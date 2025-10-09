@@ -15,7 +15,6 @@ These are places with good Wi-Fi, a peaceful environment, and great customer ser
  ## Group Members
  - Amen Teshome.............ETS 0165/16
  - Amir Abduljelil..........ETS 0167/16
- - Amir Yimam...............ETS 0169/16
  - Betsegaw Tesfaye.........ETS 0285/16
  - Biniyam Kinfe............ETS 0304/16
  - Binyam Yalew.............ETS 0297/15
