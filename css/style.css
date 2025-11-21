@@ -1,17 +1,181 @@
-*{
+/*
+    defualt css for the page. UNIVERSAL CSS RESET
+    "*" is UNIVERSAL SELECTOR
+
+*/
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+
 }
 
-.header{
+body {
+
+    background: radial-gradient(circle, #C3C1E0, #ffff);
+    height: 100vh;
+
+}
+
+.landing-header {
+    position: fixed;
+    top: 0;
+     z-index: 1000;
+     height: 65px;
+    width: 100%;
+    
+    background: radial-gradient(circle, #C3C1E0, #ffff);
+}
+
+
+.landing-nav {
+    
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
+    padding: 1rem 2rem;
+    
+}
+
+.landing-page-logo a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.3rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.img-logo {
+    height: 40px;
+}
+
+.landing-nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.landing-nav-links a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.source-btn {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    align-items: center;
+    gap: 0.5rem;
+    height: 37px;
+    display: flex;
+    cursor: pointer;
+}
+
+.source-btn:hover {
+    background-color: #363637;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4rem 13%;
+      margin-top: 70px;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.hero h1 {
+    font-size: 50px;
+    margin-bottom: 1.5rem;
+}
+
+.hero p {
+    font-size: 17px;
+    margin-bottom: 3rem;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 400px;
+  
+}
+
+.start-btn {
+    color: white;
+    background-color: black;
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    width: 150px;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-image {
+        margin-top: 2rem;
+    }
+}
+
+.how-section {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f8f9fe; /* light background for contrast */
+}
+
+.how-section h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.how-it-work {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  flex-wrap: wrap; /* responsive */
+}
+
+.how-card {
+ 
+  border-radius: 12px;
+  padding: 30px;
+  width: 250px;
+
+  transition: transform 0.3s ease;
+}
+
+.how-card:hover {
+  transform: translateY(-10px);
+}
+
+.how-img{
+    margin-bottom: 30px;
+}
+
+.header {
     width: 100%;
     height: 100vh;
     background: black;
 }
 
-.side-nav{
+.side-nav {
     width: 250px;
     height: 100%;
     position: fixed;
@@ -19,10 +183,10 @@
     top: 0;
     left: 0;
     padding: 20px, 30px;
-    
+
 }
 
-.logo{
+.logo {
     display: block;
     margin-bottom: 40px;
     margin-top: 20px;
@@ -37,29 +201,27 @@
     font-weight: 900;
 }
 
-.nav-links{
+.nav-links {
     list-style: none;
     position: relative;
-     margin-top: 20px;
+    margin-top: 20px;
     margin-left: 20px;
 }
 
-.nav-links li{
+.nav-links li {
     padding: 10px 0px;
 }
 
-.nav-links li a{
+.nav-links li a {
     color: black;
     text-decoration: none;
     display: flex;
     align-items: center;
-    padding: 6px ;
+    padding: 6px;
 
 }
 
-.nav-links li a i{
+.nav-links li a i {
     font-size: 20px;
     margin-right: 10px;
 }
-
-

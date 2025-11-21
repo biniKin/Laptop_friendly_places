@@ -3,59 +3,73 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
     <meta name="description"
         content="Laptop friendly place is an app where you can get access to places that help you stay productive outdoor.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="Map, Cafes for my pc, remote work">
+    <link rel="stylesheet" href="css/style.css">
 
-    <title>Laptop friendly places</title>
-    <link href="css/style.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/4137d3c4c5.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="header">
-        <div class="side-nav">
-            <a href="#" class="logo">
-                <p>LFP</p>
-            </a>
+    <header class="landing-header">
 
-            <ul class="nav-links">
-                <li>
-                    <a href="#" class="home">
-                        <i class="fa-solid fa-house"></i><p>Home</p>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="contribute">
-                        <i class="fa-solid fa-people-group"></i><p>Contribute</p>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="places">
-                        <i class="fa-solid fa-location-dot"></i><p>Places</p>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="fav-places">
-                        <i class="fa-solid fa-heart"></i><p>Favorite places</p>
-                    </a>
-                </li>
-
-               
+        <nav class="landing-nav">
+            <p class="landing-page-logo"><a href="#"> <img src="assets/images/logo.svg" class="img-logo">
+                    <span>LFP</span></a></p>
+            <ul class="landing-nav-links">
+                <li><a href="#how-section">How it works</a></li>
+                <li><button class="source-btn">
+                        <span>Source code</span>
+                        <img src="assets/images/git_icon.svg"></button></li>
             </ul>
+        </nav>
+
+    </header>
+
+    <main>
+        <section class="hero">
 
 
+            <div class="hero-text">
+                <h1>
+                    Discover <span style="color: #30458A;">best</span><br> <span style="color: #30458A;">places</span>
+                    for
+                    your<br> laptop.
+                </h1>
+                <p>
+                    Good wifi, best power, and good customer service.
+                </p>
 
+                <button class="start-btn">
+                    Start now
+                </button>
+            </div>
 
+            <div class="hero-img">
+                <img src="assets/images/lan-img2.svg">
+            </div>
+        </section>
 
-        </div>
-    </div>
+        <section class="how-section" id="how-section">
+            <h2>How it works</h2>
+            <div class="how-it-work">
+                <div class="how-card">
+                    <img src="assets/images/how-map.svg" class="how-img">
+                    <p>Good wifi, best power, and good customer service.</p>
+                </div>
+                <div class="how-card">
+                    <img src="assets/images/cont.svg" class="how-img">
+                    <p>Good wifi, best power, and good customer service.</p>
+                </div>
+                <div class="how-card">
+                    <img src="assets/images/srch.svg" class="how-img">
+                    <p>Good wifi, best power, and good customer service.</p>
+                </div>
+            </div>
+        </section>
 
+    </main>
 </body>
 
 </html>
