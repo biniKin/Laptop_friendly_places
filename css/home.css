@@ -1,0 +1,104 @@
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 30px;
+  position: relative;
+}
+
+.container {
+  display: flex;
+  height: 100%;
+}
+
+/* TOP SEARCH BAR */
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.top-bar input {
+  width: 280px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #cfcfcf;
+  font-size: 14px;
+}
+
+/* STAT CARDS */
+.stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 20px 25px;
+  border-radius: 12px;
+  width: 220px;
+  border: 1px solid #ececec;
+}
+
+.card h3 {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.card p {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* FILTER BUTTONS */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.filter {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid #bfbff8;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.filter.active {
+  background: #ececff;
+  font-weight: bold;
+}
+
+/* MAP AREA */
+.map-box {
+  width: 100%;
+  height: 320px;
+  border-radius: 12px;
+  border: 1px solid #dedede;
+  overflow: hidden;
+  position: relative;
+}
+
+.map-box iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.view-btn {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  transform: translate(-45%, -45%);
+  padding: 10px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #2430a3;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
