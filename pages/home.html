@@ -1,23 +1,88 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="description"
-        content="Laptop friendly place is an app where you can get access to places that help you stay productive outdoor.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="Map, Cafes for my pc, remote work">
-
-    <title>Laptop friendly places</title>
-    <link href="css/style.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/4137d3c4c5.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8" />
+    <title>LFP Dashboard</title>
+    <link rel="stylesheet" href="../css/home.css" />
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
-    <!-- the side bar will be here -->
-    
+<div class="container">
+    <nav class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo">
+                <i class="fa-solid fa-laptop"></i>
+                <span>LFP</span>
+            </div>
 
+            <ul class="nav-links">
+                <li>
+                    <a href="home.html">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="contribute.html">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Contribute</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="places.html">
+                        <i class="fa-solid fa-map"></i>
+                        <span>Places</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="fav.html">
+                        <i class="fa-regular fa-heart"></i>
+                        <span>Favorite</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-bottom">
+            <i class="fa-regular fa-sun"></i>
+        </div>
+    </nav>
+    <main class="main">
+        <div class="search">
+            <input placeholder="Search"></input>
+        </div>
+        <div class="stats">
+            <div class="card">
+                <h3>Total places</h3>
+                <p>1,890</p>
+            </div>
+
+            <div class="card">
+                <h3>New added</h3>
+                <p>1,890</p>
+            </div>
+
+            <div class="card">
+                <h3>Contributers</h3>
+                <p>50</p>
+            </div>
+        </div>
+
+        <h2 class="title">Places around your area</h2>
+
+       <div class="map-box">
+    <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3915.6181451994473!2d38.746802!3d9.010793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85c0e72c773f%3A0x4e4c5d25e36385fb!2sAddis%20Ababa!5e0!3m2!1sen!2sET!4v1700000000000!5m2!1sen!2sET"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+
+    <button class="view-btn">View more</button>
+</div>
+
+
+    </main>
+</div>
 </body>
-
 </html>

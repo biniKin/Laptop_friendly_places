@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contribute Location</title>
+  <style>
+    body {
+      margin: 0;
+      width: 1280px;
+      height: 832px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0eef7;
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      width: 513px;
+      height: 644px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 40px;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    label {
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      align-self: flex-start;
+      margin-left: 70px;
+    }
+
+    input[type="text"] {
+      width: 365px;
+      height: 59px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px 15px;
+      font-size: 0.95rem;
+      margin-bottom: 30px;
+    }
+
+    .photo-section {
+      align-self: flex-start;
+      margin-left: 70px;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .photo-upload {
+      width: 365px;
+      height: 282px;
+      background-color: #f4f4f9;
+      border: 1px dashed #999;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .photo-upload:hover {
+      background-color: #eae8f5;
+    }
+
+    .photo-upload .circle {
+     width: 83px;
+     height: 83px; /* or 76px if you want the oval shape */
+     border-radius: 50%;
+     border: 2px solid #888;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 3rem;
+     color: #777;
+     line-height: 1;           /* ensures vertical alignment */
+     box-sizing: border-box;   /* keeps border from affecting size */
+}
+
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Contribute location</h2>
+    
+    <label for="place-name">Name of the place</label>
+    <input type="text" id="place-name" placeholder="Boss burger" />
+
+    <div class="photo-section">
+      Add photo<br>
+      <small>• you must add at least 1 image</small>
+    </div>
+
+    <div class="photo-upload">
+      <div class="circle">＋</div>
+    </div>
+  </div>
+</body>
+</html>
