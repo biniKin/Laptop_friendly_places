@@ -1,117 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LFP - Favourite Places</title>
+    <title>Favorites - LFP</title>
+    <!-- Use only home.css -->
     <link rel="stylesheet" href="../css/style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="../css/style.css" />
-  </head>
-  <body>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <!-- Header with Logo & Search -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-logo">
+                <img src="../assets/images/logo.svg" alt="LFP Logo">
+                <span>LFP</span>
+            </div>
+            
+            <div class="header-search">
+                <input type="text" placeholder="Search favorites...">
+                <i class="fa fa-search"></i>
+            </div>
+        </div>
+    </header>
+
     <div class="container">
-      <!-- <nav class="sidebar">
-        <div class="sidebar-top">
-          <div class="logo">
-            <i class="fa-solid fa-laptop"></i>
-            <span>LFP</span>
-          </div>
-
-          <ul class="nav-links">
-            <li>
-              <a href="home.html">
-                <i class="fa-solid fa-house"></i>
-                <span>Home</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa-solid fa-users"></i>
-                <span>Contribute</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa-solid fa-map"></i>
-                <span>Places</span>
-              </a>
-            </li>
-            <li class="active">
-              <a href="#">
-                <i class="fa-regular fa-heart"></i>
-                <span>Favorite</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="sidebar-bottom">
-          <i class="fa-regular fa-sun"></i>
-        </div>
-      </nav> -->
-
-      <main class="main-content">
-        <header>
-          <h1>Your Favourite places</h1>
-        </header>
-
-        <section class="cards-grid">
-          <article class="card">
-            <div class="card-image">
-              <img
-                src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop"
-                alt="Cafe Interior"
-              />
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <ul class="nav-links">
+                <li>
+                    <a href="home.html" title="Home">
+                        <i class="fa-solid fa-house"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="contribute-location.html" title="Contribute">
+                        <i class="fa-solid fa-users"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="places.html" title="Places">
+                        <i class="fa-solid fa-map"></i>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="fav.html" title="Favorite">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-bottom">
+                <i class="fa-regular fa-sun" title="Theme"></i>
             </div>
-            <div class="card-details">
-              <div class="card-header">
-                <h3>Angela cafe</h3>
-                <i class="fa-solid fa-heart heart-icon"></i>
-              </div>
-              <span class="rating">4.5</span>
-            </div>
-          </article>
+        </nav>
 
-          <article class="card">
-            <div class="card-image">
-              <img
-                src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop"
-                alt="Cafe Interior"
-              />
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1><i class="fa-solid fa-heart" style="color: #ff4757; margin-right: 10px;"></i> Your Favorite Places</h1>
+                <p class="page-subtitle">Places you've liked and saved for later</p>
             </div>
-            <div class="card-details">
-              <div class="card-header">
-                <h3>Angela cafe</h3>
-                <i class="fa-solid fa-heart heart-icon"></i>
-              </div>
-              <span class="rating">4.5</span>
-            </div>
-          </article>
 
-          <article class="card">
-            <div class="card-image">
-              <img
-                src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop"
-                alt="Cafe Interior"
-              />
+            <!-- Favorites Grid -->
+            <div class="favorites-grid">
+                <!-- Favorite Card 1 -->
+                <div class="favorite-card">
+                    <div class="fav-card-image">
+                        <img src="../assets/images/cafe1.jpg" alt="Angela Cafe">
+                        <div class="fav-badge">
+                            <i class="fa-solid fa-heart"></i> Favorite
+                        </div>
+                    </div>
+                    <div class="fav-card-content">
+                        <div class="fav-card-header">
+                            <h3>Angela Cafe</h3>
+                            <button class="fav-remove-btn" title="Remove from favorites">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="fav-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-number">4.5</span>
+                            <span class="reviews">(120 reviews)</span>
+                        </div>
+                        <div class="fav-features">
+                            <span class="feature"><i class="fa-solid fa-wifi"></i> Excellent WiFi</span>
+                            <span class="feature"><i class="fa-solid fa-plug"></i> Power Outlets</span>
+                            <span class="feature"><i class="fa-solid fa-mug-saucer"></i> Cafe</span>
+                        </div>
+                        <div class="fav-location">
+                            <i class="fa-solid fa-location-dot"></i> Bole, Addis Ababa
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Favorite Card 2 -->
+                <div class="favorite-card">
+                    <div class="fav-card-image">
+                        <img src="../assets/images/cafe2.jpg" alt="Science Cafe">
+                        <div class="fav-badge">
+                            <i class="fa-solid fa-heart"></i> Favorite
+                        </div>
+                    </div>
+                    <div class="fav-card-content">
+                        <div class="fav-card-header">
+                            <h3>Science Cafe</h3>
+                            <button class="fav-remove-btn" title="Remove from favorites">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="fav-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-number">4.3</span>
+                            <span class="reviews">(95 reviews)</span>
+                        </div>
+                        <div class="fav-features">
+                            <span class="feature"><i class="fa-solid fa-wifi"></i> Good WiFi</span>
+                            <span class="feature"><i class="fa-solid fa-plug"></i> Limited Outlets</span>
+                            <span class="feature"><i class="fa-solid fa-mug-saucer"></i> Cafe</span>
+                        </div>
+                        <div class="fav-location">
+                            <i class="fa-solid fa-location-dot"></i> Piazza, Addis Ababa
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Favorite Card 3 -->
+                <div class="favorite-card">
+                    <div class="fav-card-image">
+                        <img src="../assets/images/cafe3.jpg" alt="Caravan Cafe">
+                        <div class="fav-badge">
+                            <i class="fa-solid fa-heart"></i> Favorite
+                        </div>
+                    </div>
+                    <div class="fav-card-content">
+                        <div class="fav-card-header">
+                            <h3>Caravan Cafe</h3>
+                            <button class="fav-remove-btn" title="Remove from favorites">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="fav-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-number">4.7</span>
+                            <span class="reviews">(210 reviews)</span>
+                        </div>
+                        <div class="fav-features">
+                            <span class="feature"><i class="fa-solid fa-wifi"></i> Premium WiFi</span>
+                            <span class="feature"><i class="fa-solid fa-plug"></i> Dedicated Workspace</span>
+                            <span class="feature"><i class="fa-solid fa-mug-saucer"></i> Cafe</span>
+                        </div>
+                        <div class="fav-location">
+                            <i class="fa-solid fa-location-dot"></i> 22 Mazoria, Addis Ababa
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More cards as needed -->
             </div>
-            <div class="card-details">
-              <div class="card-header">
-                <h3>Angela cafe</h3>
-                <i class="fa-solid fa-heart heart-icon"></i>
-              </div>
-              <span class="rating">4.5</span>
+
+            <!-- Empty State -->
+            <div class="empty-favorites" id="emptyState" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+                <h3>No favorites yet</h3>
+                <p>When you find places you like, click the heart icon to save them here.</p>
+                <a href="places.html" class="explore-fav-btn">
+                    <i class="fa-solid fa-map"></i> Explore Places
+                </a>
             </div>
-          </article>
-        </section>
-      </main>
+        </main>
     </div>
-  </body>
+</body>
 </html>
