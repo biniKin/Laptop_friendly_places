@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contribute - LFP</title>
-    <!-- Use home.css for sidebar navigation -->
     <link rel="stylesheet" href="../css/style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -26,7 +25,6 @@
     </header>
 
     <div class="container">
-        <!-- Sidebar Navigation (same as home page) -->
         <nav class="sidebar">
             <ul class="nav-links">
                 <li>
@@ -56,9 +54,8 @@
             </div>
         </nav>
 
-        <!-- Main Content - Simple Form -->
+        <!-- Main Content  -->
         <main class="main">
-            <!-- Simple Form Card -->
             <div class="simple-form-card">
                 <h2 class="form-title">Contribute location</h2>
                 
@@ -92,7 +89,6 @@
         </main>
     </div>
 
-    <!-- Simple JavaScript for photo upload -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const uploadArea = document.getElementById('photo-upload-area');
@@ -165,7 +161,6 @@
                     return;
                 }
                 
-                // Here you would normally send data to your API
                 alert('Location contributed successfully!');
                 window.location.href = 'home.html';
             });
