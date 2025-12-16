@@ -62,11 +62,32 @@ body {
   font-weight: bold;
 }
 
-/* Make the start button work as both button and link */
+.source-btn{
+    background-color: #000;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.source-btn:hover {
+    background-color: #222;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.source-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
 .start-btn {
-    display: inline-block; /* Changed from default button */
-    text-decoration: none; /* Remove link underline */
-    /* Keep all your existing button styles */
+    display: inline-block; 
+    text-decoration: none; 
     background-color: #30458A;
     color: white;
     padding: 12px 24px;
@@ -76,8 +97,10 @@ body {
     transition: background-color 0.3s;
     border: none; /* If you have border styles */
     font-family: inherit; /* Use same font as button */
-    font-size: inherit; /* Use same font size */
+    font-size: inherit; 
+    align-content: center;
 }
+
 
 .start-btn:hover {
     background-color: #1e3570;
@@ -90,7 +113,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 4rem 13%;
-  margin-top: 70px;
+  min-height: 100vh; 
 }
 
 .hero-text {
@@ -134,6 +157,7 @@ body {
 }
 
 .how-section {
+    min-height: 100vh;
   text-align: center;
   padding: 60px 20px;
   background: #f8f9fe;
@@ -141,17 +165,19 @@ body {
 }
 
 .how-section h2 {
-  font-size: 2rem;
-  margin-bottom: 40px;
+  font-size: 3rem;
+  margin-bottom: 5rem;
+  font-weight: 600;
 }
+
 
 .how-it-work {
   display: flex;
   justify-content: center;
-  gap: 100px;
+  gap: 6rem;
   flex-wrap: wrap;
-  /* responsive */
 }
+
 
 .how-card {
   border-radius: 12px;
@@ -169,6 +195,69 @@ body {
   margin-bottom: 30px;
 }
 
+
+.about {
+  background-color: #0f0f0f;
+  color: #fff;
+  padding: 4rem 13% 2rem;
+}
+
+.about-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.about-brand {
+  max-width: 420px;
+}
+
+.footer-logo {
+  width: 40px;
+  margin-bottom: 1rem;
+}
+
+.about h3 {
+  font-size: 22px;
+  margin-bottom: 0.8rem;
+}
+
+.about p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.about-links h4 {
+  font-size: 16px;
+  margin-bottom: 1rem;
+}
+
+.about-links a {
+  display: block;
+  color: #ccc;
+  text-decoration: none;
+  margin-bottom: 0.6rem;
+  transition: color 0.3s ease;
+}
+
+.about-links a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  border-top: 1px solid #2a2a2a;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+}
+
+
+
+
 /* Reset and Base */
 * {
     margin: 0;
@@ -179,7 +268,7 @@ body {
 
 html, body {
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 
 body {
@@ -616,128 +705,8 @@ body {
     }
 }
 /* Places Page Specific Styles */
-.tabs-section {
-    margin-bottom: 1.5rem;
-}
 
-.tabs {
-    display: flex;
-    gap: 0.5rem;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 0.5rem;
-}
 
-.tab {
-    background: none;
-    border: none;
-    padding: 0.5rem 1.2rem;
-    color: #777;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 6px 6px 0 0;
-    transition: all 0.3s;
-}
-
-.tab:hover {
-    background: #f0f5ff;
-    color: #30458A;
-}
-
-.tab.active {
-    background: #30458A;
-    color: white;
-}
-
-/* Cards Grid */
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-.place-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s;
-}
-
-.place-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.place-image {
-    position: relative;
-    height: 160px;
-    overflow: hidden;
-}
-
-.place-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.favorite-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.1rem;
-    color: #666;
-    transition: all 0.3s;
-}
-
-.favorite-btn:hover {
-    background: white;
-    color: #ff4757;
-}
-
-.place-info {
-    padding: 1rem;
-}
-
-.place-info h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.1rem;
-    color: #333;
-}
-
-.place-rating {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: #ffb400;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.place-features {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-}
-
-.feature {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.85rem;
-    color: #555;
-}
-
-.place-address {
-    font-size: 0.85rem;
-    color: #777;
-    margin: 0;
-}
 /* ===== FAVORITES PAGE STYLES ===== */
 
 /* Page Header */
