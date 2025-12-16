@@ -706,6 +706,129 @@ body {
 }
 /* Places Page Specific Styles */
 
+.tabs-section {
+    margin-bottom: 1.5rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.tab {
+    background: none;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    color: #777;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    transition: all 0.3s;
+}
+
+.tab:hover {
+    background: #f0f5ff;
+    color: #30458A;
+}
+
+.tab.active {
+    background: #30458A;
+    color: white;
+}
+
+/* Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.place-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+}
+
+.place-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.place-image {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+}
+
+.place-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #666;
+    transition: all 0.3s;
+}
+
+.favorite-btn:hover {
+    background: white;
+    color: #ff4757;
+}
+
+.place-info {
+    padding: 1rem;
+}
+
+.place-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.place-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #ffb400;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.place-features {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.place-address {
+    font-size: 0.85rem;
+    color: #777;
+    margin: 0;
+}
+
 
 /* ===== FAVORITES PAGE STYLES ===== */
 
