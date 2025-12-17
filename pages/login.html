@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Login Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            
+            
+            <form class="login-form" id="loginForm" novalidate>
+                <div class="login-header">
+                <h2>Welcome Back</h2>
+                <p>Sign in to your account</p>
+            </div>
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <input type="email" id="email" name="email" placeholder="" required autocomplete="email">
+                        <label for="email">Email Address</label>
+                        <span class="focus-border"></span>
+                    </div>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+              <div class="form-group">
+                <div class="input-wrapper password-wrapper">
+                    <input type="password" id="password" name="password" placeholder="" required autocomplete="current-password">
+                    <label for="password">Password</label>
+                    <button type="button" class="password-toggle" id="loginPasswordToggle" aria-label="Toggle password visibility">
+                        <span class="eye-icon"></span>
+                    </button>
+                    <span class="focus-border"></span>
+                </div>
+                <span class="error-message" id="passwordError"></span>
+            </div>
+
+                <button type="submit" class="login-btn btn">
+                    <span class="btn-text">Sign In</span>
+                    <span class="btn-loader"></span>
+                </button>
+            
+
+          <div class="signup-link">
+            Don’t have an account?
+            <a href="#" id="signupLink">Sign up</a>
+          </div>
+          </form>
+
+            <form  class="signup-form hidden" id="signupForm" validate>
+                <div class="signup-header">
+                <h2>Sign Up</h2>
+                </div>
+
+                <div class="form-group">
+                <div class="input-wrapper">
+                        <input type="text" id="signupfullname" name="signupfullname" placeholder="" required >
+                        <label for="signupfullname">Full Name</label>
+                        <span class="focus-border"></span>
+                    </div>
+                    </div>
+                    <div class="form-group">
+               <div class="input-wrapper">
+                        <input type="email" id="signupemail" name="signupemail" placeholder="" required autocomplete="email">
+                        <label for="signupemail">Email Address</label>
+                        <span class="focus-border"></span>
+                    </div>
+                    </div>
+                <div class="form-group">
+                    <div class="input-wrapper password-wrapper">
+                        <input type="password" id="signuppassword" name="signuppassword" placeholder="" required autocomplete="current-password">
+                        <label for="signuppassword">Password</label>
+                        <button type="button" class="password-toggle" id="signupPasswordToggle" aria-label="Toggle password visibility">
+                            <span class="eye-icon"></span>
+                        </button>
+                        <span class="focus-border"></span>
+                    </div>
+                    <span class="error-message" id="signupPasswordError"></span>
+                </div>
+
+               <button type="submit" class="login-btn btn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-loader"></span>
+                </button>
+
+
+                <div class="login-link">
+                    Already have an account? <a href="#" onclick="showLogin()">Login</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="../../shared/js/form-utils.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
