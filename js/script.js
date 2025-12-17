@@ -53,3 +53,95 @@ button.addEventListener('click', ()=>{
     // fetchMap();
     window.location.href = '../pages/home.html'
 });
+// login page java script
+unction showSignup() {
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('signupForm').classList.remove('hidden');
+}
+
+function showLogin() {
+    document.getElementById('signupForm').classList.add('hidden');
+    document.getElementById('loginForm').classList.remove('hidden');
+}
+document.getElementById('signupLink').addEventListener('click', function (e) {
+    e.preventDefault();
+    showSignup();
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const loginCard = document.querySelector('.login-card');
+    FormUtils.addEntranceAnimation(loginCard);
+
+    new LoginForm1();
+   
+
+    // Login link in signup form
+    const loginLink = document.querySelector('.switch a');
+    if (loginLink) {
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showLogin();
+        });
+    }
+});
+// Add this script to your JavaScript file or within <script> tags
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to toggle password visibility
+    function setupPasswordToggle(toggleButtonId, passwordInputId) {
+        const toggleButton = document.getElementById(toggleButtonId);
+        const passwordInput = document.getElementById(passwordInputId);
+        
+        if (toggleButton && passwordInput) {
+            toggleButton.addEventListener('click', function() {
+                // Toggle between password and text type
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    this.setAttribute('aria-label', 'Hide password');
+                    this.classList.add('password-visible');
+                } else {
+                    passwordInput.type = 'password';
+                    this.setAttribute('aria-label', 'Show password');
+                    this.classList.remove('password-visible');
+                }
+            });
+        }
+    }
+    
+    // Set up both password toggle buttons
+    setupPasswordToggle('loginPasswordToggle', 'password');
+    setupPasswordToggle('signupPasswordToggle', 'signuppassword');
+});
+// Minimal validation for login form
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    let isValid = true;
+    
+    // Check email
+    if (!email) {
+        document.getElementById('emailError').textContent = 'Email is required';
+        document.getElementById('emailError').classList.add('show');
+        isValid = false;
+    } else {
+        document.getElementById('emailError').classList.remove('show');
+    }
+    
+    // Check password
+    if (!password) {
+        document.getElementById('passwordError').textContent = 'Password is required';
+        document.getElementById('passwordError').classList.add('show');
+        isValid = false;
+    } else {
+        document.getElementById('passwordError').classList.remove('show');
+    }
+    
+    // If valid, show success
+    if (isValid) {
+        alert('Login form is valid!');
+        // Add your login logic here
+    }
+});
