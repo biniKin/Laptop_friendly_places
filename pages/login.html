@@ -2,99 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glassmorphism Login Form</title>
-    <link rel="stylesheet" href="style.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Sign Up</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
+    <div class="bg"></div>
+
     <div class="container">
-        <div class="login-card">
-            
-            
-            <form class="login-form" id="loginForm" novalidate>
-                <div class="login-header">
+        <div class="form-box glass">
+
+            <!-- LOGIN FORM -->
+            <form id="loginForm" class="form active">
                 <h2>Welcome Back</h2>
-                <p>Sign in to your account</p>
-            </div>
-                <div class="form-group">
-                    <div class="input-wrapper">
-                        <input type="email" id="email" name="email" placeholder="" required autocomplete="email">
-                        <label for="email">Email Address</label>
-                        <span class="focus-border"></span>
-                    </div>
-                    <span class="error-message" id="emailError"></span>
+
+                <input type="email" id="loginEmail" placeholder="Email">
+                <small class="error" id="loginEmailError"></small>
+
+                <div class="password-box">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                    <i class="fa-solid fa-eye toggle" data-target="loginPassword"></i>
                 </div>
+                <small class="error" id="loginPasswordError"></small>
 
-              <div class="form-group">
-                <div class="input-wrapper password-wrapper">
-                    <input type="password" id="password" name="password" placeholder="" required autocomplete="current-password">
-                    <label for="password">Password</label>
-                    <button type="button" class="password-toggle" id="loginPasswordToggle" aria-label="Toggle password visibility">
-                        <span class="eye-icon"></span>
-                    </button>
-                    <span class="focus-border"></span>
+                <button type="submit">Login</button>
+
+                <p class="switch">
+                    Don’t have an account?
+                    <span id="showSignup">Sign Up</span>
+                </p>
+            </form>
+
+            <!-- SIGN UP FORM -->
+            <form id="signupForm" class="form">
+                <h2>Create Account</h2>
+
+                <input type="text" id="signupName" placeholder="Full Name">
+                <small class="error" id="signupNameError"></small>
+
+                <input type="email" id="signupEmail" placeholder="Email">
+                <small class="error" id="signupEmailError"></small>
+
+                <div class="password-box">
+                    <input type="password" 
+        id="signupPassword" 
+        placeholder="Password"
+        minlength="8"
+        pattern="(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
+        title="Password must be at least 8 characters long and include at least one uppercase and one special character">
+                    <i class="fa-solid fa-eye toggle" data-target="signupPassword"></i>
                 </div>
-                <span class="error-message" id="passwordError"></span>
-            </div>
+                <small class="error" id="signupPasswordError"></small>
 
-                <button type="submit" class="login-btn btn">
-                    <span class="btn-text">Sign In</span>
-                    <span class="btn-loader"></span>
-                </button>
-            
-
-          <div class="signup-link">
-            Don’t have an account?
-            <a href="#" id="signupLink">Sign up</a>
-          </div>
-          </form>
-
-            <form  class="signup-form hidden" id="signupForm" validate>
-                <div class="signup-header">
-                <h2>Sign Up</h2>
+                <div class="password-box">
+                    <input type="password" id="signupConfirm" placeholder="Confirm Password">
+                    <i class="fa-solid fa-eye toggle" data-target="signupConfirm"></i>
                 </div>
+                <small class="error" id="signupConfirmError"></small>
 
-                <div class="form-group">
-                <div class="input-wrapper">
-                        <input type="text" id="signupfullname" name="signupfullname" placeholder="" required >
-                        <label for="signupfullname">Full Name</label>
-                        <span class="focus-border"></span>
-                    </div>
-                    </div>
-                    <div class="form-group">
-               <div class="input-wrapper">
-                        <input type="email" id="signupemail" name="signupemail" placeholder="" required autocomplete="email">
-                        <label for="signupemail">Email Address</label>
-                        <span class="focus-border"></span>
-                    </div>
-                    </div>
-                <div class="form-group">
-                    <div class="input-wrapper password-wrapper">
-                        <input type="password" id="signuppassword" name="signuppassword" placeholder="" required autocomplete="current-password">
-                        <label for="signuppassword">Password</label>
-                        <button type="button" class="password-toggle" id="signupPasswordToggle" aria-label="Toggle password visibility">
-                            <span class="eye-icon"></span>
-                        </button>
-                        <span class="focus-border"></span>
-                    </div>
-                    <span class="error-message" id="signupPasswordError"></span>
-                </div>
+                <button type="submit">Sign Up</button>
 
-               <button type="submit" class="login-btn btn">
-                    <span class="btn-text">Create Account</span>
-                    <span class="btn-loader"></span>
-                </button>
-
-
-                <div class="login-link">
-                    Already have an account? <a href="#" onclick="showLogin()">Login</a>
-                </div>
+                <p class="switch">
+                    Already have an account?
+                    <span id="showLogin">Login</span>
+                </p>
             </form>
 
         </div>
     </div>
 
-    <script src="../../shared/js/form-utils.js"></script>
-    <script src="script.js"></script>
+
+<script src="../js/login.js"></script>
 </body>
 </html>
