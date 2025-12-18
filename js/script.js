@@ -53,39 +53,6 @@ button.addEventListener('click', ()=>{
     // fetchMap();
     window.location.href = '../pages/home.html'
 });
-// login page java script
-unction showSignup() {
-    document.getElementById('loginForm').classList.add('hidden');
-    document.getElementById('signupForm').classList.remove('hidden');
-}
-
-function showLogin() {
-    document.getElementById('signupForm').classList.add('hidden');
-    document.getElementById('loginForm').classList.remove('hidden');
-}
-document.getElementById('signupLink').addEventListener('click', function (e) {
-    e.preventDefault();
-    showSignup();
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const loginCard = document.querySelector('.login-card');
-    FormUtils.addEntranceAnimation(loginCard);
-
-    new LoginForm1();
-   
-
-    // Login link in signup form
-    const loginLink = document.querySelector('.switch a');
-    if (loginLink) {
-        loginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showLogin();
-        });
-    }
-});
-// Add this script to your JavaScript file or within <script> tags
 
 document.addEventListener('DOMContentLoaded', function() {
     // Function to toggle password visibility
