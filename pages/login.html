@@ -6,7 +6,7 @@
     <title>Login & Sign Up</title>
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    
 </head>
 <body>
     <div class="bg"></div>
@@ -25,9 +25,12 @@
                     <input type="password" id="loginPassword" placeholder="Password">
                     <i class="fa-solid fa-eye toggle" data-target="loginPassword"></i>
                 </div>
-                <small class="error" id="loginPasswordError"></small>
+                <div class="msg" id="loginPasswordError"></div>
 
-                <button type="submit">Login</button>
+                <button type="submit">
+                    <span class="btn-text">Login</span>
+                    <span class="spinner"></span>
+                </button>
 
                 <p class="switch">
                     Don’t have an account?
@@ -60,9 +63,15 @@
                     <input type="password" id="signupConfirm" placeholder="Confirm Password">
                     <i class="fa-solid fa-eye toggle" data-target="signupConfirm"></i>
                 </div>
-                <small class="error" id="signupConfirmError"></small>
+                <div class="msg" id="signupConfirmError"></div>
 
-                <button type="submit">Sign Up</button>
+                <button type="submit">
+                    <span class="btn-text">Sign Up</span>
+                    <span class="spinner"></span>
+                </button>
+               
+                
+                <p id="message"></p>
 
                 <p class="switch">
                     Already have an account?
@@ -72,8 +81,6 @@
 
         </div>
     </div>
-
-
-<script src="../js/login.js"></script>
+<script type="module" src="../js/login.js"></script>
 </body>
 </html>
