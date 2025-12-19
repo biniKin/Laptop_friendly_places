@@ -704,6 +704,9 @@ body {
         min-height: 350px;
     }
 }
+
+
+
 /* Places Page Specific Styles */
 
 .tabs-section {
@@ -751,6 +754,7 @@ body {
     overflow: hidden;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s;
+    cursor: pointer;
 }
 
 .place-card:hover {
@@ -822,6 +826,8 @@ body {
     font-size: 0.85rem;
     color: #555;
 }
+
+
 
 .place-address {
     font-size: 0.85rem;
