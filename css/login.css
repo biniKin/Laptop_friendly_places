@@ -97,6 +97,15 @@ button {
     color: #000;
     font-weight: bold;
     cursor: pointer;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-text{
+    display: block;
+    align-items: center;
 }
 
 button:hover {
@@ -122,6 +131,35 @@ button:hover {
     color: #ff6b6b;
     font-size: 12px;
     height: 14px;
+}
+
+.msg{
+    border: 1px solid red;
+    border-radius: 10px;
+    height: 60px;
+    width: 100%;
+    background-color: rgba(223, 91, 91, 0.4);
+    display: block;
+    align-content: center;
+    padding: 10px;
+    margin-top: 10px;
+    display: none;
+    
+}
+
+.spinner{
+    border: 3px solid white;
+    border-top: 3px solid black;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    display: none;
+    animation: spin 1s linear infinite;
+}
+ 
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}   
 }
 
 /* Mobile Responsive */
