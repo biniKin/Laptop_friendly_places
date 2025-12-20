@@ -713,6 +713,10 @@ body {
     margin-bottom: 1.5rem;
 }
 
+.hidden{
+    display: none;
+}
+
 .tabs {
     display: flex;
     gap: 0.5rem;
@@ -740,6 +744,27 @@ body {
     background: #30458A;
     color: white;
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem;
+  color: #30458A;
+  font-weight: 500;
+}
+
+.loading i {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 /* Cards Grid */
 .cards-grid {
