@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Places Management - Laptop Friendly Finder</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD_JBz46CTr9MEOT2rdiYs0d8tZyRRTR4&libraries=places"></script>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+      <div class="loader">
+        <div class="loader-circle"></div>
+        <div>Loading Places...</div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Logo -->
+      <div class="sidebar-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <div class="logo-text">
+            <h2>LFF Admin</h2>
+            <p>Dashboard v1.0</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item">
+          <i class="fas fa-tachometer-alt nav-icon"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="places.html" class="nav-item active">
+          <i class="fas fa-map-marker-alt nav-icon"></i>
+          <span>Places</span>
+          <span class="nav-badge" id="placesBadge">0</span>
+        </a>
+
+        <a href="add-place.html" class="nav-item">
+          <i class="fas fa-plus-circle nav-icon"></i>
+          <span>Add Place</span>
+        </a>
+
+        <a href="reported.html" class="nav-item">
+          <i class="fas fa-flag nav-icon"></i>
+          <span>Reported</span>
+          <span class="nav-badge" id="reportedBadge">0</span>
+        </a>
+
+        <a href="contributors.html" class="nav-item">
+          <i class="fas fa-users nav-icon"></i>
+          <span>Contributors</span>
+        </a>
+      </nav>
+
+      <!-- User Profile -->
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <div class="user-info">
+            <h4 id="adminName">Admin User</h4>
+            <p>Super Admin</p>
+          </div>
+          <button class="logout-btn" onclick="logout()" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+
+    <!-- JavaScript Files -->
+    <script src="js/database.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/maps.js"></script>
+    <script src="js/places.js"></script>
+  </body>
+</html>

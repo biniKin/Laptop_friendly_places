@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Laptop Friendly Finder</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD_JBz46CTr9MEOT2rdiYs0d8tZyRRTR4&libraries=places"></script>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+      <div class="loader">
+        <div class="loader-circle"></div>
+        <div>Loading Dashboard...</div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Logo -->
+      <div class="sidebar-header">
+        <a
+          href="#"
+          class="logo"
+          onclick="showSection('dashboard'); return false;"
+        >
+          <div class="logo-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <div class="logo-text">
+            <h2>LFF Admin</h2>
+            <p>Dashboard v1.0</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav">
+        <a
+          href="#"
+          class="nav-item active"
+          onclick="showSection('dashboard'); return false;"
+        >
+          <i class="fas fa-tachometer-alt nav-icon"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a
+          href="#"
+          class="nav-item"
+          onclick="showSection('places'); return false;"
+        >
+          <i class="fas fa-map-marker-alt nav-icon"></i>
+          <span>Places</span>
+          <span class="nav-badge" id="placesBadge">0</span>
+        </a>
+
+        <a
+          href="#"
+          class="nav-item"
+          onclick="showSection('add-place'); return false;"
+        >
+          <i class="fas fa-plus-circle nav-icon"></i>
+          <span>Add Place</span>
+        </a>
+
+        <a
+          href="#"
+          class="nav-item"
+          onclick="showSection('reported'); return false;"
+        >
+          <i class="fas fa-flag nav-icon"></i>
+          <span>Reported</span>
+          <span class="nav-badge" id="reportedBadge">0</span>
+        </a>
+
+        <a
+          href="#"
+          class="nav-item"
+          onclick="showSection('contributors'); return false;"
+        >
+          <i class="fas fa-users nav-icon"></i>
+          <span>Contributors</span>
+        </a>
+      </nav>
+
+      <!-- User Profile -->
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <div class="user-info">
+            <h4 id="adminName">Admin User</h4>
+            <p>Super Admin</p>
+          </div>
+          <button class="logout-btn" onclick="logout()" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="page-title">
+          <h1 id="pageTitle">Dashboard Overview</h1>
+          <div class="breadcrumb" id="breadcrumb">
+            <a href="#" onclick="showSection('dashboard'); return false;"
+              >Dashboard</a
+            >
+            <i class="fas fa-chevron-right"></i>
+            <span id="breadcrumbCurrent">Overview</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearch" placeholder="Search..." />
+          </div>
+
+          <button class="btn-primary" onclick="refreshData()">
+            <i class="fas fa-sync-alt"></i>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+          <!-- Stats Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon blue">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="stat-info">
+                <h3 id="totalPlaces">0</h3>
+                <p>Total Places</p>
+              </div>
+              <div class="stat-trend trend-up">
+                <i class="fas fa-arrow-up"></i>
+                <span>12%</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon green">
+                <i class="fas fa-check-circle"></i>
+              </div>
+              <div class="stat-info">
+                <h3 id="verifiedPlaces">0</h3>
+                <p>Verified Places</p>
+              </div>
+              <div class="stat-trend trend-up">
+                <i class="fas fa-arrow-up"></i>
+                <span>8%</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon orange">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="stat-info">
+                <h3 id="pendingPlaces">0</h3>
+                <p>Pending Places</p>
+              </div>
+              <div class="stat-trend trend-down">
+                <i class="fas fa-arrow-down"></i>
+                <span>3%</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon red">
+                <i class="fas fa-flag"></i>
+              </div>
+              <div class="stat-info">
+                <h3 id="reportedPlaces">0</h3>
+                <p>Reported Issues</p>
+              </div>
+              <div class="stat-trend trend-up">
+                <i class="fas fa-arrow-up"></i>
+                <span>24%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map Section -->
+          <div class="map-container">
+            <h3>All Places Map</h3>
+            <div id="dashboardMap"></div>
+            <div class="map-controls">
+              <div class="map-toggle" onclick="toggleMapLayer('all')">
+                <i class="fas fa-layer-group"></i>
+                <span>All Places</span>
+              </div>
+              <div class="map-toggle" onclick="toggleMapLayer('reported')">
+                <i class="fas fa-flag"></i>
+                <span>Reported Only</span>
+              </div>
+            </div>
+            <div class="map-legend">
+              <div class="legend-item">
+                <div class="legend-color" style="background: #8b5cf6"></div>
+                <span class="legend-label">Regular Places</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background: #ef4444"></div>
+                <span class="legend-label">Reported Places</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="recent-activity">
+            <div class="section-header">
+              <h2>Recent Activity</h2>
+              <a
+                href="#"
+                onclick="showSection('places'); return false;"
+                style="
+                  color: var(--primary);
+                  text-decoration: none;
+                  font-size: 14px;
+                "
+              >
+                View All <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+
+            <div class="activity-list" id="activityList">
+              <!-- Activity items will be loaded here -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Places Section -->
+        <section id="places" class="section">
+          <div class="section-header">
+            <h2>All Places</h2>
+            <div class="table-filters">
+              <button class="filter-btn active" onclick="filterPlaces('all')">
+                All
+              </button>
+              <button class="filter-btn" onclick="filterPlaces('verified')">
+                Verified
+              </button>
+              <button class="filter-btn" onclick="filterPlaces('pending')">
+                Pending
+              </button>
+            </div>
+          </div>
+
+          <!-- Places Map -->
+          <div class="map-container">
+            <h3>Places Map View</h3>
+            <div id="placesMap"></div>
+            <div class="map-controls">
+              <div
+                class="map-toggle active"
+                onclick="togglePlacesMapLayer('all')"
+              >
+                <i class="fas fa-layer-group"></i>
+                <span>Show All</span>
+              </div>
+              <div
+                class="map-toggle"
+                onclick="togglePlacesMapLayer('verified')"
+              >
+                <i class="fas fa-check-circle"></i>
+                <span>Verified Only</span>
+              </div>
+              <div class="map-toggle" onclick="togglePlacesMapLayer('pending')">
+                <i class="fas fa-clock"></i>
+                <span>Pending Only</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <div class="table-header">
+              <div style="font-size: 14px; color: var(--gray-600)">
+                Showing <span id="placesCount">0</span> places
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Search places..."
+                  style="
+                    padding: 8px 12px;
+                    border: 2px solid var(--gray-200);
+                    border-radius: 8px;
+                    font-size: 14px;
+                  "
+                  onkeyup="searchPlaces(this.value)"
+                />
+              </div>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Place</th>
+                  <th>Type</th>
+                  <th>Location</th>
+                  <th>Rating</th>
+                  <th>Status</th>
+                  <th>Added</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="placesTable">
+                <!-- Places will be loaded here -->
+              </tbody>
+            </table>
+
+            <div class="empty-state" id="noPlaces" style="display: none">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>No places found</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Add Place Section -->
+        <section id="add-place" class="section">
+          <div class="section-header">
+            <h2>Add New Place</h2>
+            <p style="color: var(--gray-600)">
+              Add a new laptop-friendly place to the system
+            </p>
+          </div>
+
+          <!-- Location Search Section -->
+          <div class="location-search-container">
+            <div class="form-container">
+              <div class="form-group">
+                <label for="placeNameSearch">Search for Place Location *</label>
+                <div class="location-search-box">
+                  <input
+                    type="text"
+                    id="placeNameSearch"
+                    placeholder="e.g., Tomoca Coffee, Addis Ababa"
+                    style="flex: 1"
+                  />
+                  <button
+                    type="button"
+                    class="btn-primary"
+                    onclick="searchPlaceLocation()"
+                    style="padding: 12px 20px"
+                  >
+                    <i class="fas fa-search"></i> Search
+                  </button>
+                </div>
+                <div id="locationResults" class="location-results"></div>
+                <div id="selectedLocation" class="selected-location">
+                  <p>
+                    <strong>Selected Location:</strong>
+                    <span id="selectedLocationName"></span>
+                  </p>
+                  <p>
+                    <strong>Coordinates:</strong>
+                    <span id="selectedCoordinates"></span>
+                  </p>
+                  <div class="location-actions">
+                    <button
+                      class="btn-primary"
+                      onclick="confirmLocationSelection()"
+                    >
+                      <i class="fas fa-check"></i> Use This Location
+                    </button>
+                    <button
+                      class="action-btn btn-edit"
+                      onclick="openMapForLocationAdjustment()"
+                    >
+                      <i class="fas fa-map-marker-alt"></i> Adjust on Map
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Place Form -->
+          <div class="form-container" id="addPlaceFormContainer">
+            <form id="addPlaceForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="placeName">Place Name *</label>
+                  <input
+                    type="text"
+                    id="placeName"
+                    required
+                    placeholder="e.g., Tomoca Coffee"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="placeType">Place Type *</label>
+                  <select id="placeType" required>
+                    <option value="">Select type</option>
+                    <option value="cafe">Cafe</option>
+                    <option value="restaurant">Restaurant</option>
+                    <option value="hotel">Hotel</option>
+                    <option value="library">Library</option>
+                    <option value="coworking">Co-working Space</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="location">Location Address *</label>
+                  <input
+                    type="text"
+                    id="location"
+                    required
+                    placeholder="e.g., Bole, Addis Ababa"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="rating">Rating * (out of 5)</label>
+                  <div class="rating-input">
+                    <div class="stars" data-value="1">★</div>
+                    <div class="stars" data-value="2">★</div>
+                    <div class="stars" data-value="3">★</div>
+                    <div class="stars" data-value="4">★</div>
+                    <div class="stars" data-value="5">★</div>
+                    <span id="ratingValue">3.0</span>
+                    <input type="hidden" id="rating" value="3.0" required />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hidden latitude and longitude fields -->
+              <input type="hidden" id="latitude" value="" />
+              <input type="hidden" id="longitude" value="" />
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="wifiSpeed">WiFi Speed *</label>
+                  <select id="wifiSpeed" required>
+                    <option value="">Select WiFi speed</option>
+                    <option value="Very Fast">Very Fast (100+ Mbps)</option>
+                    <option value="Fast">Fast (50-100 Mbps)</option>
+                    <option value="Medium">Medium (20-50 Mbps)</option>
+                    <option value="Slow">Slow (&lt;20 Mbps)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="powerOutlets">Power Outlets *</label>
+                  <select id="powerOutlets" required>
+                    <option value="">Select availability</option>
+                    <option value="Plentiful">Plentiful (every table)</option>
+                    <option value="Available">Available</option>
+                    <option value="Limited">Limited</option>
+                    <option value="None">None</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="noiseLevel">Noise Level *</label>
+                  <select id="noiseLevel" required>
+                    <option value="">Select noise level</option>
+                    <option value="Quiet">Quiet</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Busy">Busy</option>
+                    <option value="Noisy">Very Noisy</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="contributor">Added By (Contributor)</label>
+                  <select id="contributor">
+                    <option value="">Select contributor (optional)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description *</label>
+                <textarea
+                  id="description"
+                  required
+                  placeholder="Describe the place, amenities, and why it's laptop-friendly..."
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="imageUrl">Image URL *</label>
+                <input
+                  type="text"
+                  id="imageUrl"
+                  required
+                  placeholder="Paste image URL here"
+                />
+                <small style="color: var(--gray-600); font-size: 13px"
+                  >Example:
+                  https://images.unsplash.com/photo-1498804103079...</small
+                >
+              </div>
+
+              <div style="display: flex; gap: 15px; margin-top: 30px">
+                <button
+                  type="submit"
+                  class="btn-primary"
+                  style="padding: 14px 30px"
+                >
+                  <i class="fas fa-plus"></i> Add Place
+                </button>
+                <button
+                  type="button"
+                  onclick="resetForm()"
+                  style="
+                    padding: 14px 30px;
+                    background: var(--gray-200);
+                    color: var(--gray-700);
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                  "
+                >
+                  Reset Form
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Reported Section -->
+        <section id="reported" class="section">
+          <div class="section-header">
+            <h2>Reported Issues</h2>
+          </div>
+
+          <!-- Reported Places Map -->
+          <div class="map-container">
+            <h3>Reported Places Map</h3>
+            <div id="reportedMap"></div>
+            <div class="map-controls">
+              <div
+                class="map-toggle active"
+                onclick="toggleReportedMapLayer('all')"
+              >
+                <i class="fas fa-layer-group"></i>
+                <span>All Reported</span>
+              </div>
+              <div
+                class="map-toggle"
+                onclick="toggleReportedMapLayer('pending')"
+              >
+                <i class="fas fa-clock"></i>
+                <span>Pending Only</span>
+              </div>
+              <div
+                class="map-toggle"
+                onclick="toggleReportedMapLayer('resolved')"
+              >
+                <i class="fas fa-check-circle"></i>
+                <span>Resolved Only</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Place</th>
+                  <th>Issue Type</th>
+                  <th>Reported By</th>
+                  <th>Proof Image</th>
+                  <th>Reported On</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="reportedTable">
+                <!-- Reported issues will be loaded here -->
+              </tbody>
+            </table>
+
+            <div class="empty-state" id="noReports" style="display: none">
+              <i class="fas fa-flag"></i>
+              <p>No reported issues</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contributors Section -->
+        <section id="contributors" class="section">
+          <div class="section-header">
+            <h2>Contributors</h2>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Places Added</th>
+                  <th>Places Details</th>
+                  <th>Joined</th>
+                </tr>
+              </thead>
+              <tbody id="contributorsTable">
+                <!-- Contributors will be loaded here -->
+              </tbody>
+            </table>
+
+            <div class="empty-state" id="noContributors" style="display: none">
+              <i class="fas fa-users"></i>
+              <p>No contributors yet</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Modal for Viewing Place -->
+    <div id="placeModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Place Details</h3>
+          <button class="logout-btn" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="placeModalBody">
+          <!-- Content will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Viewing Report Details -->
+    <div id="reportModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Report Details</h3>
+          <button class="logout-btn" onclick="closeReportModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" id="reportModalBody">
+          <!-- Content will be loaded here -->
+        </div>
+        <div class="modal-footer">
+          <button class="action-btn btn-approve" onclick="approveReport()">
+            <i class="fas fa-check"></i> Approve Report
+          </button>
+          <button class="action-btn btn-reject" onclick="rejectReport()">
+            <i class="fas fa-times"></i> Reject Report
+          </button>
+          <button
+            class="logout-btn"
+            onclick="closeReportModal()"
+            style="
+              background: var(--gray-200);
+              padding: 10px 20px;
+              border-radius: 8px;
+            "
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Map Location Adjustment -->
+    <div id="mapModal" class="modal map-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Adjust Location on Map</h3>
+          <button class="logout-btn" onclick="closeMapModal()">&times;</button>
+        </div>
+        <div class="modal-body map-modal-body">
+          <div class="map-modal-instructions">
+            <h4>Instructions</h4>
+            <p>1. Search for a location using the search box</p>
+            <p>2. Click anywhere on the map to set the marker</p>
+            <p>3. Drag the marker to adjust the location</p>
+            <p>4. Click "Confirm Location" when done</p>
+          </div>
+          <div class="map-modal-controls">
+            <div class="location-search-box">
+              <input
+                type="text"
+                id="mapSearchBox"
+                placeholder="Search for location..."
+              />
+              <button
+                class="btn-primary"
+                onclick="searchOnMap()"
+                style="padding: 10px"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            <div id="mapSearchResults" class="location-results"></div>
+            <div
+              class="selected-location"
+              id="mapSelectedLocation"
+              style="margin-top: 10px"
+            >
+              <p>
+                <strong>Selected:</strong> <span id="mapLocationName"></span>
+              </p>
+              <p>
+                <strong>Coordinates:</strong> <span id="mapCoordinates"></span>
+              </p>
+            </div>
+            <button
+              class="btn-primary"
+              onclick="confirmMapLocation()"
+              style="width: 100%; margin-top: 10px"
+            >
+              <i class="fas fa-check"></i> Confirm Location
+            </button>
+          </div>
+          <div id="adjustmentMap" style="width: 100%; height: 100%"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

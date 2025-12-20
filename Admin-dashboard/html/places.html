@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Places Management - Laptop Friendly Finder</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD_JBz46CTr9MEOT2rdiYs0d8tZyRRTR4&libraries=places"></script>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+      <div class="loader">
+        <div class="loader-circle"></div>
+        <div>Loading Places...</div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Logo -->
+      <div class="sidebar-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <div class="logo-text">
+            <h2>LFF Admin</h2>
+            <p>Dashboard v1.0</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item">
+          <i class="fas fa-tachometer-alt nav-icon"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="places.html" class="nav-item active">
+          <i class="fas fa-map-marker-alt nav-icon"></i>
+          <span>Places</span>
+          <span class="nav-badge" id="placesBadge">0</span>
+        </a>
+
+        <a href="add-place.html" class="nav-item">
+          <i class="fas fa-plus-circle nav-icon"></i>
+          <span>Add Place</span>
+        </a>
+
+        <a href="reported.html" class="nav-item">
+          <i class="fas fa-flag nav-icon"></i>
+          <span>Reported</span>
+          <span class="nav-badge" id="reportedBadge">0</span>
+        </a>
+
+        <a href="contributors.html" class="nav-item">
+          <i class="fas fa-users nav-icon"></i>
+          <span>Contributors</span>
+        </a>
+      </nav>
+
+      <!-- User Profile -->
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <div class="user-info">
+            <h4 id="adminName">Admin User</h4>
+            <p>Super Admin</p>
+          </div>
+          <button class="logout-btn" onclick="logout()" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="page-title">
+          <h1 id="pageTitle">Places Management</h1>
+          <div class="breadcrumb" id="breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <i class="fas fa-chevron-right"></i>
+            <span id="breadcrumbCurrent">Places</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearch" placeholder="Search..." />
+          </div>
+
+          <button class="btn-primary" onclick="refreshData()">
+            <i class="fas fa-sync-alt"></i>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Places Section -->
+        <section id="places" class="section active">
+          <div class="section-header">
+            <h2>All Places</h2>
+            <div class="table-filters">
+              <button class="filter-btn active" onclick="filterPlaces('all')">
+                All
+              </button>
+              <button class="filter-btn" onclick="filterPlaces('verified')">
+                Verified
+              </button>
+              <button class="filter-btn" onclick="filterPlaces('pending')">
+                Pending
+              </button>
+            </div>
+          </div>
+
+          <!-- Places Map -->
+          <div class="map-container">
+            <h3>Places Map View</h3>
+            <div id="placesMap"></div>
+            <div class="map-controls">
+              <div
+                class="map-toggle active"
+                onclick="togglePlacesMapLayer('all')"
+              >
+                <i class="fas fa-layer-group"></i>
+                <span>Show All</span>
+              </div>
+              <div
+                class="map-toggle"
+                onclick="togglePlacesMapLayer('verified')"
+              >
+                <i class="fas fa-check-circle"></i>
+                <span>Verified Only</span>
+              </div>
+              <div class="map-toggle" onclick="togglePlacesMapLayer('pending')">
+                <i class="fas fa-clock"></i>
+                <span>Pending Only</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <div class="table-header">
+              <div style="font-size: 14px; color: var(--gray-600)">
+                Showing <span id="placesCount">0</span> places
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Search places..."
+                  style="
+                    padding: 8px 12px;
+                    border: 2px solid var(--gray-200);
+                    border-radius: 8px;
+                    font-size: 14px;
+                  "
+                  onkeyup="searchPlaces(this.value)"
+                />
+              </div>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Place</th>
+                  <th>Type</th>
+                  <th>Location</th>
+                  <th>Rating</th>
+                  <th>Status</th>
+                  <th>Added</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="placesTable">
+                <!-- Places will be loaded here -->
+              </tbody>
+            </table>
+
+            <div class="empty-state" id="noPlaces" style="display: none">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>No places found</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Modal for Viewing Place -->
+    <div id="placeModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Place Details</h3>
+          <button class="logout-btn" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="placeModalBody">
+          <!-- Content will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/database.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/maps.js"></script>
+    <script src="../js/places.js"></script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - Laptop Friendly Finder</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../css/login-admin.css" />
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-card">
+        <div class="logo">
+          <i class="fas fa-laptop-code"></i>
+          <h1>Laptop Friendly Finder</h1>
+          <p>Admin Dashboard</p>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <div class="input-with-icon">
+              <i class="fas fa-user"></i>
+              <input
+                type="text"
+                id="username"
+                placeholder="Enter admin username"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-with-icon">
+              <i class="fas fa-lock"></i>
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter admin password"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" class="login-btn">
+            <span>Sign In</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+
+          <div id="errorMessage" class="error-message"></div>
+        </form>
+
+        <div class="demo-credentials">
+          <p><strong>Demo Credentials</strong></p>
+          <div class="credential">
+            <span>Username:</span>
+            <span>admin</span>
+          </div>
+          <div class="credential">
+            <span>Password:</span>
+            <span>admin123</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/login-admin.js"></script>
+  </body>
+</html>
