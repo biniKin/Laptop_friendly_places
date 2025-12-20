@@ -60,133 +60,24 @@
           
             <div class="tabs-section">
                 <div class="tabs">
-                    <button class="tab active">New</button>
-                    <button class="tab">Popular</button>
-                    <button class="tab" id="all-tab">All</button>
+                    <button class="tab active" data-target="all">All</button>
+                    <button class="tab" data-target="new">New</button>
+                    <button class="tab" data-target="popular">Popular</button>
+                    
                 </div>
             </div>
+
+            <div id="loading" class="loading">
+              <i class="fa-solid fa-spinner"></i>
+              <span>Loading places...</span>
+            </div>
+
 
           
-            <div class="cards-grid places-container">
-                <!-- <div class="cards-grid places-container"></div> -->
+            <div id="all" class="cards-grid places-container"></div>
+            <div id="new" class="cards-grid places-container hidden"></div>
+            <div id="popular" class="cards-grid places-container hidden"></div>
 
-                <!-- <div class="place-card"> -->
-                    <!-- <div class="place-image">
-                        <img src="../assets/images/cafe1.jpg" alt="Caravan Cafe">
-                        <button class="favorite-btn">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="place-info">
-                        <h3>Caravan Cafe</h3>
-                        <div class="place-rating">
-                            <i class="fa-solid fa-star"></i> 4.5
-                        </div>
-                        <div class="place-features">
-                            <span class="feature"><i class="fa-solid fa-wifi"></i> Excellent</span>
-                            <span class="feature"><i class="fa-solid fa-plug"></i> Good</span>
-                        </div>
-                        <p class="place-address">Bole, Addis Ababa</p>
-                    </div> -->
-                <!-- </div> -->
-
-
-                <!-- <div class="place-card">
-                    <div class="place-image">
-                        <img src="../assets/images/cafe2.jpg" alt="Science Cafe">
-                        <button class="favorite-btn">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="place-info">
-                        <h3>Science Cafe</h3>
-                        <div class="place-rating">
-                            <i class="fa-solid fa-star"></i> 4.5
-                        </div>
-                        <div class="place-features">
-                            <span class="feature"><i class="fa-solid fa-wifi"></i> Excellent</span>
-                            <span class="feature"><i class="fa-solid fa-plug"></i> Good</span>
-                        </div>
-                        <p class="place-address">Piazza, Addis Ababa</p>
-                    </div>
-                </div>
-               <div class="place-card">
-                    <div class="place-image">
-                        <img src="../assets/images/cafe3.jpg" alt="Tech Cafe">
-                        <button class="favorite-btn">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="place-info">
-                        <h3>Tech cafe</h3>
-                        <div class="place-rating">
-                            <i class="fa-solid fa-star"></i> 4.5
-                        </div>
-                        <div class="place-features">
-                            <span class="feature"><i class="fa-solid fa-wifi"></i> Excellent</span>
-                            <span class="feature"><i class="fa-solid fa-plug"></i> Good</span>
-                        </div>
-                        <p class="place-address">Piazza, Addis Ababa</p>
-                    </div>
-                </div> -->
-               <!-- <div class="place-card">
-                    <div class="place-image">
-                        <img src="../assets/images/cafe1.jpg" alt="Angela Cafe">
-                        <button class="favorite-btn">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="place-info">
-                        <h3>Angela Cafe</h3>
-                        <div class="place-rating">
-                            <i class="fa-solid fa-star"></i> 4.5
-                        </div>
-                        <div class="place-features">
-                            <span class="feature"><i class="fa-solid fa-wifi"></i> Excellent</span>
-                            <span class="feature"><i class="fa-solid fa-plug"></i> Good</span>
-                        </div>
-                        <p class="place-address">Piazza, Addis Ababa</p>
-                    </div>
-                </div> -->
-               <!-- <div class="place-card">
-                    <div class="place-image">
-                        <img src="../assets/images/cafe2.jpg" alt="AASTU Cafe">
-                        <button class="favorite-btn">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="place-info">
-                        <h3>AASTU Cafe</h3>
-                        <div class="place-rating">
-                            <i class="fa-solid fa-star"></i> 4.5
-                        </div>
-                        <div class="place-features">
-                            <span class="feature"><i class="fa-solid fa-wifi"></i> Excellent</span>
-                            <span class="feature"><i class="fa-solid fa-plug"></i> Good</span>
-                        </div>
-                        <p class="place-address">Piazza, Addis Ababa</p>
-                    </div>
-                </div> -->
-               <!-- <div class="place-card">
-                    <div class="place-image">
-                        <img src="../assets/images/cafe3.jpg" alt="AAU cafe">
-                        <button class="favorite-btn">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="place-info">
-                        <h3>AAU Cafe</h3>
-                        <div class="place-rating">
-                            <i class="fa-solid fa-star"></i> 4.5
-                        </div>
-                        <div class="place-features">
-                            <span class="feature"><i class="fa-solid fa-wifi"></i> Excellent</span>
-                            <span class="feature"><i class="fa-solid fa-plug"></i> Good</span>
-                        </div>
-                        <p class="place-address">Piazza, Addis Ababa</p>
-                    </div> -->
-                </div>
-            </div>
         </main>
     </div>
     <script type="module" src="../js/places.js"></script>

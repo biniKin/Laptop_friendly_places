@@ -1,0 +1,5 @@
+# Ignore Firebase config
+js/firebase/config.js
+
+# supabase
+js/supabase/client.js
