@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Places Management - Laptop Friendly Finder</title>
+    <title>Add New Place - Laptop Friendly Finder</title>
     <link rel="stylesheet" href="../css/styles.css" />
     <link
       rel="stylesheet"
@@ -16,7 +16,7 @@
     <div id="loadingScreen">
       <div class="loader">
         <div class="loader-circle"></div>
-        <div>Loading Places...</div>
+        <div>Loading Add Place...</div>
       </div>
     </div>
 
@@ -42,13 +42,13 @@
           <span>Dashboard</span>
         </a>
 
-        <a href="places.html" class="nav-item active">
+        <a href="places.html" class="nav-item">
           <i class="fas fa-map-marker-alt nav-icon"></i>
           <span>Places</span>
           <span class="nav-badge" id="placesBadge">0</span>
         </a>
 
-        <a href="add-place.html" class="nav-item">
+        <a href="add-place.html" class="nav-item active">
           <i class="fas fa-plus-circle nav-icon"></i>
           <span>Add Place</span>
         </a>
@@ -83,11 +83,312 @@
     </aside>
 
     <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="page-title">
+          <h1 id="pageTitle">Add New Place</h1>
+          <div class="breadcrumb" id="breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <i class="fas fa-chevron-right"></i>
+            <span id="breadcrumbCurrent">Add Place</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearch" placeholder="Search..." />
+          </div>
+
+          <button class="btn-primary" onclick="refreshData()">
+            <i class="fas fa-sync-alt"></i>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Add Place Section -->
+        <section id="add-place" class="section active">
+          <div class="section-header">
+            <h2>Add New Place</h2>
+            <p style="color: var(--gray-600)">
+              Add a new laptop-friendly place to the system
+            </p>
+          </div>
+
+          <!-- Location Search Section -->
+          <div class="location-search-container">
+            <div class="form-container">
+              <div class="form-group">
+                <label for="placeNameSearch">Search for Place Location *</label>
+                <div class="location-search-box">
+                  <input
+                    type="text"
+                    id="placeNameSearch"
+                    placeholder="e.g., Tomoca Coffee, Addis Ababa"
+                    style="flex: 1"
+                  />
+                  <button
+                    type="button"
+                    class="btn-primary"
+                    onclick="searchPlaceLocation()"
+                    style="padding: 12px 20px"
+                  >
+                    <i class="fas fa-search"></i> Search
+                  </button>
+                </div>
+                <div id="locationResults" class="location-results"></div>
+                <div id="selectedLocation" class="selected-location">
+                  <p>
+                    <strong>Selected Location:</strong>
+                    <span id="selectedLocationName"></span>
+                  </p>
+                  <p>
+                    <strong>Coordinates:</strong>
+                    <span id="selectedCoordinates"></span>
+                  </p>
+                  <div class="location-actions">
+                    <button
+                      class="btn-primary"
+                      onclick="confirmLocationSelection()"
+                    >
+                      <i class="fas fa-check"></i> Use This Location
+                    </button>
+                    <button
+                      class="action-btn btn-edit"
+                      onclick="openMapForLocationAdjustment()"
+                    >
+                      <i class="fas fa-map-marker-alt"></i> Adjust on Map
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Place Form -->
+          <div class="form-container" id="addPlaceFormContainer">
+            <form id="addPlaceForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="placeName">Place Name *</label>
+                  <input
+                    type="text"
+                    id="placeName"
+                    required
+                    placeholder="e.g., Tomoca Coffee"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="placeType">Place Type *</label>
+                  <select id="placeType" required>
+                    <option value="">Select type</option>
+                    <option value="cafe">Cafe</option>
+                    <option value="restaurant">Restaurant</option>
+                    <option value="hotel">Hotel</option>
+                    <option value="library">Library</option>
+                    <option value="coworking">Co-working Space</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="location">Location Address *</label>
+                  <input
+                    type="text"
+                    id="location"
+                    required
+                    placeholder="e.g., Bole, Addis Ababa"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="rating">Rating * (out of 5)</label>
+                  <div class="rating-input">
+                    <div class="stars" data-value="1">★</div>
+                    <div class="stars" data-value="2">★</div>
+                    <div class="stars" data-value="3">★</div>
+                    <div class="stars" data-value="4">★</div>
+                    <div class="stars" data-value="5">★</div>
+                    <span id="ratingValue">3.0</span>
+                    <input type="hidden" id="rating" value="3.0" required />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hidden latitude and longitude fields -->
+              <input type="hidden" id="latitude" value="" />
+              <input type="hidden" id="longitude" value="" />
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="wifiSpeed">WiFi Speed *</label>
+                  <select id="wifiSpeed" required>
+                    <option value="">Select WiFi speed</option>
+                    <option value="Very Fast">Very Fast (100+ Mbps)</option>
+                    <option value="Fast">Fast (50-100 Mbps)</option>
+                    <option value="Medium">Medium (20-50 Mbps)</option>
+                    <option value="Slow">Slow (&lt;20 Mbps)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="powerOutlets">Power Outlets *</label>
+                  <select id="powerOutlets" required>
+                    <option value="">Select availability</option>
+                    <option value="Plentiful">Plentiful (every table)</option>
+                    <option value="Available">Available</option>
+                    <option value="Limited">Limited</option>
+                    <option value="None">None</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="noiseLevel">Noise Level *</label>
+                  <select id="noiseLevel" required>
+                    <option value="">Select noise level</option>
+                    <option value="Quiet">Quiet</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Busy">Busy</option>
+                    <option value="Noisy">Very Noisy</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="contributor">Added By (Contributor)</label>
+                  <select id="contributor">
+                    <option value="">Select contributor (optional)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description *</label>
+                <textarea
+                  id="description"
+                  required
+                  placeholder="Describe the place, amenities, and why it's laptop-friendly..."
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="imageUrl">Image URL *</label>
+                <input
+                  type="text"
+                  id="imageUrl"
+                  required
+                  placeholder="Paste image URL here"
+                />
+                <small style="color: var(--gray-600); font-size: 13px"
+                  >Example:
+                  https://images.unsplash.com/photo-1498804103079...</small
+                >
+              </div>
+
+              <div style="display: flex; gap: 15px; margin-top: 30px">
+                <button
+                  type="submit"
+                  class="btn-primary"
+                  style="padding: 14px 30px"
+                >
+                  <i class="fas fa-plus"></i> Add Place
+                </button>
+                <button
+                  type="button"
+                  onclick="resetForm()"
+                  style="
+                    padding: 14px 30px;
+                    background: var(--gray-200);
+                    color: var(--gray-700);
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                  "
+                >
+                  Reset Form
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Modal for Map Location Adjustment -->
+    <div id="mapModal" class="modal map-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Adjust Location on Map</h3>
+          <button class="logout-btn" onclick="closeMapModal()">&times;</button>
+        </div>
+        <div class="modal-body map-modal-body">
+          <div class="map-modal-instructions">
+            <h4>Instructions</h4>
+            <p>1. Search for a location using the search box</p>
+            <p>2. Click anywhere on the map to set the marker</p>
+            <p>3. Drag the marker to adjust the location</p>
+            <p>4. Click "Confirm Location" when done</p>
+          </div>
+          <div class="map-modal-controls">
+            <div class="location-search-box">
+              <input
+                type="text"
+                id="mapSearchBox"
+                placeholder="Search for location..."
+              />
+              <button
+                class="btn-primary"
+                onclick="searchOnMap()"
+                style="padding: 10px"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            <div id="mapSearchResults" class="location-results"></div>
+            <div
+              class="selected-location"
+              id="mapSelectedLocation"
+              style="margin-top: 10px"
+            >
+              <p>
+                <strong>Selected:</strong> <span id="mapLocationName"></span>
+              </p>
+              <p>
+                <strong>Coordinates:</strong> <span id="mapCoordinates"></span>
+              </p>
+            </div>
+            <button
+              class="btn-primary"
+              onclick="confirmMapLocation()"
+              style="width: 100%; margin-top: 10px"
+            >
+              <i class="fas fa-check"></i> Confirm Location
+            </button>
+          </div>
+          <div id="adjustmentMap" style="width: 100%; height: 100%"></div>
+        </div>
+      </div>
+    </div>
 
     <!-- JavaScript Files -->
-    <script src="js/database.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/maps.js"></script>
-    <script src="js/places.js"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/maps.js"></script>
+    <script src="../js/add-place.js"></script>
   </body>
 </html>

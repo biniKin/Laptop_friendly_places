@@ -3,20 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Places Management - Laptop Friendly Finder</title>
+    <title>Contributors - Laptop Friendly Finder</title>
     <link rel="stylesheet" href="../css/styles.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD_JBz46CTr9MEOT2rdiYs0d8tZyRRTR4&libraries=places"></script>
   </head>
   <body>
     <!-- Loading Screen -->
     <div id="loadingScreen">
       <div class="loader">
         <div class="loader-circle"></div>
-        <div>Loading Places...</div>
+        <div>Loading Contributors...</div>
       </div>
     </div>
 
@@ -42,7 +41,7 @@
           <span>Dashboard</span>
         </a>
 
-        <a href="places.html" class="nav-item active">
+        <a href="places.html" class="nav-item">
           <i class="fas fa-map-marker-alt nav-icon"></i>
           <span>Places</span>
           <span class="nav-badge" id="placesBadge">0</span>
@@ -59,7 +58,7 @@
           <span class="nav-badge" id="reportedBadge">0</span>
         </a>
 
-        <a href="contributors.html" class="nav-item">
+        <a href="contributors.html" class="nav-item active">
           <i class="fas fa-users nav-icon"></i>
           <span>Contributors</span>
         </a>
@@ -83,11 +82,74 @@
     </aside>
 
     <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="page-title">
+          <h1 id="pageTitle">Contributors</h1>
+          <div class="breadcrumb" id="breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <i class="fas fa-chevron-right"></i>
+            <span id="breadcrumbCurrent">Contributors</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearch" placeholder="Search..." />
+          </div>
+
+          <button class="btn-primary" onclick="refreshData()">
+            <i class="fas fa-sync-alt"></i>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Contributors Section -->
+        <section id="contributors" class="section active">
+          <div class="section-header">
+            <h2>Contributors</h2>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Places Added</th>
+                  <th>Places Details</th>
+                  <th>Joined</th>
+                </tr>
+              </thead>
+              <tbody id="contributorsTable">
+                <!-- Contributors will be loaded here -->
+              </tbody>
+            </table>
+
+            <div class="empty-state" id="noContributors" style="display: none">
+              <i class="fas fa-users"></i>
+              <p>No contributors yet</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
 
     <!-- JavaScript Files -->
-    <script src="js/database.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/maps.js"></script>
-    <script src="js/places.js"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/contributors.js"></script>
   </body>
 </html>

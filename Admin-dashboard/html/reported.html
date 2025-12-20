@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Places Management - Laptop Friendly Finder</title>
+    <title>Reported Issues - Laptop Friendly Finder</title>
     <link rel="stylesheet" href="../css/styles.css" />
     <link
       rel="stylesheet"
@@ -16,7 +16,7 @@
     <div id="loadingScreen">
       <div class="loader">
         <div class="loader-circle"></div>
-        <div>Loading Places...</div>
+        <div>Loading Reported Issues...</div>
       </div>
     </div>
 
@@ -42,7 +42,7 @@
           <span>Dashboard</span>
         </a>
 
-        <a href="places.html" class="nav-item active">
+        <a href="places.html" class="nav-item">
           <i class="fas fa-map-marker-alt nav-icon"></i>
           <span>Places</span>
           <span class="nav-badge" id="placesBadge">0</span>
@@ -53,7 +53,7 @@
           <span>Add Place</span>
         </a>
 
-        <a href="reported.html" class="nav-item">
+        <a href="reported.html" class="nav-item active">
           <i class="fas fa-flag nav-icon"></i>
           <span>Reported</span>
           <span class="nav-badge" id="reportedBadge">0</span>
@@ -83,11 +83,140 @@
     </aside>
 
     <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="page-title">
+          <h1 id="pageTitle">Reported Issues</h1>
+          <div class="breadcrumb" id="breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <i class="fas fa-chevron-right"></i>
+            <span id="breadcrumbCurrent">Reports</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearch" placeholder="Search..." />
+          </div>
+
+          <button class="btn-primary" onclick="refreshData()">
+            <i class="fas fa-sync-alt"></i>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Reported Section -->
+        <section id="reported" class="section active">
+          <div class="section-header">
+            <h2>Reported Issues</h2>
+          </div>
+
+          <!-- Reported Places Map -->
+          <div class="map-container">
+            <h3>Reported Places Map</h3>
+            <div id="reportedMap"></div>
+            <div class="map-controls">
+              <div
+                class="map-toggle active"
+                onclick="toggleReportedMapLayer('all')"
+              >
+                <i class="fas fa-layer-group"></i>
+                <span>All Reported</span>
+              </div>
+              <div
+                class="map-toggle"
+                onclick="toggleReportedMapLayer('pending')"
+              >
+                <i class="fas fa-clock"></i>
+                <span>Pending Only</span>
+              </div>
+              <div
+                class="map-toggle"
+                onclick="toggleReportedMapLayer('resolved')"
+              >
+                <i class="fas fa-check-circle"></i>
+                <span>Resolved Only</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Place</th>
+                  <th>Issue Type</th>
+                  <th>Reported By</th>
+                  <th>Proof Image</th>
+                  <th>Reported On</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="reportedTable">
+                <!-- Reported issues will be loaded here -->
+              </tbody>
+            </table>
+
+            <div class="empty-state" id="noReports" style="display: none">
+              <i class="fas fa-flag"></i>
+              <p>No reported issues</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Modal for Viewing Report Details -->
+    <div id="reportModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Report Details</h3>
+          <button class="logout-btn" onclick="closeReportModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" id="reportModalBody">
+          <!-- Content will be loaded here -->
+        </div>
+        <div class="modal-footer">
+          <button class="action-btn btn-approve" onclick="approveReport()">
+            <i class="fas fa-check"></i> Approve Report
+          </button>
+          <button class="action-btn btn-reject" onclick="rejectReport()">
+            <i class="fas fa-times"></i> Reject Report
+          </button>
+          <button
+            class="logout-btn"
+            onclick="closeReportModal()"
+            style="
+              background: var(--gray-200);
+              padding: 10px 20px;
+              border-radius: 8px;
+            "
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- JavaScript Files -->
-    <script src="js/database.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/maps.js"></script>
-    <script src="js/places.js"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/maps.js"></script>
+    <script src="../js/reported.js"></script>
   </body>
 </html>
