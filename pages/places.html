@@ -78,6 +78,35 @@
             <div id="new" class="cards-grid places-container hidden"></div>
             <div id="popular" class="cards-grid places-container hidden"></div>
 
+
+            <div class="modal hidden" id="reportModal">
+  <div class="modal-content">
+    <h3>Report Place</h3>
+
+    <form id="reportForm">
+
+      <label for="issueType">Issue Type:</label>
+      <select id="issueType" name="issueType" required>
+        <option value="" disabled selected>Select an issue</option>
+        <option value="incorrect_info">Incorrect Information</option>
+        <option value="spam">Spam / Fake</option>
+        <option value="inappropriate_content">Inappropriate Content</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="desc">Description:</label>
+      <textarea id="desc" placeholder="Describe the issue..." required></textarea>
+
+      <div class="modal-actions">
+        <button type="submit" class="submit-btn">Submit</button>
+        <button type="button" id="closeModal" class="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
         </main>
     </div>
     <script type="module" src="../js/places.js"></script>

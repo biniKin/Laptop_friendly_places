@@ -780,6 +780,8 @@ body {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s;
     cursor: pointer;
+    display: flex;              /* ✅ ADD */
+    flex-direction: column; 
 }
 
 .place-card:hover {
@@ -821,6 +823,9 @@ body {
 
 .place-info {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .place-info h3 {
@@ -858,7 +863,119 @@ body {
     font-size: 0.85rem;
     color: #777;
     margin: 0;
+    padding-bottom: 10px;
 }
+
+.card-actions{
+ 
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 12px;          /* footer spacing */
+    border-top: 1px solid #eee;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  color:  #30458A;
+  border: none;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-content h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+  text-align: center;
+}
+
+form label {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 4px;
+  display: block;
+}
+
+form select,
+form textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+form textarea {
+  min-height: 80px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.submit-btn {
+  background: #ff4757;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.submit-btn:hover {
+  background: #e84118;
+}
+
+.cancel-btn {
+  background: #ccc;
+  
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.cancel-btn:hover {
+  background: #aaa;
+}
+
+
 
 
 /* ===== FAVORITES PAGE STYLES ===== */
