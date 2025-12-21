@@ -1,23 +1,132 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="description"
-        content="Laptop friendly place is an app where you can get access to places that help you stay productive outdoor.">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="Map, Cafes for my pc, remote work">
-
-    <title>Laptop friendly places</title>
-    <link href="css/style.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/4137d3c4c5.js" crossorigin="anonymous"></script>
+    <title>LFP Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body>
-    <!-- the side bar will be here -->
-    
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-logo">
+                <img src="../assets/images/logo.svg" alt="LFP Logo">
+                <span>LFP</span>
+            </div>
+            
+            <div class="header-search">
+                <input type="text" placeholder="Search places...">
+                <i class="fa fa-search"></i>
+            </div>
+        </div>
+    </header>
 
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <ul class="nav-links">
+                <li class="active">
+                    <a href="home.html" title="Home">
+                        <i class="fa-solid fa-house"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="contribute-location.html" title="Contribute">
+                        <i class="fa-solid fa-users"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="places.html" title="Places">
+                        <i class="fa-solid fa-map"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="fav.html" title="Favorite">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-bottom">
+                <i class="fa-regular fa-sun" title="Theme"></i>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Stats Cards - Compact -->
+            <div class="stats">
+                <div class="card">
+                    <i class="fa-solid fa-map"></i>
+                    <div class="card-content">
+                        <h3>Total places</h3>
+                        <p>1,890</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <div class="card-content">
+                        <h3>New added</h3>
+                        <p>1,880</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <i class="fa-solid fa-people-group"></i>
+                    <div class="card-content">
+                        <h3>Contributors</h3>
+                        <p>50</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Section -->
+            <h2 class="title">Places around your area</h2>
+
+            <div class="map-section">
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3915.6181451994473!2d38.746802!3d9.010793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85c0e72c773f%3A0x4e4c5d25e36385fb!2sAddis%20Ababa!5e0!3m2!1sen!2sET!4v1700000000000!5m2!1sen!2sET"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <button class="view-btn">View more</button>
+                </div>
+
+                <!-- Places Summary -->
+                <div class="places-sidebar">
+                    <div class="places-category">
+                        <div class="category-header">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Total places</span>
+                        </div>
+                        <span class="category-count">50</span>
+                    </div>
+                    
+                    <div class="places-category">
+                        <div class="category-header">
+                            <i class="fa-solid fa-mug-saucer"></i>
+                            <span>Cafe</span>
+                        </div>
+                        <span class="category-count">5</span>
+                    </div>
+                    
+                    <div class="places-category">
+                        <div class="category-header">
+                            <i class="fa-solid fa-hotel"></i>
+                            <span>Hotel</span>
+                        </div>
+                        <span class="category-count">2</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
-
 </html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Sign Up</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+</head>
+<body>
+    <div class="bg"></div>
+
+    <div class="container">
+        <div class="form-box glass">
+
+            <!-- LOGIN FORM -->
+            <form id="loginForm" class="form active">
+                <h2>Welcome Back</h2>
+
+                <input type="email" id="loginEmail" placeholder="Email">
+                <small class="error" id="loginEmailError"></small>
+
+                <div class="password-box">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                    <i class="fa-solid fa-eye toggle" data-target="loginPassword"></i>
+                </div>
+                <div class="msg" id="loginPasswordError"></div>
+
+                <button type="submit">
+                    <span class="btn-text">Login</span>
+                    <span class="spinner"></span>
+                </button>
+
+                <p class="switch">
+                    Don’t have an account?
+                    <span id="showSignup">Sign Up</span>
+                </p>
+            </form>
+
+            <!-- SIGN UP FORM -->
+            <form id="signupForm" class="form">
+                <h2>Create Account</h2>
+
+                <input type="text" id="signupName" placeholder="Full Name">
+                <small class="error" id="signupNameError"></small>
+
+                <input type="email" id="signupEmail" placeholder="Email">
+                <small class="error" id="signupEmailError"></small>
+
+                <div class="password-box">
+                    <input type="password" 
+        id="signupPassword" 
+        placeholder="Password"
+        minlength="8"
+        pattern="(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
+        title="Password must be at least 8 characters long and include at least one uppercase and one special character">
+                    <i class="fa-solid fa-eye toggle" data-target="signupPassword"></i>
+                </div>
+                <small class="error" id="signupPasswordError"></small>
+
+                <div class="password-box">
+                    <input type="password" id="signupConfirm" placeholder="Confirm Password">
+                    <i class="fa-solid fa-eye toggle" data-target="signupConfirm"></i>
+                </div>
+                <div class="msg" id="signupConfirmError"></div>
+
+                <button type="submit">
+                    <span class="btn-text">Sign Up</span>
+                    <span class="spinner"></span>
+                </button>
+               
+                
+                <p id="message"></p>
+
+                <p class="switch">
+                    Already have an account?
+                    <span id="showLogin">Login</span>
+                </p>
+            </form>
+
+        </div>
+    </div>
+<script type="module" src="../js/login.js"></script>
+</body>
+</html>

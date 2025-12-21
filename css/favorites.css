@@ -1,0 +1,14 @@
+body.dark-mode {
+  background-color: #0f172a;
+  color: #e5e7eb;
+}
+
+body.dark-mode .main-header,
+body.dark-mode .sidebar,
+body.dark-mode .favorite-card {
+  background-color: #020617;
+}
+
+body.dark-mode .favorite-card {
+  border-color: #1e293b;
+}
