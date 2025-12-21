@@ -704,10 +704,17 @@ body {
         min-height: 350px;
     }
 }
+
+
+
 /* Places Page Specific Styles */
 
 .tabs-section {
     margin-bottom: 1.5rem;
+}
+
+.hidden{
+    display: none;
 }
 
 .tabs {
@@ -738,6 +745,27 @@ body {
     color: white;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem;
+  color: #30458A;
+  font-weight: 500;
+}
+
+.loading i {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 /* Cards Grid */
 .cards-grid {
     display: grid;
@@ -751,6 +779,7 @@ body {
     overflow: hidden;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s;
+    cursor: pointer;
 }
 
 .place-card:hover {
@@ -822,6 +851,8 @@ body {
     font-size: 0.85rem;
     color: #555;
 }
+
+
 
 .place-address {
     font-size: 0.85rem;

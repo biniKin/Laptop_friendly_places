@@ -1,6 +1,19 @@
+import {auth, db} from "./firebase/init.js";
+import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+import {signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User already logged in → redirect
+    window.location.replace("home.html");
+  }
+});
+
 // Get forms
 const loginForm = document.getElementById("loginForm");
 const signupForm = document.getElementById("signupForm");
+
+
 function setError(id, message) {
     document.getElementById(id).innerText = message;
 }
@@ -27,7 +40,63 @@ function getUsers() {
 
 // Save users to localStorage (JSON)
 function saveUsers(users) {
+
     localStorage.setItem("users", JSON.stringify(users));
+}
+
+const signUp = async (name, email, password) => {
+    const submitText = signupForm.querySelector(".btn-text");
+    const spinner = signupForm.querySelector(".spinner");
+    const msg = signupForm.querySelector(".msg");
+
+    submitText.style.display = "none";
+    spinner.style.display = "block";
+    try{
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCred.user;
+
+        await updateProfile(user, {
+            displayName: name
+        });
+
+        msg.innerText = "Succesfully logged in.";
+        console.log(user);
+    }catch(e){
+        console.log(`error on create user: ${e}`);
+    } finally{
+        submitText.style.display = "block";
+        spinner.style.display = "none"
+    }
+    
+}
+
+const logIn = async (email, password) => {
+    const submitText = loginForm.querySelector(".btn-text");
+    const spinner = loginForm.querySelector(".spinner");
+    const msg = loginForm.querySelector(".msg");
+    
+    if (!submitText || !spinner) {
+        console.error("Required DOM elements (submitText or spinner) were not found.");
+        return;
+    }
+    submitText.style.display = "none";
+    spinner.style.display = "block";
+
+    try{
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        // msg.innerText = "Succesfully logged in.";
+       
+        console.log(`user login successfully: ${user}`);
+    }catch(e){
+        msg.style.display = "block";
+        msg.style.color = "black";
+        msg.innerText = "Error";
+        console.log(`user login failed ${e}`);
+    } finally{
+        submitText.style.display = "block";
+        spinner.style.display = "none"
+    }
 }
 
 /* ================= SIGN UP ================= */
@@ -38,6 +107,7 @@ signupForm.addEventListener("submit", function (e) {
     const email = document.getElementById("signupEmail").value.trim();
     const password = document.getElementById("signupPassword").value;
     const confirm = document.getElementById("signupConfirm").value;
+    
 
     if (!name || !email || !password || !confirm) {
         alert("All fields are required!");
@@ -54,24 +124,26 @@ signupForm.addEventListener("submit", function (e) {
         return;
     }
 
-    let users = getUsers();
+    // let users = getUsers();
 
     // Check if email exists
-    const exists = users.some(user => user.email === email);
-    if (exists) {
-        alert("Email already registered");
-        return;
-    }
+    // const exists = users.some(user => user.email === email);
+    // if (exists) {
+    //     alert("Email already registered");
+    //     return;
+    // }
 
     // Save user
-    users.push({
-        name: name,
-        email: email,
-        password: password
-    });
+    // users.push({
+    //     name: name,
+    //     email: email,
+    //     password: password
+    // });
 
-    saveUsers(users);
-    alert("Account created successfully!");
+    // saveUsers(users);
+    
+    signUp(name, email, password);
+    
 
     signupForm.reset();
     signupForm.classList.remove("active");
@@ -84,23 +156,27 @@ loginForm.addEventListener("submit", function (e) {
 
     const email = document.getElementById("loginEmail").value.trim();
     const password = document.getElementById("loginPassword").value;
+    
 
     if (!email || !password) {
         alert("Please enter email and password");
         return;
     }
 
-    let users = getUsers();
+    // let users = getUsers();
 
-    const user = users.find(
-        user => user.email === email && user.password === password
-    );
+    // const user = users.find(
+    //     user => user.email === email && user.password === password
+    // );
 
-    if (user) {
-        alert(`Welcome ${user.name}!`);
-    } else {
-        alert("Invalid email or password");
-    }
+    // if (user) {
+    //     alert(`Welcome ${user.name}!`);
+    // } else {
+    //     alert("Invalid email or password");
+    // }
+
+    logIn(email, password,);
+
 
     loginForm.reset();
 });
