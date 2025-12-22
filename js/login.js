@@ -1,7 +1,11 @@
 import {auth, db} from "./firebase/init.js";
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
 import {signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
-
+import {
+  getDocs,
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // User already logged in → redirect
@@ -44,6 +48,27 @@ function saveUsers(users) {
     localStorage.setItem("users", JSON.stringify(users));
 }
 
+async function saveUserToFirestore(name, email) {
+    try {
+        console.log("User to save:");
+        console.log(`name: ${name}, email: ${email}`);
+    // reference to the 'reports' collection
+    const reportsCol = collection(db, "users");
+    
+    // add a new document
+    await addDoc(reportsCol, {
+      name: name,
+      email: email,
+      created_at: new Date(),
+    });
+
+    alert("Report submitted successfully!");
+  } catch (error) {
+    console.error("Error submitting report:", error);
+    alert("Failed to submit report. Try again.");
+  }
+}
+
 const signUp = async (name, email, password) => {
     const submitText = signupForm.querySelector(".btn-text");
     const spinner = signupForm.querySelector(".spinner");
@@ -61,6 +86,7 @@ const signUp = async (name, email, password) => {
 
         msg.innerText = "Succesfully logged in.";
         console.log(user);
+        await saveUserToFirestore(user.displayName, user.email);
     }catch(e){
         console.log(`error on create user: ${e}`);
     } finally{
