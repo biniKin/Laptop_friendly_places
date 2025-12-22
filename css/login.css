@@ -1,0 +1,174 @@
+/*login page css*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Background */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #8b51a1, #552d63, #8971ab);
+}
+
+.bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at top left, #00f5ff55, transparent 40%),
+        radial-gradient(circle at bottom right, #ff00ff55, transparent 40%);
+    z-index: -1;
+}
+
+/* Container */
+.container {
+    width: 380px;
+}
+
+/* Glass Card */
+.glass {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Forms */
+.form {
+    display: none;
+}
+
+.form.active {
+    display: block;
+}
+
+h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    outline: none;
+}
+
+input::placeholder {
+    color: #ddd;
+}
+
+/* Password Box */
+.password-box {
+    position: relative;
+}
+
+.password-box i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #00f5ff, #ff00ff);
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-text{
+    display: block;
+    align-items: center;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Switch Text */
+.switch {
+    text-align: center;
+    margin-top: 15px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.switch span {
+    color: #00f5ff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Errors */
+.error {
+    color: #ff6b6b;
+    font-size: 12px;
+    height: 14px;
+}
+
+.msg{
+    border: 1px solid red;
+    border-radius: 10px;
+    height: 60px;
+    width: 100%;
+    background-color: rgba(223, 91, 91, 0.4);
+    display: block;
+    align-content: center;
+    padding: 10px;
+    margin-top: 10px;
+    display: none;
+    
+}
+
+.spinner{
+    border: 3px solid white;
+    border-top: 3px solid black;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    display: none;
+    animation: spin 1s linear infinite;
+}
+ 
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}   
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+    }
+
+    .glass {
+        padding: 20px;
+    }
+}

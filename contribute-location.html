@@ -2,182 +2,293 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contribute Location</title>
+
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
     body {
       margin: 0;
-      width: 1280px;
-      height: 832px;
+      background: #f0eef7;
+      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
-      align-items: center;
-      background-color: #f0eef7;
-      font-family: Arial, sans-serif;
+      padding: 40px 0;
     }
 
     .card {
-      width: 513px;
-      height: 644px;
+      width: 520px;
       background: white;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 40px;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
 
-    .card h2 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 30px;
+    h2 {
       text-align: center;
-    }
-
-    /* Wrapper to perfectly center label + input */
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
       margin-bottom: 20px;
     }
 
     label {
       font-size: 0.9rem;
-      margin-bottom: 6px;
-      text-align: center;
+      margin-bottom: 5px;
+      display: block;
     }
 
-    input[type="text"] {
-      width: 365px;
-      height: 59px;
-      border: 1px solid #ccc;
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
       border-radius: 6px;
-      padding: 10px 15px;
-      font-size: 0.95rem;
-      text-align: center;
-    }
-
-    .photo-section {
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
       font-size: 0.9rem;
-      margin-bottom: 10px;
-      line-height: 1.4;
-      text-align: center;
     }
 
-    .photo-upload {
-      width: 365px;
-      height: 282px;
-      background-color: #f4f4f9;
-      border: 1px dashed #999;
-      border-radius: 10px;
+    textarea {
+      resize: none;
+      height: 90px;
+    }
+
+    .map-search {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      cursor: pointer;
-      transition: background 0.3s;
-      overflow: hidden;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    #map {
+      height: 250px;
+      border-radius: 10px;
       margin-bottom: 20px;
     }
 
-    .photo-upload:hover {
-      background-color: #eae8f5;
+    .ratings {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
-    .photo-upload .circle {
-      width: 83px;
-      height: 83px;
-      border-radius: 50%;
-      border: 2px solid #888;
+    /* STAR RATING */
+    .stars {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      color: #777;
-      pointer-events: none;
+      gap: 6px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      margin-bottom: 15px;
     }
 
-    #photo-input {
-      display: none;
+    .stars span {
+      color: #ccc;
     }
 
-    .preview {
+    .stars span.active {
+      color: #f5b301;
+    }
+
+    .photo-upload {
+      border: 2px dashed #aaa;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    /* ✅ GRID FIX – NO OVERLAP */
+    .preview-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .preview-container img {
       width: 100%;
-      height: 100%;
+      height: 80px;
       object-fit: cover;
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
+      border-radius: 6px;
     }
 
-    .submit-btn {
-      width: 365px;
-      height: 55px;
-      background-color: #6a5ae0;
+    button {
+      background: #6a5ae0;
       color: white;
       border: none;
+      padding: 12px;
+      width: 100%;
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
-      margin-top: 10px;
     }
 
-    .submit-btn:hover {
-      background-color: #584ad6;
+    button:hover {
+      background: #584ad6;
     }
   </style>
 </head>
 
 <body>
-  <div class="card">
-    <h2>Contribute location</h2>
 
-    <form>
-      <!-- Centered Name Field -->
-      <div class="field-group">
-        <label for="place-name">Name of the place</label>
-        <input type="text" id="place-name" placeholder="Boss burger" required />
+<div class="card">
+  <h2>Contribute Location</h2>
+
+  <form id="contributeForm">
+
+    <label>Place Name</label>
+    <input type="text" id="placeName" required placeholder="Boss Burger" />
+
+    <label>Description</label>
+    <textarea id="description" required placeholder="Why is this place laptop-friendly?"></textarea>
+
+    <label>Search Location</label>
+    <div class="map-search">
+      <input id="search" placeholder="Search any place..." />
+      <button type="button" onclick="searchPlace()">Search</button>
+    </div>
+
+    <div id="map"></div>
+
+    <input type="hidden" id="lat">
+    <input type="hidden" id="lng">
+
+    <div class="ratings">
+      <div>
+        <label>Wi-Fi</label>
+        <select id="wifi" required>
+          <option value="">Select</option>
+          <option>Best</option>
+          <option>Good</option>
+          <option>Worst</option>
+        </select>
       </div>
 
-      <div class="photo-section">
-        Add photo<br>
-        <small>• you must add at least 1 image</small>
+      <div>
+        <label>Power</label>
+        <select id="power" required>
+          <option value="">Select</option>
+          <option>Best</option>
+          <option>Good</option>
+          <option>Worst</option>
+        </select>
       </div>
 
-      <label for="photo-input">
-        <div class="photo-upload">
-          <div class="circle">＋</div>
-          <img id="preview-img" class="preview" />
-        </div>
-      </label>
+      <div>
+        <label>Customer Service</label>
+        <select id="service" required>
+          <option value="">Select</option>
+          <option>Best</option>
+          <option>Good</option>
+          <option>Worst</option>
+        </select>
+      </div>
+    </div>
 
-      <input type="file" id="photo-input" accept="image/*" required />
+    <label>Overall Rating</label>
+    <div class="stars" id="starRating">
+      <span data-value="1">★</span>
+      <span data-value="2">★</span>
+      <span data-value="3">★</span>
+      <span data-value="4">★</span>
+      <span data-value="5">★</span>
+    </div>
 
-      <button type="submit" class="submit-btn">Submit</button>
-    </form>
-  </div>
+    <label>Add Photos (max 3)</label>
+    <div class="photo-upload" onclick="photos.click()">
+      Click to upload images
+    </div>
 
-  <script>
-    const photoInput = document.getElementById('photo-input');
-    const previewImg = document.getElementById('preview-img');
+    <input type="file" id="photos" accept="image/*" multiple hidden />
+    <div class="preview-container" id="preview"></div>
 
-    photoInput.addEventListener('change', function () {
-      const file = this.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          previewImg.src = e.target.result;
-          previewImg.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-      }
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  /* MAP */
+  const map = L.map("map").setView([9.03, 38.74], 13);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
+  let marker;
+  function placeMarker(lat, lng, label) {
+    if (marker) map.removeLayer(marker);
+    marker = L.marker([lat, lng]).addTo(map).bindPopup(label).openPopup();
+    lat.value = lat;
+    lng.value = lng;
+  }
+
+  map.on("click", e => placeMarker(e.latlng.lat, e.latlng.lng, "Selected location"));
+
+  function searchPlace() {
+    if (!search.value) return;
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(search.value)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (!data.length) return alert("No results found");
+        const p = data[0];
+        map.setView([p.lat, p.lon], 15);
+        placeMarker(p.lat, p.lon, p.display_name);
+      });
+  }
+
+  /* IMAGE PREVIEW – FIXED */
+  photos.addEventListener("change", () => {
+    preview.innerHTML = "";
+
+    if (photos.files.length > 3) {
+      alert("Maximum 3 images allowed");
+      photos.value = "";
+      return;
+    }
+
+    Array.from(photos.files).forEach(file => {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(file);
+      preview.appendChild(img);
     });
-  </script>
+  });
+
+  /* STAR RATING */
+  let overallRating = 0;
+  document.querySelectorAll("#starRating span").forEach(star => {
+    star.addEventListener("click", () => {
+      overallRating = star.dataset.value;
+      document.querySelectorAll("#starRating span").forEach(s =>
+        s.classList.toggle("active", s.dataset.value <= overallRating)
+      );
+    });
+  });
+
+  /* FORM SUBMIT */
+  contributeForm.addEventListener("submit", e => {
+    e.preventDefault();
+
+    if (!lat.value || !overallRating) {
+      alert("Please select location and overall rating");
+      return;
+    }
+
+    console.log({
+      name: placeName.value,
+      description: description.value,
+      location: { lat: lat.value, lng: lng.value },
+      ratings: {
+        wifi: wifi.value,
+        power: power.value,
+        service: service.value,
+        overall: overallRating
+      },
+      images: photos.files.length
+    });
+
+    alert("Submitted successfully! Check console.");
+  });
+</script>
+
 </body>
 </html>
