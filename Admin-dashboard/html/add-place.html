@@ -13,12 +13,12 @@
   </head>
   <body>
     <!-- Loading Screen -->
-    <div id="loadingScreen">
+    <!-- <div id="loadingScreen">
       <div class="loader">
         <div class="loader-circle"></div>
         <div>Loading Add Place...</div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
@@ -188,9 +188,9 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="placeType">Place Type *</label>
+                  <label for="placeType">Place Category *</label>
                   <select id="placeType" required>
-                    <option value="">Select type</option>
+                    <option value="">Select Category</option>
                     <option value="cafe">Cafe</option>
                     <option value="restaurant">Restaurant</option>
                     <option value="hotel">Hotel</option>
@@ -231,18 +231,27 @@
               <input type="hidden" id="longitude" value="" />
 
               <div class="form-row">
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="wifiSpeed">WiFi Speed *</label>
                   <select id="wifiSpeed" required>
-                    <option value="">Select WiFi speed</option>
-                    <option value="Very Fast">Very Fast (100+ Mbps)</option>
+                    <option value="">Very Good</option>
+                    <option value="Very Fast">Good</option>
                     <option value="Fast">Fast (50-100 Mbps)</option>
                     <option value="Medium">Medium (20-50 Mbps)</option>
                     <option value="Slow">Slow (&lt;20 Mbps)</option>
                   </select>
-                </div>
+                </div> -->
 
                 <div class="form-group">
+                  <label for="wifiSpeed">WiFi Speed *</label>
+                  <select id="wifiSpeed" required>
+                    <option value="Very Good">Very Good</option>
+                    <option value="Good">Good</option>
+                    <option value="Bad">Bad</option>
+                  </select>
+                </div>
+
+                <!-- <div class="form-group">
                   <label for="powerOutlets">Power Outlets *</label>
                   <select id="powerOutlets" required>
                     <option value="">Select availability</option>
@@ -251,11 +260,11 @@
                     <option value="Limited">Limited</option>
                     <option value="None">None</option>
                   </select>
-                </div>
+                </div> -->
               </div>
 
               <div class="form-row">
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="noiseLevel">Noise Level *</label>
                   <select id="noiseLevel" required>
                     <option value="">Select noise level</option>
@@ -264,14 +273,14 @@
                     <option value="Busy">Busy</option>
                     <option value="Noisy">Very Noisy</option>
                   </select>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="contributor">Added By (Contributor)</label>
                   <select id="contributor">
                     <option value="">Select contributor (optional)</option>
                   </select>
-                </div>
+                </div> -->
               </div>
 
               <div class="form-group">
@@ -285,16 +294,11 @@
 
               <div class="form-group">
                 <label for="imageUrl">Image URL *</label>
-                <input
-                  type="text"
-                  id="imageUrl"
-                  required
-                  placeholder="Paste image URL here"
-                />
-                <small style="color: var(--gray-600); font-size: 13px"
+                <input type="file" id="imageFile" required />
+                <!-- <small style="color: var(--gray-600); font-size: 13px"
                   >Example:
                   https://images.unsplash.com/photo-1498804103079...</small
-                >
+                > -->
               </div>
 
               <div style="display: flex; gap: 15px; margin-top: 30px">
@@ -330,7 +334,7 @@
     <div id="toastContainer"></div>
 
     <!-- Modal for Map Location Adjustment -->
-    <div id="mapModal" class="modal map-modal">
+    <div id="mapModal" class="modal map-modal" style="display: none">
       <div class="modal-content">
         <div class="modal-header">
           <h3>Adjust Location on Map</h3>
@@ -363,7 +367,7 @@
             <div
               class="selected-location"
               id="mapSelectedLocation"
-              style="margin-top: 10px"
+              style="margin-top: 10px; display: none"
             >
               <p>
                 <strong>Selected:</strong> <span id="mapLocationName"></span>
@@ -386,9 +390,8 @@
     </div>
 
     <!-- JavaScript Files -->
-    <script src="../js/database.js"></script>
     <script src="../js/utils.js"></script>
-    <script src="../js/maps.js"></script>
-    <script src="../js/add-place.js"></script>
+    <script type="module" src="../js/maps.js"></script>
+    <script type="module" src="../js/add-place.js"></script>
   </body>
 </html>
