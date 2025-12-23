@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Places - LFP</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-logo">
+                <img src="../assets/images/logo.svg" alt="LFP Logo">
+                <span>LFP</span>
+            </div>
+            
+            <div class="header-search">
+                <input type="text" placeholder="Search places...">
+                <i class="fa fa-search"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+      
+        <nav class="sidebar">
+            <ul class="nav-links">
+                <li>
+                    <a href="home.html" title="Home">
+                        <i class="fa-solid fa-house"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="contribute-location.html" title="Contribute">
+                        <i class="fa-solid fa-users"></i>
+                    </a>
+                </li>
+                <li class="active"> 
+                    <a href="places.html" title="Places">
+                        <i class="fa-solid fa-map"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="fav.html" title="Favorite">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-bottom">
+                <i class="fa-regular fa-sun" title="Theme"></i>
+            </div>
+        </nav>
+
+       
+        <main class="main">
+          
+            <div class="tabs-section">
+                <div class="tabs">
+                    <button class="tab active" data-target="all">All</button>
+                    <button class="tab" data-target="new">New</button>
+                    <button class="tab" data-target="popular">Popular</button>
+                    
+                </div>
+            </div>
+
+            <div id="loading" class="loading">
+              <i class="fa-solid fa-spinner"></i>
+              <span>Loading places...</span>
+            </div>
+
+
+          
+            <div id="all" class="cards-grid places-container"></div>
+            <div id="new" class="cards-grid places-container hidden"></div>
+            <div id="popular" class="cards-grid places-container hidden"></div>
+
+
+            <div class="modal hidden" id="reportModal">
+  <div class="modal-content">
+    <h3>Report Place</h3>
+
+    <form id="reportForm">
+
+      <label for="issueType">Issue Type:</label>
+      <select id="issueType" name="issueType" required>
+        <option value="" disabled selected>Select an issue</option>
+        <option value="incorrect_info">Incorrect Information</option>
+        <option value="spam">Spam / Fake</option>
+        <option value="inappropriate_content">Inappropriate Content</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="desc">Description:</label>
+      <textarea id="desc" placeholder="Describe the issue..." required></textarea>
+
+      <div class="modal-actions">
+        <button type="submit" class="submit-btn">Submit</button>
+        <button type="button" id="closeModal" class="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+        </main>
+    </div>
+    <script type="module" src="../js/places.js"></script>
+</body>
+</html>
+
