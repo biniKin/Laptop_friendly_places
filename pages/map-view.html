@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Map View | LFP</title>
+
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+.container {
+  display: flex;
+  height: calc(100vh - 70px);
+}
+
+.sidebar {
+  width: 80px;
+}
+
+main.main {
+  flex: 1;
+  padding: 10px;
+}
+
+#mapViewMap {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+/* Popup card */
+.leaflet-popup-content {
+  margin: 0;
+  width: min(300px, 80vw);
+}
+
+.map-card {
+  font-family: Arial, sans-serif;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.map-card-img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+}
+
+.map-card-body {
+  padding: 10px;
+}
+
+.map-card-body h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.category {
+  font-size: 13px;
+  color: #777;
+  margin: 4px 0;
+}
+
+.desc {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.ratings {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header class="main-header">
+  <div class="header-container">
+    <div class="header-logo">
+      <img src="../assets/images/logo.svg">
+      <span>LFP</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- SIDEBAR (UNCHANGED) -->
+  <nav class="sidebar">
+    <ul class="nav-links">
+      <li><a href="home.html"><i class="fa-solid fa-house"></i></a></li>
+      <li><a href="contribute-location.html"><i class="fa-solid fa-users"></i></a></li>
+      <li><a href="map-view.html"><i class="fa-solid fa-map"></i></a></li>
+      <li><a href="fav.html"><i class="fa-regular fa-heart"></i></a></li>
+    </ul>
+    <div class="sidebar-bottom">
+      <i class="fa-regular fa-sun"></i>
+    </div>
+  </nav>
+
+  <!-- MAP CONTENT -->
+  <main class="main">
+    <div id="mapViewMap"></div>
+  </main>
+
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module">
+  import { loadPlaces } from "../js/map-view.js";
+  loadPlaces();
+</script>
+</body>
+</html>
