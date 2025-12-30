@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reported Issues - Laptop Friendly Finder</title>
-    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/reported.css">
+    <link rel="stylesheet" href="../css/maps.css">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -13,12 +15,12 @@
   </head>
   <body>
     <!-- Loading Screen -->
-    <div id="loadingScreen">
+    <!-- <div id="loadingScreen">
       <div class="loader">
         <div class="loader-circle"></div>
         <div>Loading Reported Issues...</div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
@@ -112,43 +114,6 @@
         </div>
       </div>
 
-      <!-- Content Area -->
-      <div class="content-area">
-        <!-- Reported Section -->
-        <section id="reported" class="section active">
-          <div class="section-header">
-            <h2>Reported Issues</h2>
-          </div>
-
-          <!-- Reported Places Map -->
-          <div class="map-container">
-            <h3>Reported Places Map</h3>
-            <div id="reportedMap"></div>
-            <div class="map-controls">
-              <div
-                class="map-toggle active"
-                onclick="toggleReportedMapLayer('all')"
-              >
-                <i class="fas fa-layer-group"></i>
-                <span>All Reported</span>
-              </div>
-              <div
-                class="map-toggle"
-                onclick="toggleReportedMapLayer('pending')"
-              >
-                <i class="fas fa-clock"></i>
-                <span>Pending Only</span>
-              </div>
-              <div
-                class="map-toggle"
-                onclick="toggleReportedMapLayer('resolved')"
-              >
-                <i class="fas fa-check-circle"></i>
-                <span>Resolved Only</span>
-              </div>
-            </div>
-          </div>
-
           <div class="table-container">
             <table>
               <thead>
@@ -156,8 +121,8 @@
                   <th>Place</th>
                   <th>Issue Type</th>
                   <th>Reported By</th>
-                  <th>Proof Image</th>
-                  <th>Reported On</th>
+                  <th>Message</th>
+                  <th>Date</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -213,10 +178,10 @@
       </div>
     </div>
 
-    <!-- JavaScript Files -->
-    <script src="../js/database.js"></script>
+    <!-- JavaScript Files --><!-- 
+    <script src="../js/database.js"></script> -->
     <script src="../js/utils.js"></script>
-    <script src="../js/maps.js"></script>
-    <script src="../js/reported.js"></script>
+    <script type="module" src="../js/maps.js"></script>
+    <script type="module" src="../js/reported.js"></script>
   </body>
 </html>

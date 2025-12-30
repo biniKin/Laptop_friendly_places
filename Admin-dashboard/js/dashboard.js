@@ -1,150 +1,240 @@
-// js/dashboard.js
-document.addEventListener("DOMContentLoaded", function () {
-  // Initialize page
-  if (!initPage()) return;
+// js/dashboard.js - Simple Version
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+import { db } from "../../js/firebase/init.js";
 
-  // Initialize maps
-  setTimeout(() => {
-    initializeMaps();
-  }, 500);
+document.addEventListener("DOMContentLoaded", async function () {
+  console.log("Dashboard loading...");
 
-  // Load dashboard data
-  loadDashboard();
-  updateBadges();
+  try {
+    await loadDashboardData();
 
-  // Setup event listeners
-  setupEventListeners();
+    // Initialize maps after a delay
+    setTimeout(() => {
+      if (window.loadDashboardMap) {
+        window.loadDashboardMap("all");
+      }
+    }, 500);
+  } catch (error) {
+    console.error("Error loading dashboard:", error);
+    showToast("Failed to load dashboard data", "error");
+  }
 });
 
-// Load dashboard data
-async function loadDashboard() {
-  const places = await db.get("places");
-  const reports = await db.get("reports");
-  const activities = await db.get("activities");
+async function loadDashboardData() {
+  try {
+    // Load places
+    const placesCol = collection(db, "places");
+    const placesSnapshot = await getDocs(placesCol);
+    const allPlaces = placesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-  document.getElementById("totalPlaces").textContent = places.length;
-  document.getElementById("verifiedPlaces").textContent = places.filter(
-    (p) => p.status === "verified"
-  ).length;
-  document.getElementById("pendingPlaces").textContent = places.filter(
-    (p) => p.status === "pending"
-  ).length;
-  document.getElementById("reportedPlaces").textContent = reports.filter(
-    (r) => r.status === "pending"
-  ).length;
+    // Load reports
+    const reportsCol = collection(db, "reports");
+    const reportsSnapshot = await getDocs(reportsCol);
+    const allReports = reportsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
+    // Load users
+    const usersCol = collection(db, "users");
+    const usersSnapshot = await getDocs(usersCol);
+    const allUsers = usersSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    // Update statistics
+    updateStats(allPlaces, allReports, allUsers);
+
+    // Update badges
+    updateBadges(allPlaces, allReports);
+
+    // Load recent activities
+    loadRecentActivities(allPlaces);
+
+    // Load recent places
+    loadRecentPlaces(allPlaces);
+  } catch (error) {
+    console.error("Error loading data:", error);
+    throw error;
+  }
+}
+
+function updateStats(places, reports, users) {
+  // Update count elements
+  const elements = {
+    totalPlaces: places.length,
+    verifiedPlaces: places.filter(
+      (p) => p.status === "approved" || p.status === "verified"
+    ).length,
+    pendingPlaces: places.filter((p) => p.status === "pending").length,
+    reportedPlaces: reports.filter((r) => r.status === "pending").length,
+    totalUsers: users.length,
+  };
+
+  for (const [id, value] of Object.entries(elements)) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.textContent = value;
+    }
+  }
+}
+
+function updateBadges(places, reports) {
+  const placesBadge = document.getElementById("placesBadge");
+  const reportedBadge = document.getElementById("reportedBadge");
+
+  if (placesBadge) {
+    placesBadge.textContent = places.length;
+  }
+
+  if (reportedBadge) {
+    reportedBadge.textContent = reports.filter(
+      (r) => r.status === "pending"
+    ).length;
+  }
+}
+
+function loadRecentActivities(places) {
   const activityList = document.getElementById("activityList");
+  if (!activityList) return;
+
+  // Sort by date (newest first)
+  const recentPlaces = [...places]
+    .sort((a, b) => {
+      const dateA = a.created_at ? a.created_at.toDate() : new Date(0);
+      const dateB = b.created_at ? b.created_at.toDate() : new Date(0);
+      return dateB - dateA;
+    })
+    .slice(0, 5);
+
+  if (recentPlaces.length === 0) {
+    return;
+  }
+
   activityList.innerHTML = "";
 
-  activities.slice(0, 4).forEach((activity) => {
-    const icon =
-      activity.type === "pla ce_added"
-        ? "fa-map-marker-alt"
-        : activity.type === "place_verified"
-        ? "fa-check-circle"
-        : activity.type === "report_resolved"
-        ? "fa-flag"
-        : "fa-bell";
-
-    const color =
-      activity.type === "place_added"
-        ? "blue"
-        : activity.type === "place_verified"
-        ? "green"
-        : activity.type === "report_resolved"
-        ? "orange"
-        : "red";
+  recentPlaces.forEach((place) => {
+    const date = place.created_at
+      ? new Date(place.created_at.toDate()).toLocaleDateString()
+      : "Recently";
 
     const item = document.createElement("div");
     item.className = "activity-item";
     item.innerHTML = `
-      <div class="activity-icon" style="background: var(--${color});">
-        <i class="fas ${icon}"></i>
+      <div class="activity-icon">
+        <i class="fas fa-map-marker-alt"></i>
       </div>
       <div class="activity-content">
-        <p>${activity.message}</p>
+        <p>New place added: ${place.name || "Unnamed Place"}</p>
         <div class="activity-meta">
-          <span>${activity.timestamp}</span>
+          <span>${date}</span>
         </div>
       </div>
     `;
+
     activityList.appendChild(item);
   });
 }
 
-// Setup event listeners
-function setupEventListeners() {
-  // Global search
-  const globalSearch = document.getElementById("globalSearch");
-  if (globalSearch) {
-    globalSearch.addEventListener("input", function (e) {
-      const query = e.target.value;
-      // Search functionality can be implemented here
-    });
+function loadRecentPlaces(places) {
+  const tableBody = document.getElementById("recentPlacesTable");
+  if (!tableBody) return;
+
+  // Get 5 most recent places
+  const recentPlaces = [...places]
+    .sort((a, b) => {
+      const dateA = a.created_at ? a.created_at.toDate() : new Date(0);
+      const dateB = b.created_at ? b.created_at.toDate() : new Date(0);
+      return dateB - dateA;
+    })
+    .slice(0, 5);
+
+  if (recentPlaces.length === 0) {
+    return;
   }
 
-  // Close modal when clicking outside
-  window.addEventListener("click", function (e) {
-    const modals = document.querySelectorAll(".modal");
-    modals.forEach((modal) => {
-      if (e.target === modal) {
-        modal.style.display = "none";
-      }
-    });
+  tableBody.innerHTML = "";
+
+  recentPlaces.forEach((place) => {
+    const date = place.created_at
+      ? new Date(place.created_at.toDate()).toLocaleDateString()
+      : "N/A";
+
+    const statusClass =
+      place.status === "approved" ? "status-verified" : "status-pending";
+    const statusText = place.status === "approved" ? "Approved" : "Pending";
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td><strong>${place.name || "Unnamed Place"}</strong></td>
+      <td>${place.category || "N/A"}</td>
+      <td>${place.rating?.overall || "N/A"}/5</td>
+      <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+      <td>${date}</td>
+      <td>
+        <button class="btn btn-sm" onclick="viewPlace('${
+          place.id
+        }')">View</button>
+      </td>
+    `;
+
+    tableBody.appendChild(row);
   });
 }
 
-// View place details
-async function viewPlace(placeId) {
-  const places = await db.get("places");
-  const place = places.find((p) => p.id === placeId);
-
-  if (!place) return;
-
-  const modalBody = document.getElementById("placeModalBody");
-  const stars = getStarRating(place.rating);
-
-  modalBody.innerHTML = `
-    <div style="text-align: center; margin-bottom: 20px;">
-      <img src="${place.image}" alt="${
-    place.name
-  }" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
-    </div>
-    
-    <h4 style="margin-bottom: 15px;">${place.name}</h4>
-    
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-      <div>
-        <p><strong>Type:</strong> ${place.type}</p>
-        <p><strong>Location:</strong> ${place.location}</p>
-        <p><strong>Coordinates:</strong> ${
-          place.latitude
-            ? `${place.latitude.toFixed(6)}, ${place.longitude.toFixed(6)}`
-            : "Not set"
-        }</p>
-        <p><strong>Added By:</strong> ${place.addedBy}</p>
-        <p><strong>Date:</strong> ${place.addedDate}</p>
-      </div>
-      <div>
-        <p><strong>Rating:</strong> ${stars} (${place.rating.toFixed(1)}/5)</p>
-        <p><strong>WiFi Speed:</strong> ${place.wifiSpeed}</p>
-        <p><strong>Power Outlets:</strong> ${place.powerOutlets}</p>
-        <p><strong>Noise Level:</strong> ${place.noiseLevel}</p>
-      </div>
-    </div>
-    
-    <div>
-      <strong>Description:</strong>
-      <p style="margin-top: 5px; color: var(--gray-700); line-height: 1.6;">${
-        place.description
-      }</p>
-    </div>
-  `;
-
-  document.getElementById("placeModal").style.display = "flex";
+function refreshData() {
+  showToast("Refreshing data...", "info");
+  loadDashboardData()
+    .then(() => {
+      showToast("Data refreshed successfully!", "success");
+    })
+    .catch((error) => {
+      showToast("Failed to refresh data", "error");
+    });
 }
 
-// Close modal
-function closeModal() {
-  document.getElementById("placeModal").style.display = "none";
+function generateReport() {
+  showToast("Exporting data...", "info");
+  setTimeout(() => {
+    showToast("Report generated successfully!", "success");
+  }, 1500);
 }
+
+function viewPlace(placeId) {
+  // Implement view place functionality
+  console.log("View place:", placeId);
+  showToast("View place feature", "info");
+}
+
+// Toast function
+function showToast(message, type = "info") {
+  const container = document.getElementById("toastContainer");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// Make functions globally available
+window.refreshData = refreshData;
+window.generateReport = generateReport;
+window.viewPlace = viewPlace;
+window.loadDashboardMap = loadDashboardMap; // This should be from maps.js

@@ -163,6 +163,56 @@ function setActiveNav() {
   });
 }
 
+// utils.js - Common utility functions
+window.toggleSidebar = function () {
+  const sidebar = document.getElementById("sidebar");
+  const mainContent = document.getElementById("mainContent");
+
+  if (sidebar.classList.contains("collapsed")) {
+    sidebar.classList.remove("collapsed");
+    mainContent.style.marginLeft = "260px";
+  } else {
+    sidebar.classList.add("collapsed");
+    mainContent.style.marginLeft = "0";
+  }
+};
+
+// Set active nav item based on current page
+document.addEventListener("DOMContentLoaded", function () {
+  const currentPage = window.location.pathname.split("/").pop();
+  const navItems = document.querySelectorAll(".nav-item");
+
+  navItems.forEach((item) => {
+    item.classList.remove("active");
+    if (item.getAttribute("href") === currentPage) {
+      item.classList.add("active");
+    }
+  });
+
+  // Hide loading screen after page loads
+  const loadingScreen = document.getElementById("loadingScreen");
+  if (loadingScreen) {
+    setTimeout(() => {
+      loadingScreen.style.opacity = "0";
+      setTimeout(() => {
+        loadingScreen.style.display = "none";
+      }, 300);
+    }, 500);
+  }
+});
+
+// Simple logout function
+window.logout = function () {
+  if (confirm("Are you sure you want to logout?")) {
+    // Clear any session data
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+
+    // Redirect to login page (adjust URL as needed)
+    window.location.href = "../index.html";
+  }
+};
+
 // Initialize page
 function initPage() {
   if (!localStorage.getItem("adminLoggedIn")) {
