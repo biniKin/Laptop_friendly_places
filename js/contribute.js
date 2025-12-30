@@ -1,5 +1,5 @@
-//import { auth, db } from "./firebase/init.js";
-//import { supabase } from "./supabase/client.js";
+import { auth, db } from "./firebase/init.js";
+import { supabase } from "./supabase/client.js";
 
 
 import { collection, addDoc, GeoPoint } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
