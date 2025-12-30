@@ -16,10 +16,8 @@
                 <img src="../assets/images/logo.svg" alt="LFP Logo">
                 <span>LFP</span>
             </div>
-            
-            <div class="header-search">
-                <input type="text" placeholder="Search...">
-                <i class="fa fa-search"></i>
+            <div class="header-profile-icon">
+                <i id="headerProfile" class="fa-regular fa-user"></i>
             </div>
         </div>
     </header>
@@ -50,7 +48,7 @@
             </ul>
             
             <div class="sidebar-bottom">
-                <i class="fa-regular fa-sun" title="Theme"></i>
+                <i id="profile" class="fa-regular fa-user"></i>
             </div>
         </nav>
 
@@ -164,6 +162,18 @@
                 alert('Location contributed successfully!');
                 window.location.href = 'home.html';
             });
+            
+            // Profile icon handlers
+            document.getElementById("profile").addEventListener("click", () => {
+                window.location.href = "profile.html";
+            });
+
+            const headerProfile = document.getElementById("headerProfile");
+            if (headerProfile) {
+                headerProfile.addEventListener("click", () => {
+                    window.location.href = "profile.html";
+                });
+            }
         });
     </script>
 </body>

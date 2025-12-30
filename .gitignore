@@ -1,5 +1,49 @@
-# Ignore Firebase config
+# Firebase config (contains API keys)
 js/firebase/config.js
 
-# supabase
+# Supabase config (contains API keys)
 js/supabase/client.js
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Node modules (if you add npm later)
+node_modules/
+package-lock.json
+yarn.lock
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs (if you add build tools later)
+dist/
+build/
+.cache/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+
+# Backup files
+*.bak
+*.backup
