@@ -1,0 +1,91 @@
+body.dark-mode {
+  background-color: #0f172a;
+  color: #e5e7eb;
+}
+
+body.dark-mode .main-header,
+body.dark-mode .sidebar,
+body.dark-mode .favorite-card {
+  background-color: #020617;
+}
+
+body.dark-mode .favorite-card {
+  border-color: #1e293b;
+}
+
+/* 1. Layout Container */
+.container {
+    display: flex; /* Aligns sidebar and main content side-by-side */
+    min-height: calc(100vh - 70px); /* Adjust 70px based on your header height */
+    width: 100%;
+}
+
+/* 2. Sidebar Positioning */
+.sidebar {
+    width: 260px; /* Standard sidebar width from your image */
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+    position: sticky; /* Keeps it visible while scrolling content */
+    top: 70px; /* Adjust to stay below your header */
+    height: calc(100vh - 70px);
+}
+
+/* 3. Main Content Area */
+.main {
+    flex: 1; /* Takes up all remaining space */
+    padding: 40px;
+    background-color: #f8fafc; /* Light gray background like the image */
+    overflow-y: auto;
+}
+
+/* 4. Sidebar Links Styling */
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.nav-links li {
+    padding: 12px 25px;
+    transition: all 0.3s ease;
+}
+
+.nav-links li.active {
+    background-color: #f1f5f9;
+  /* border-left: 4px solid #4f46e5; */
+     /* The blue indicator on the left */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.nav-links li.active a {
+    color: #4f46e5;
+}
+
+.nav-links i {
+    margin-right: 15px;
+    width: 20px;
+    font-size: 1.1rem;
+}
+
+/* 5. Theme Toggle at Bottom */
+.sidebar-bottom {
+    padding: 20px 25px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.sidebar-bottom i {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #64748b;
+}
