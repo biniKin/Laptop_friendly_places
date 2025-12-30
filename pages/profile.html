@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - LFP</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-logo">
+                <img src="../assets/images/logo.svg" alt="LFP Logo">
+                <span>LFP</span>
+            </div>
+            <div class="header-profile-icon">
+                <i id="headerProfile" class="fa-regular fa-user"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav class="sidebar">
+            <ul class="nav-links">
+                <li>
+                    <a href="home.html" title="Home">
+                        <i class="fa-solid fa-house"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="contribute-location.html" title="Contribute">
+                        <i class="fa-solid fa-users"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="places.html" title="Places">
+                        <i class="fa-solid fa-map"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="fav.html" title="Favorite">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-bottom">
+                <i id="profile" class="fa-solid fa-user"></i>
+            </div>
+        </nav>
+
+        <main class="main">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <h1 id="profileName">Loading...</h1>
+                    <p id="profileEmail">Loading...</p>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <i class="fa-solid fa-heart"></i>
+                        <div class="stat-info">
+                            <h3 id="favCount">0</h3>
+                            <p>Favorites</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <div class="stat-info">
+                            <h3 id="contributionCount">0</h3>
+                            <p>Contributions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-info-card">
+                    <h2><i class="fa-solid fa-circle-info"></i> Account Information</h2>
+                    <div class="info-row">
+                        <span class="info-label">Name:</span>
+                        <span class="info-value" id="infoName">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value" id="infoEmail">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Member Since:</span>
+                        <span class="info-value" id="memberSince">-</span>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="logout-btn" id="logoutBtn">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="../js/profile.js"></script>
+</body>
+</html>

@@ -9,17 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-    <!-- Header with Logo & Search -->
     <header class="main-header">
         <div class="header-container">
             <div class="header-logo">
                 <img src="../assets/images/logo.svg" alt="LFP Logo">
                 <span>LFP</span>
             </div>
-            
-            <div class="header-search">
-                <input type="text" placeholder="Search favorites...">
-                <i class="fa fa-search"></i>
+            <div class="header-profile-icon">
+                <i id="headerProfile" class="fa-regular fa-user"></i>
             </div>
         </div>
     </header>
@@ -51,7 +48,7 @@
             </ul>
             
             <div class="sidebar-bottom">
-                <i class="fa-regular fa-sun" title="Theme"></i>
+                <i id="profile" class="fa-regular fa-user"></i>
             </div>
         </nav>
 
@@ -65,100 +62,7 @@
 
             <!-- Favorites Grid -->
             <div class="favorites-grid">
-                <!-- Favorite Card 1 -->
-                <div class="favorite-card">
-                    <div class="fav-card-image">
-                        <img src="../assets/images/cafe1.jpg" alt="Angela Cafe">
-                        <div class="fav-badge">
-                            <i class="fa-solid fa-heart"></i> Favorite
-                        </div>
-                    </div>
-                    <div class="fav-card-content">
-                        <div class="fav-card-header">
-                            <h3>Angela Cafe</h3>
-                            <button class="fav-remove-btn" title="Remove from favorites">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        </div>
-                        <div class="fav-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="rating-number">4.5</span>
-                            <span class="reviews">(120 reviews)</span>
-                        </div>
-                        <div class="fav-features">
-                            <span class="feature"><i class="fa-solid fa-wifi"></i> Excellent WiFi</span>
-                            <span class="feature"><i class="fa-solid fa-plug"></i> Power Outlets</span>
-                            <span class="feature"><i class="fa-solid fa-mug-saucer"></i> Cafe</span>
-                        </div>
-                        <div class="fav-location">
-                            <i class="fa-solid fa-location-dot"></i> Bole, Addis Ababa
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Favorite Card 2 -->
-                <div class="favorite-card">
-                    <div class="fav-card-image">
-                        <img src="../assets/images/cafe2.jpg" alt="Science Cafe">
-                        <div class="fav-badge">
-                            <i class="fa-solid fa-heart"></i> Favorite
-                        </div>
-                    </div>
-                    <div class="fav-card-content">
-                        <div class="fav-card-header">
-                            <h3>Science Cafe</h3>
-                            <button class="fav-remove-btn" title="Remove from favorites">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        </div>
-                        <div class="fav-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="rating-number">4.3</span>
-                            <span class="reviews">(95 reviews)</span>
-                        </div>
-                        <div class="fav-features">
-                            <span class="feature"><i class="fa-solid fa-wifi"></i> Good WiFi</span>
-                            <span class="feature"><i class="fa-solid fa-plug"></i> Limited Outlets</span>
-                            <span class="feature"><i class="fa-solid fa-mug-saucer"></i> Cafe</span>
-                        </div>
-                        <div class="fav-location">
-                            <i class="fa-solid fa-location-dot"></i> Piazza, Addis Ababa
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Favorite Card 3 -->
-                <div class="favorite-card">
-                    <div class="fav-card-image">
-                        <img src="../assets/images/cafe1.jpg" alt="Caravan Cafe">
-                        <div class="fav-badge">
-                            <i class="fa-solid fa-heart"></i> Favorite
-                        </div>
-                    </div>
-                    <div class="fav-card-content">
-                        <div class="fav-card-header">
-                            <h3>Caravan Cafe</h3>
-                            <button class="fav-remove-btn" title="Remove from favorites">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        </div>
-                        <div class="fav-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="rating-number">4.7</span>
-                            <span class="reviews">(210 reviews)</span>
-                        </div>
-                        <div class="fav-features">
-                            <span class="feature"><i class="fa-solid fa-wifi"></i> Premium WiFi</span>
-                            <span class="feature"><i class="fa-solid fa-plug"></i> Dedicated Workspace</span>
-                            <span class="feature"><i class="fa-solid fa-mug-saucer"></i> Cafe</span>
-                        </div>
-                        <div class="fav-location">
-                            <i class="fa-solid fa-location-dot"></i> 22 Mazoria, Addis Ababa
-                        </div>
-                    </div>
-                </div>
-
-                <!-- More cards as needed -->
+                <!-- Dynamic content will be loaded here -->
             </div>
 
             <div class="empty-favorites" id="emptyState" style="display: none;">
@@ -171,7 +75,97 @@
                     <i class="fa-solid fa-map"></i> Explore Places
                 </a>
             </div>
+
+            <!-- Side Sheet for Place Details -->
+            <div class="sheet-overlay" id="sheetOverlay"></div>
+            <div class="place-sheet" id="placeSheet">
+                <button class="close-sheet" id="closeSheet">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                
+                <div class="sheet-content">
+                    <div class="sheet-media">
+                        <div class="media-carousel" id="mediaCarousel">
+                            <!-- Images will be inserted here -->
+                        </div>
+                        <button class="carousel-btn prev" id="prevBtn">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-btn next" id="nextBtn">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="sheet-info">
+                        <h2 id="sheetName">Place Name</h2>
+                        <div class="sheet-rating">
+                            <i class="fa-solid fa-star"></i>
+                            <span id="sheetRating">4.5</span>
+                        </div>
+                        
+                        <div class="sheet-description">
+                            <h3><i class="fa-solid fa-circle-info"></i> Description</h3>
+                            <p id="sheetDescription">Place description goes here...</p>
+                        </div>
+                        
+                        <div class="sheet-ratings">
+                            <h3><i class="fa-solid fa-star"></i> Ratings</h3>
+                            <div class="rating-items">
+                                <div class="rating-item">
+                                    <i class="fa-solid fa-wifi"></i>
+                                    <span>WiFi:</span>
+                                    <strong id="sheetWifi">4.5</strong>
+                                </div>
+                                <div class="rating-item">
+                                    <i class="fa-solid fa-plug"></i>
+                                    <span>Power:</span>
+                                    <strong id="sheetPower">4.0</strong>
+                                </div>
+                                <div class="rating-item">
+                                    <i class="fa-solid fa-face-smile"></i>
+                                    <span>Service:</span>
+                                    <strong id="sheetService">4.8</strong>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="sheet-actions">
+                            <button class="sheet-btn primary" id="viewMapBtn">
+                                <i class="fa-solid fa-map"></i> View Map
+                            </button>
+                            <button class="sheet-btn secondary" id="reportBtn">
+                                <i class="fa-solid fa-flag"></i> Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal hidden" id="reportModal">
+                <div class="modal-content">
+                    <h3>Report Place</h3>
+                    <form id="reportForm">
+                        <label for="issueType">Issue Type:</label>
+                        <select id="issueType" name="issueType" required>
+                            <option value="" disabled selected>Select an issue</option>
+                            <option value="incorrect_info">Incorrect Information</option>
+                            <option value="spam">Spam / Fake</option>
+                            <option value="inappropriate_content">Inappropriate Content</option>
+                            <option value="other">Other</option>
+                        </select>
+
+                        <label for="desc">Description:</label>
+                        <textarea id="desc" placeholder="Describe the issue..." required></textarea>
+
+                        <div class="modal-actions">
+                            <button type="submit" class="submit-btn">Submit</button>
+                            <button type="button" id="closeModal" class="cancel-btn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </main>
     </div>
+    <script type="module" src="../js/fav.js"></script>
 </body>
 </html>

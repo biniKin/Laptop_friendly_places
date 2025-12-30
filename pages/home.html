@@ -38,9 +38,8 @@
       <img src="../assets/images/logo.svg" alt="LFP Logo">
       <span>LFP</span>
     </div>
-    <div class="header-search">
-      <input type="text" placeholder="Search places...">
-      <i class="fa fa-search"></i>
+    <div class="header-profile-icon">
+      <i id="headerProfile" class="fa-regular fa-user"></i>
     </div>
   </div>
 </header>
@@ -64,7 +63,7 @@
       </li>
     </ul>
     <div class="sidebar-bottom">
-  <i id="themeToggle" class="fa-regular fa-moon"></i>
+  <i id="profile" class="fa-regular fa-user"></i>
 </div>
 
   </nav>
@@ -146,6 +145,18 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 L.marker([9.0365, 38.7612]).addTo(homeMap);
 </script>
 <script>
+// Profile icon handlers
+document.getElementById("profile").addEventListener("click", () => {
+  window.location.href = "profile.html";
+});
+
+const headerProfile = document.getElementById("headerProfile");
+if (headerProfile) {
+  headerProfile.addEventListener("click", () => {
+    window.location.href = "profile.html";
+  });
+}
+
 const toggleBtn = document.getElementById("themeToggle");
 
 // Load saved mode

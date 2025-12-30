@@ -12,16 +12,22 @@
 <style>
 .container {
   display: flex;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 60px);
 }
 
 .sidebar {
-  width: 80px;
+  width: 60px;
+  position: fixed;
+  left: 0;
+  top: 60px;
+  bottom: 0;
 }
 
 main.main {
   flex: 1;
+  margin-left: 60px;
   padding: 10px;
+  height: calc(100vh - 60px);
 }
 
 #mapViewMap {
@@ -73,7 +79,25 @@ main.main {
   font-size: 13px;
 }
 
-
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: 50px;
+    flex-direction: row;
+    padding: 0 1rem;
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+  }
+  
+  main.main {
+    margin-left: 0;
+    margin-bottom: 50px;
+    height: calc(100vh - 110px);
+  }
+}
 </style>
 </head>
 
@@ -85,21 +109,24 @@ main.main {
       <img src="../assets/images/logo.svg">
       <span>LFP</span>
     </div>
+    <div class="header-profile-icon">
+      <i id="headerProfile" class="fa-regular fa-user"></i>
+    </div>
   </div>
 </header>
 
 <div class="container">
 
-  <!-- SIDEBAR (UNCHANGED) -->
+  <!-- SIDEBAR -->
   <nav class="sidebar">
     <ul class="nav-links">
-      <li><a href="home.html"><i class="fa-solid fa-house"></i></a></li>
-      <li><a href="contribute-location.html"><i class="fa-solid fa-users"></i></a></li>
-      <li><a href="map-view.html"><i class="fa-solid fa-map"></i></a></li>
-      <li><a href="fav.html"><i class="fa-regular fa-heart"></i></a></li>
+      <li><a href="home.html" title="Home"><i class="fa-solid fa-house"></i></a></li>
+      <li><a href="contribute-location.html" title="Contribute"><i class="fa-solid fa-users"></i></a></li>
+      <li class="active"><a href="places.html" title="Map"><i class="fa-solid fa-map"></i></a></li>
+      <li><a href="fav.html" title="Favorite"><i class="fa-regular fa-heart"></i></a></li>
     </ul>
     <div class="sidebar-bottom">
-      <i class="fa-regular fa-sun"></i>
+      <i id="profile" class="fa-regular fa-user"></i>
     </div>
   </nav>
 
@@ -111,8 +138,20 @@ main.main {
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script type="module">
-  import { loadPlaces } from "../js/firebase/init.js";
+  import { loadPlaces } from "../js/map-view.js";
   loadPlaces();
+  
+  // Profile icon handlers
+  document.getElementById("profile").addEventListener("click", () => {
+    window.location.href = "profile.html";
+  });
+
+  const headerProfile = document.getElementById("headerProfile");
+  if (headerProfile) {
+    headerProfile.addEventListener("click", () => {
+      window.location.href = "profile.html";
+    });
+  }
 </script>
 </body>
 </html>
