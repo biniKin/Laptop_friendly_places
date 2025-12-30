@@ -2,7 +2,10 @@ import { auth, db } from "./firebase/init.js";
 import {
   getDocs,
   collection,
-  addDoc
+  addDoc,
+  query,
+  where,
+  Timestamp
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
 
@@ -136,8 +139,11 @@ tabs.forEach(tab => {
 async function fetchPlaces() {
   try {
     loader.style.display = "flex";
+    
+    // Only fetch approved places
     const placesCol = collection(db, "places");
-    const snapshot = await getDocs(placesCol);
+    const q = query(placesCol, where("status", "==", "approved"));
+    const snapshot = await getDocs(q);
 
     allPlaces = snapshot.docs.map(doc => ({
       id: doc.id,
@@ -152,6 +158,7 @@ async function fetchPlaces() {
 
   } catch (error) {
     console.error("Error fetching places:", error);
+    loader.style.display = "none";
   }
 }
 
@@ -318,7 +325,7 @@ document.getElementById("reportForm").addEventListener("submit", async (e) => {
   const issueType = document.getElementById("issueType").value;
   const description = document.getElementById("desc").value;
 
-  console.log("Reported place:");
+  console.log("Reporting place:");
   console.log("ID:", placeId);
   console.log("Name:", placeName);
   console.log("Issue type:", issueType);
@@ -326,20 +333,22 @@ document.getElementById("reportForm").addEventListener("submit", async (e) => {
 
   try {
     const reportsCol = collection(db, "reports");
+    
+    // Add report to Firestore with proper structure
     await addDoc(reportsCol, {
       place_id: placeId,
       reported_by: auth.currentUser?.uid || "anonymous",
       status: "pending",
       reason: issueType,
       message: description,
-      created_at: new Date()
+      created_at: Timestamp.now()
     });
 
-    alert("Report submitted successfully!");
+    alert("Report submitted successfully! Our team will review it.");
     document.getElementById("reportForm").reset();
   } catch (error) {
     console.error("Error submitting report:", error);
-    alert("Failed to submit report. Try again.");
+    alert("Failed to submit report. Please try again.");
   }
 
   modal.classList.add("hidden");
