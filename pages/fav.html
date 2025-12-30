@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Favorites - LFP</title>
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/favorites.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+     <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
 </head>
 <body>
     <header class="main-header">
-        <div class="header-container">
+        <!-- <div class="header-container">
             <div class="header-logo">
                 <img src="../assets/images/logo.svg" alt="LFP Logo">
                 <span>LFP</span>
@@ -18,7 +21,24 @@
             <div class="header-profile-icon">
                 <i id="headerProfile" class="fa-regular fa-user"></i>
             </div>
-        </div>
+        </div> -->
+
+        <div class="header-container">
+    <div class="header-logo">
+        <img src="../assets/images/logo.svg" alt="LFP Logo">
+        <span>LFP</span>
+    </div>
+
+    <div class="header-actions">
+        <!-- Dark mode toggle -->
+        <i id="darkModeToggle" class="fa-regular fa-moon"></i>
+
+    </div>
+</div>
+
+
+
+
     </header>
 
     <div class="container">
@@ -166,6 +186,7 @@
             </div>
         </main>
     </div>
+    <script src="../js/favorites.js"></script>
     <script type="module" src="../js/fav.js"></script>
 </body>
 </html>
