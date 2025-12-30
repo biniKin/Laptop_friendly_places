@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contributors - Laptop Friendly Finder</title>
     <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/contributors.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -12,12 +13,12 @@
   </head>
   <body>
     <!-- Loading Screen -->
-    <div id="loadingScreen">
+    <!-- <div id="loadingScreen">
       <div class="loader">
         <div class="loader-circle"></div>
         <div>Loading Contributors...</div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
@@ -123,11 +124,11 @@
             <table>
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th>User</th>
                   <th>Email</th>
-                  <th>Places Added</th>
-                  <th>Places Details</th>
-                  <th>Joined</th>
+                  <th>Reports Made</th>
+                  <th>Places Reported</th>
+                  <th>Reports Details</th>
                 </tr>
               </thead>
               <tbody id="contributorsTable">
@@ -147,9 +148,11 @@
     <!-- Toast Container -->
     <div id="toastContainer"></div>
 
-    <!-- JavaScript Files -->
-    <script src="../js/database.js"></script>
+    <!-- JavaScript Files --><!-- 
+    <script src="../js/database.js"></script> -->
     <script src="../js/utils.js"></script>
-    <script src="../js/contributors.js"></script>
+    <script type="module" src="../js/contributors.js"></script>
+    <script type="module" src="../js/places.js"></script>
+    <script type="module" src="../js/reported.js"></script>
   </body>
 </html>

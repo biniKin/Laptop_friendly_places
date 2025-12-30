@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Places Management - Laptop Friendly Finder</title>
     <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/places.css" />
+    <link rel="stylesheet" href="../css/maps.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -13,12 +15,12 @@
   </head>
   <body>
     <!-- Loading Screen -->
-    <div id="loadingScreen">
+    <!-- <div id="loadingScreen">
       <div class="loader">
         <div class="loader-circle"></div>
         <div>Loading Places...</div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
@@ -220,9 +222,9 @@
     </div>
 
     <!-- JavaScript Files -->
-    <script src="../js/database.js"></script>
+    <!-- <script src="../js/database.js"></script> -->
     <script src="../js/utils.js"></script>
-    <script src="../js/maps.js"></script>
-    <script src="../js/places.js"></script>
+    <script type="module" src="../js/maps.js"></script>
+    <script type="module" src="../js/places.js"></script>
   </body>
 </html>

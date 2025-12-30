@@ -700,6 +700,7 @@ window.mapsModule = {
 
 // Make functions available globally for onclick handlers
 window.initializeMaps = initializeMaps;
+window.loadDashboardMap = loadDashboardMap;
 window.loadPlacesMap = loadPlacesMap;
 window.loadReportedMap = loadReportedMap;
 window.toggleMapLayer = toggleMapLayer;
