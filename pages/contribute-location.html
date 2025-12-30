@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-    <!-- Header with Logo & Search -->
     <header class="main-header">
         <div class="header-container">
             <div class="header-logo">
@@ -30,7 +30,7 @@
                         <i class="fa-solid fa-house"></i>
                     </a>
                 </li>
-                <li class="active"> <!-- ACTIVE FOR CONTRIBUTE PAGE -->
+                <li class="active">
                     <a href="contribute-location.html" title="Contribute">
                         <i class="fa-solid fa-users"></i>
                     </a>
@@ -52,129 +52,160 @@
             </div>
         </nav>
 
-        <!-- Main Content  -->
         <main class="main">
-            <div class="simple-form-card">
-                <h2 class="form-title">Contribute location</h2>
-                
-                <form class="simple-form">
-                    <!-- Place Name -->
+            <div class="contribute-layout">
+                <div class="contribute-main-content">
+                    <div class="contribute-card">
+                        <form id="contributeForm" class="contribute-form">
+                            <div class="contribute-header">
+                                <h1><i class="fa-solid fa-location-dot"></i> Contribute a Place</h1>
+                                <p class="subtitle">Help others discover great laptop-friendly places</p>
+                            </div>
                     <div class="form-group">
-                        <label for="place-name">Name of the place</label>
-                        <input type="text" id="place-name" class="form-input" placeholder="Boss burger" required>
+                        <label><i class="fa-solid fa-tag"></i> Place Name <span class="required-note">*</span></label>
+                        <input type="text" id="placeName" placeholder="e.g., Angela Cafe" required>
                     </div>
 
-                    <!-- Photo Upload Section -->
                     <div class="form-group">
-                        <div class="photo-label">
-                            Add photo
-                            <div class="required-note">• you must add at least 1 image</div>
-                        </div>
-                        
-                        <div class="photo-upload" id="photo-upload-area">
-                            <div class="upload-icon">＋</div>
-                        </div>
-                        <input type="file" id="file-input" multiple accept="image/*" style="display: none;">
-                        
-                        <!-- Preview Container -->
-                        <div class="preview-container" id="preview-container"></div>
+                        <label><i class="fa-solid fa-list"></i> Category <span class="required-note">*</span></label>
+                        <select id="category" required>
+                            <option value="">Select a category</option>
+                            <option value="cafe">Cafe</option>
+                            <option value="hotel">Hotel</option>
+                            <option value="library">Library</option>
+                            <option value="coworking">Co-working Space</option>
+                            <option value="restaurant">Restaurant</option>
+                        </select>
                     </div>
 
-                    <!-- Submit Button -->
-                    <button type="submit" class="submit-btn">Submit Contribution</button>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-align-left"></i> Description</label>
+                        <textarea id="description" rows="3" placeholder="Tell us about this place..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-map-marker-alt"></i> Select Location on Map <span class="required-note">*</span></label>
+                        <div id="map" class="contribute-map"></div>
+                        <p class="help-text">Click on the map to set the location</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-star"></i> Overall Rating <span class="required-note">*</span></label>
+                        <div class="rating-stars" id="ratingStars">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                        <input type="hidden" id="overallRating" required>
+                    </div>
+
+                    <div class="ratings-grid">
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-wifi"></i> WiFi Quality</label>
+                            <select id="wifi">
+                                <option value="">Select</option>
+                                <option value="5">Excellent</option>
+                                <option value="4">Good</option>
+                                <option value="3">Average</option>
+                                <option value="2">Poor</option>
+                                <option value="1">Very Poor</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-plug"></i> Power Outlets</label>
+                            <select id="power">
+                                <option value="">Select</option>
+                                <option value="5">Excellent</option>
+                                <option value="4">Good</option>
+                                <option value="3">Average</option>
+                                <option value="2">Limited</option>
+                                <option value="1">None</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-face-smile"></i> Customer Service</label>
+                            <select id="service">
+                                <option value="">Select</option>
+                                <option value="5">Excellent</option>
+                                <option value="4">Good</option>
+                                <option value="3">Average</option>
+                                <option value="2">Poor</option>
+                                <option value="1">Very Poor</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-images"></i> Images (1-3 images) <span class="required-note">*</span></label>
+                        <div class="photo-upload-area" id="photoUploadArea">
+                            <div class="upload-icon">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                            <p class="upload-text">Click to upload images</p>
+                            <p class="upload-subtext">PNG, JPG up to 5MB each</p>
+                        </div>
+                        <input type="file" id="photoInput" multiple accept="image/*" hidden>
+                        <div id="imagePreview" class="uploaded-images"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-video"></i> Video (Optional)</label>
+                        <div class="photo-upload-area" id="videoUploadArea">
+                            <div class="upload-icon">
+                                <i class="fa-solid fa-film"></i>
+                            </div>
+                            <p class="upload-text">Click to upload video</p>
+                            <p class="upload-subtext">MP4, MOV up to 50MB</p>
+                        </div>
+                        <input type="file" id="videoInput" accept="video/*" hidden>
+                        <div id="videoPreview" class="uploaded-images"></div>
+                    </div>
+
+                    <input type="hidden" id="lat">
+                    <input type="hidden" id="lng">
+
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" onclick="window.location.href='places.html'">
+                            <i class="fa-solid fa-xmark"></i> Cancel
+                        </button>
+                        <button type="submit" class="submit-btn">
+                            <i class="fa-solid fa-paper-plane"></i> Submit Place
+                        </button>
+                    </div>
                 </form>
             </div>
+        </div>
+
+        <!-- Contributors Sidebar -->
+        <aside class="contributors-sidebar">
+            <div class="contributors-header">
+                <h2><i class="fa-solid fa-users"></i> Top Contributors</h2>
+                <p class="contributors-subtitle">Community heroes making a difference</p>
+            </div>
+
+            <div id="contributorsLoading" class="contributors-loading">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <span>Loading contributors...</span>
+            </div>
+
+            <div id="contributorsList" class="contributors-list">
+                <!-- Contributors will be loaded here -->
+            </div>
+
+            <div id="contributorsEmpty" class="contributors-empty" style="display: none;">
+                <i class="fa-regular fa-face-frown"></i>
+                <p>No contributors yet</p>
+            </div>
+        </aside>
+    </div>
         </main>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const uploadArea = document.getElementById('photo-upload-area');
-            const fileInput = document.getElementById('file-input');
-            const previewContainer = document.getElementById('preview-container');
-            
-            // Click on upload area
-            uploadArea.addEventListener('click', () => {
-                fileInput.click();
-            });
-            
-            // File selection
-            fileInput.addEventListener('change', function(e) {
-                handleFiles(e.target.files);
-            });
-            
-            // Drag and drop
-            uploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadArea.style.backgroundColor = '#f0f5ff';
-                uploadArea.style.borderColor = '#30458A';
-            });
-            
-            uploadArea.addEventListener('dragleave', () => {
-                uploadArea.style.backgroundColor = '#f8f9fa';
-                uploadArea.style.borderColor = '#ccc';
-            });
-            
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadArea.style.backgroundColor = '#f8f9fa';
-                uploadArea.style.borderColor = '#ccc';
-                handleFiles(e.dataTransfer.files);
-            });
-            
-            function handleFiles(files) {
-                for (let file of files) {
-                    if (file.type.startsWith('image/')) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            addImagePreview(e.target.result);
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }
-            }
-            
-            function addImagePreview(src) {
-                const previewDiv = document.createElement('div');
-                previewDiv.className = 'image-preview';
-                previewDiv.innerHTML = `
-                    <img src="${src}" alt="Preview">
-                    <button type="button" class="remove-preview">×</button>
-                `;
-                previewContainer.appendChild(previewDiv);
-                
-                // Remove button functionality
-                previewDiv.querySelector('.remove-preview').addEventListener('click', function() {
-                    previewDiv.remove();
-                });
-            }
-            
-            // Form submission
-            document.querySelector('.simple-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Check if at least one image is uploaded
-                if (previewContainer.children.length === 0) {
-                    alert('Please add at least one image');
-                    return;
-                }
-                
-                alert('Location contributed successfully!');
-                window.location.href = 'home.html';
-            });
-            
-            // Profile icon handlers
-            document.getElementById("profile").addEventListener("click", () => {
-                window.location.href = "profile.html";
-            });
-
-            const headerProfile = document.getElementById("headerProfile");
-            if (headerProfile) {
-                headerProfile.addEventListener("click", () => {
-                    window.location.href = "profile.html";
-                });
-            }
-        });
-    </script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script type="module" src="../js/contribute.js"></script>
 </body>
 </html>
