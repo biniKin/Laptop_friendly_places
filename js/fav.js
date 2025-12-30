@@ -1,25 +1,12 @@
-import { auth, db } from "./firebase/init.js";
-import {
-  getDocs,
-  collection,
-  addDoc
-} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+import { auth } from "./firebase/init.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
 
-
-
-const tabs = document.querySelectorAll(".tab");
-const loader = document.getElementById("loading");
-
-
-const containers = {
-  all: document.getElementById("all"),
-  new: document.getElementById("new"),
-  popular: document.getElementById("popular")
-};
-
-
-let allPlaces = [];
-
+// Check authentication
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.replace("login.html");
+  }
+});
 
 function getFavorites() {
   return JSON.parse(localStorage.getItem("favorites")) || [];
@@ -29,46 +16,32 @@ function saveFavorites(favorites) {
   localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
-function isFav(id) {
-  return getFavorites().some(p => p.id === id);
-}
-
-function toggleFavorite(place) {
+function removeFavorite(placeId) {
   let favorites = getFavorites();
-
-  const index = favorites.findIndex(p => p.id === place.id);
-
-  if (index === -1) {
-    favorites.push(place); // add
-  } else {
-    favorites.splice(index, 1); // remove
-  }
-
+  favorites = favorites.filter(p => p.id !== placeId);
   saveFavorites(favorites);
+  renderFavorites();
 }
 
-
-
-function createCard(place) {
+function createFavoriteCard(place) {
   const card = document.createElement("div");
   card.className = "favorite-card";
   card.dataset.placeId = place.id;
 
   const imageUrl = place.media?.images?.[0] || "../assets/images/cafe1.jpg";
-  const isFavorite = isFav(place.id);
-
+  
   card.innerHTML = `
     <div class="fav-card-image">
       <img src="${imageUrl}" alt="${place.name}">
-      <div class="fav-badge ${isFavorite ? '' : 'hidden'}">
+      <div class="fav-badge">
         <i class="fa-solid fa-heart"></i> Favorite
       </div>
     </div>
     <div class="fav-card-content">
       <div class="fav-card-header">
         <h3>${place.name}</h3>
-        <button class="fav-toggle-btn" title="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
-          <i class="${isFavorite ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+        <button class="fav-remove-btn" title="Remove from favorites">
+          <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
       <div class="fav-rating">
@@ -84,22 +57,11 @@ function createCard(place) {
     </div>
   `;
 
-  // Favorite button handler
-  const favBtn = card.querySelector(".fav-toggle-btn");
-  const icon = favBtn.querySelector("i");
-  const badge = card.querySelector(".fav-badge");
-
-  favBtn.addEventListener("click", (e) => {
+  // Remove button handler
+  const removeBtn = card.querySelector(".fav-remove-btn");
+  removeBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    toggleFavorite(place);
-    
-    icon.classList.toggle("fa-solid");
-    icon.classList.toggle("fa-regular");
-    badge.classList.toggle("hidden");
-    
-    favBtn.title = icon.classList.contains("fa-solid") 
-      ? "Remove from favorites" 
-      : "Add to favorites";
+    removeFavorite(place.id);
   });
 
   // Card click handler - open side sheet
@@ -110,57 +72,24 @@ function createCard(place) {
   return card;
 }
 
-function renderPlaces(type) {
-  // clear all containers
-  Object.values(containers).forEach(c => (c.innerHTML = ""));
+function renderFavorites() {
+  const favorites = getFavorites();
+  const grid = document.querySelector(".favorites-grid");
+  const emptyState = document.getElementById("emptyState");
 
-  allPlaces.forEach(place => {
-    if (type === "all" || place.tag === type) {
-      containers[type].appendChild(createCard(place));
-    }
-  });
-}
-
-
-tabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-
-    const type = tab.dataset.target;
-    renderPlaces(type);
-  });
-});
-
-
-async function fetchPlaces() {
-  try {
-    loader.style.display = "flex";
-    const placesCol = collection(db, "places");
-    const snapshot = await getDocs(placesCol);
-
-    allPlaces = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-
-    // initial render
-    loader.style.display = "none";
-    renderPlaces("all");
-
-    console.log(getFavorites());
-
-  } catch (error) {
-    console.error("Error fetching places:", error);
+  if (favorites.length === 0) {
+    grid.style.display = "none";
+    emptyState.style.display = "block";
+  } else {
+    grid.style.display = "grid";
+    emptyState.style.display = "none";
+    grid.innerHTML = "";
+    favorites.forEach(place => {
+      grid.appendChild(createFavoriteCard(place));
+    });
   }
 }
 
-
-
-
-fetchPlaces();
-
-// Side sheet functions
 function openPlaceSheet(place) {
   const sheet = document.getElementById("placeSheet");
   const overlay = document.getElementById("sheetOverlay");
@@ -237,6 +166,101 @@ function closePlaceSheet() {
   overlay.classList.remove("active");
 }
 
+// Initialize
+renderFavorites();
+
+// Close sheet handlers
+document.getElementById("closeSheet").addEventListener("click", closePlaceSheet);
+document.getElementById("sheetOverlay").addEventListener("click", closePlaceSheet);
+
+// View map button
+document.getElementById("viewMapBtn").addEventListener("click", () => {
+  const sheet = document.getElementById("placeSheet");
+  const lat = sheet.dataset.lat;
+  const lng = sheet.dataset.lng;
+  const placeId = sheet.dataset.placeId;
+  
+  if (lat && lng) {
+    window.location.href = `map-view.html?lat=${lat}&lng=${lng}&placeId=${placeId}`;
+  } else {
+    alert("Location data not available");
+  }
+});
+
+// Report button
+document.getElementById("reportBtn").addEventListener("click", () => {
+  const sheet = document.getElementById("placeSheet");
+  const modal = document.getElementById("reportModal");
+  
+  modal.dataset.placeId = sheet.dataset.placeId;
+  modal.dataset.placeName = sheet.dataset.placeName;
+  
+  // Close the side sheet first
+  closePlaceSheet();
+  
+  // Then open the modal
+  modal.classList.remove("hidden");
+});
+
+// Profile icon handler
+document.getElementById("profile").addEventListener("click", () => {
+  window.location.href = "profile.html";
+});
+
+const headerProfile = document.getElementById("headerProfile");
+if (headerProfile) {
+  headerProfile.addEventListener("click", () => {
+    window.location.href = "profile.html";
+  });
+}
+
+
+// Report form submission
+document.getElementById("reportForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const modal = document.getElementById("reportModal");
+  const placeId = modal.dataset.placeId;
+  const placeName = modal.dataset.placeName;
+
+  const issueType = document.getElementById("issueType").value;
+  const description = document.getElementById("desc").value;
+
+  console.log("Reported place:");
+  console.log("ID:", placeId);
+  console.log("Name:", placeName);
+  console.log("Issue type:", issueType);
+  console.log("Description:", description);
+
+  try {
+    const { db } = await import("./firebase/init.js");
+    const { collection, addDoc } = await import("https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js");
+    
+    const reportsCol = collection(db, "reports");
+    await addDoc(reportsCol, {
+      place_id: placeId,
+      reported_by: auth.currentUser?.uid || "anonymous",
+      status: "pending",
+      reason: issueType,
+      message: description,
+      created_at: new Date()
+    });
+
+    alert("Report submitted successfully!");
+    document.getElementById("reportForm").reset();
+  } catch (error) {
+    console.error("Error submitting report:", error);
+    alert("Failed to submit report. Try again.");
+  }
+
+  modal.classList.add("hidden");
+});
+
+// Close modal
+document.getElementById("closeModal").addEventListener("click", () => {
+  document.getElementById("reportModal").classList.add("hidden");
+});
+
 // Carousel navigation
 let currentSlide = 0;
 
@@ -268,91 +292,3 @@ document.getElementById("prevBtn").addEventListener("click", () => {
 document.getElementById("nextBtn").addEventListener("click", () => {
   showSlide(currentSlide + 1);
 });
-
-// Close sheet handlers
-document.getElementById("closeSheet").addEventListener("click", closePlaceSheet);
-document.getElementById("sheetOverlay").addEventListener("click", closePlaceSheet);
-
-// View map button
-document.getElementById("viewMapBtn").addEventListener("click", () => {
-  const sheet = document.getElementById("placeSheet");
-  const lat = sheet.dataset.lat;
-  const lng = sheet.dataset.lng;
-  const placeId = sheet.dataset.placeId;
-  
-  if (lat && lng) {
-    window.location.href = `map-view.html?lat=${lat}&lng=${lng}&placeId=${placeId}`;
-  } else {
-    alert("Location data not available");
-  }
-});
-
-// Report button from sheet
-document.getElementById("reportBtn").addEventListener("click", () => {
-  const sheet = document.getElementById("placeSheet");
-  const modal = document.getElementById("reportModal");
-  
-  modal.dataset.placeId = sheet.dataset.placeId;
-  modal.dataset.placeName = sheet.dataset.placeName;
-  
-  // Close the side sheet first
-  closePlaceSheet();
-  
-  // Then open the modal
-  modal.classList.remove("hidden");
-});
-
-// Close modal
-document.getElementById("closeModal").addEventListener("click", () => {
-  document.getElementById("reportModal").classList.add("hidden");
-});
-
-// Report form submission
-document.getElementById("reportForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const modal = document.getElementById("reportModal");
-  const placeId = modal.dataset.placeId;
-  const placeName = modal.dataset.placeName;
-
-  const issueType = document.getElementById("issueType").value;
-  const description = document.getElementById("desc").value;
-
-  console.log("Reported place:");
-  console.log("ID:", placeId);
-  console.log("Name:", placeName);
-  console.log("Issue type:", issueType);
-  console.log("Description:", description);
-
-  try {
-    const reportsCol = collection(db, "reports");
-    await addDoc(reportsCol, {
-      place_id: placeId,
-      reported_by: auth.currentUser?.uid || "anonymous",
-      status: "pending",
-      reason: issueType,
-      message: description,
-      created_at: new Date()
-    });
-
-    alert("Report submitted successfully!");
-    document.getElementById("reportForm").reset();
-  } catch (error) {
-    console.error("Error submitting report:", error);
-    alert("Failed to submit report. Try again.");
-  }
-
-  modal.classList.add("hidden");
-});
-
-// Profile icon handlers
-document.getElementById("profile").addEventListener("click", () => {
-  window.location.href = "profile.html";
-});
-
-const headerProfile = document.getElementById("headerProfile");
-if (headerProfile) {
-  headerProfile.addEventListener("click", () => {
-    window.location.href = "profile.html";
-  });
-}
