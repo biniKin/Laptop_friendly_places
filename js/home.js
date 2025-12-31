@@ -20,7 +20,6 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 L.marker([9.0365, 38.7612]).addTo(homeMap);
 
-// Profile icon handlers
 document.getElementById("profile").addEventListener("click", () => {
   window.location.href = "profile.html";
 });
@@ -31,26 +30,7 @@ if (headerProfile) {
     window.location.href = "profile.html";
   });
 }
-/*
-const toggleBtn = document.getElementById("themeToggle");
 
-// Load saved mode
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark");
-  toggleBtn.classList.replace("fa-moon", "fa-sun");
-}
-
-toggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-
-  const isDark = document.body.classList.contains("dark");
-  toggleBtn.classList.toggle("fa-moon", !isDark);
-  toggleBtn.classList.toggle("fa-sun", isDark);
-
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-});
-
-*/
 
 async function loadStatistics() {
     try {
@@ -58,7 +38,6 @@ async function loadStatistics() {
         const placesSnapshot = await getDocs(placesCol);
         const places = placesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        // Debug: Log first place to see field names
         if (places.length > 0) {
             console.log('First place data:', places[0]);
         }
@@ -70,15 +49,24 @@ async function loadStatistics() {
         const newAdded = places.filter(place => place.tag === 'new').length;
         document.getElementById('newAdded').textContent = newAdded.toLocaleString();
 
-        const uniqueContributors = new Set();
-        places.forEach(place => {
-            const contributorId = place.added_by || place.addedBy || place.contributor_id || place.contributorId || place.user_id || place.userId;
-            if (contributorId) {
-                uniqueContributors.add(contributorId);
-            }
-        });
-        
-        document.getElementById('totalContributors').textContent = uniqueContributors.size;
+try {
+    const contributorsCol = collection(db, 'contributors');
+    const contributorsSnapshot = await getDocs(contributorsCol);
+    
+    const uniqueContributorIds = new Set();
+    contributorsSnapshot.forEach(doc => {
+        const contributorId = doc.data().contributor_id;
+        if (contributorId) {
+            uniqueContributorIds.add(contributorId);
+        }
+    });
+    
+    document.getElementById('totalContributors').textContent = uniqueContributorIds.size;
+      } catch (error) {
+    console.error('Error fetching contributors:', error);
+    document.getElementById('totalContributors').textContent = '0';
+     }
+
 
         const cafeCount = places.filter(place => place.category && place.category.toLowerCase() === 'cafe').length;
         document.getElementById('cafeCount').textContent = cafeCount;
