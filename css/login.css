@@ -12,16 +12,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #8b51a1, #552d63, #8971ab);
-}
+     background: radial-gradient(circle, #c3c1e0, #ffff);}
 
 .bg {
     position: absolute;
     width: 100%;
     height: 100%;
-    background:
-        radial-gradient(circle at top left, #00f5ff55, transparent 40%),
-        radial-gradient(circle at bottom right, #ff00ff55, transparent 40%);
+    background: radial-gradient(circle, #c3c1e0, #ffff);
     z-index: -1;
 }
 
@@ -91,7 +88,7 @@ button {
     width: 100%;
     padding: 12px;
     margin-top: 20px;
-    background: linear-gradient(135deg, #00f5ff, #ff00ff);
+background: radial-gradient(circle, #a6c3cb, #ffffff);  
     border: none;
     border-radius: 8px;
     color: #000;
