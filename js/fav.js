@@ -226,7 +226,7 @@ document.getElementById("reportForm").addEventListener("submit", async (e) => {
   const issueType = document.getElementById("issueType").value;
   const description = document.getElementById("desc").value;
 
-  console.log("Reported place:");
+  console.log("Reporting place:");
   console.log("ID:", placeId);
   console.log("Name:", placeName);
   console.log("Issue type:", issueType);
@@ -234,23 +234,25 @@ document.getElementById("reportForm").addEventListener("submit", async (e) => {
 
   try {
     const { db } = await import("./firebase/init.js");
-    const { collection, addDoc } = await import("https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js");
+    const { collection, addDoc, Timestamp } = await import("https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js");
     
     const reportsCol = collection(db, "reports");
+    
+    // Add report to Firestore with proper structure
     await addDoc(reportsCol, {
       place_id: placeId,
       reported_by: auth.currentUser?.uid || "anonymous",
       status: "pending",
       reason: issueType,
       message: description,
-      created_at: new Date()
+      created_at: Timestamp.now()
     });
 
-    alert("Report submitted successfully!");
+    alert("Report submitted successfully! Our team will review it.");
     document.getElementById("reportForm").reset();
   } catch (error) {
     console.error("Error submitting report:", error);
-    alert("Failed to submit report. Try again.");
+    alert("Failed to submit report. Please try again.");
   }
 
   modal.classList.add("hidden");

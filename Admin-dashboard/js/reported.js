@@ -1,310 +1,361 @@
-// js/reported.js
+// js/reported.js - SIMPLE WORKING VERSION
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  query,
+  orderBy,
+} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+import { db } from "../../js/firebase/init.js";
+
 let currentReportId = null;
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Initialize page
-  if (!initPage()) return;
-
-  // Initialize maps
-  setTimeout(() => {
-    initializeMaps();
-    loadReportedMap("all");
-  }, 500);
-
-  // Load reports data
-  loadReports();
-  updateBadges();
-
-  // Setup event listeners
+// Initialize when page loads
+document.addEventListener("DOMContentLoaded", async function () {
+  console.log("Reports page loading...");
+  await loadReports();
   setupEventListeners();
 });
 
-// Load reports data
+// Load reports - SIMPLE VERSION
 async function loadReports() {
-  const reports = await db.get("reports");
-  const table = document.getElementById("reportedTable");
-  const noReports = document.getElementById("noReports");
+  try {
+    console.log("Loading reports...");
 
-  table.innerHTML = "";
+    // Get all reports
+    const reportsCol = collection(db, "reports");
+    const q = query(reportsCol, orderBy("created_at", "desc"));
+    const snapshot = await getDocs(q);
 
-  if (reports.length === 0) {
-    noReports.style.display = "block";
-    return;
-  }
+    const table = document.getElementById("reportedTable");
+    const noReports = document.getElementById("noReports");
 
-  noReports.style.display = "none";
-
-  reports.forEach((report) => {
-    const statusClass =
-      report.status === "resolved"
-        ? "status-verified"
-        : report.status === "rejected"
-        ? "status-rejected"
-        : "status-reported";
-    const statusText =
-      report.status === "resolved"
-        ? "Resolved"
-        : report.status === "rejected"
-        ? "Rejected"
-        : "Pending";
-
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td><strong>${report.placeName}</strong></td>
-      <td><span style="background: var(--gray-100); padding: 4px 8px; border-radius: 6px;">${
-        report.issueType
-      }</span></td>
-      <td>${report.reportedBy}</td>
-      <td>
-        ${
-          report.image
-            ? `<img src="${report.image}" alt="Proof" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px; cursor: pointer;" onclick="viewReportImage('${report.image}', '${report.placeName}')">`
-            : '<span style="color: var(--gray-500);">No image</span>'
-        }
-      </td>
-      <td>${report.reportedDate}</td>
-      <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-      <td>
-        <button class="action-btn btn-view" onclick="viewReportDetails(${
-          report.id
-        })">
-          <i class="fas fa-eye"></i> View
-        </button>
-        ${
-          report.status === "pending"
-            ? `<button class="action-btn btn-approve" onclick="approveReport(${report.id})">
-                <i class="fas fa-check"></i>
-              </button>
-              <button class="action-btn btn-reject" onclick="rejectReport(${report.id})">
-                <i class="fas fa-times"></i>
-              </button>`
-            : ""
-        }
-        <button class="action-btn btn-reject" onclick="deleteReport(${
-          report.id
-        })">
-          <i class="fas fa-trash"></i>
-        </button>
-      </td>
-    `;
-    table.appendChild(row);
-  });
-}
-
-// View report image
-function viewReportImage(imageUrl, placeName) {
-  const modal = document.createElement("div");
-  modal.className = "modal";
-  modal.style.display = "flex";
-  modal.innerHTML = `
-    <div class="modal-content" style="max-width: 500px;">
-      <div class="modal-header">
-        <h3>Proof Image - ${placeName}</h3>
-        <button class="logout-btn" onclick="this.parentElement.parentElement.remove()">&times;</button>
-      </div>
-      <div class="modal-body" style="text-align: center;">
-        <img src="${imageUrl}" alt="Proof" style="width: 100%; border-radius: 10px;">
-        <p style="margin-top: 15px; color: var(--gray-600);">Image uploaded by user as proof</p>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-
-  modal.addEventListener("click", function (e) {
-    if (e.target === this) {
-      this.remove();
+    if (!table) {
+      console.error("Table element not found!");
+      return;
     }
-  });
+
+    table.innerHTML = "";
+
+    if (snapshot.empty) {
+      if (noReports) noReports.style.display = "block";
+      console.log("No reports found");
+      return;
+    }
+
+    if (noReports) noReports.style.display = "none";
+
+    // Get all places for reference
+    const placesCol = collection(db, "places");
+    const placesSnapshot = await getDocs(placesCol);
+    const places = {};
+
+    placesSnapshot.docs.forEach((placeDoc) => {
+      places[placeDoc.id] = placeDoc.data().name || "Unknown Place";
+    });
+
+    // Get all users for reference
+    const usersCol = collection(db, "users");
+    const usersSnapshot = await getDocs(usersCol);
+    const users = {};
+
+    usersSnapshot.docs.forEach((userDoc) => {
+      users[userDoc.id] = userDoc.data().name || "Anonymous";
+    });
+
+    // Display each report
+    snapshot.forEach((docSnap) => {
+      const report = docSnap.data();
+      const reportId = docSnap.id;
+
+      // Get place name
+      const placeName = places[report.place_id] || "Unknown Place";
+
+      // Get user name
+      const userName = users[report.reported_by] || "Anonymous";
+
+      // Format date
+      const reportDate = report.created_at
+        ? new Date(report.created_at.toDate()).toLocaleDateString()
+        : "N/A";
+
+      // Status color
+      let statusClass = "status-reported";
+      let statusText = "Pending";
+
+      if (report.status === "resolved") {
+        statusClass = "status-verified";
+        statusText = "Resolved";
+      } else if (report.status === "rejected") {
+        statusClass = "status-rejected";
+        statusText = "Rejected";
+      }
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><strong>${placeName}</strong></td>
+        <td>${report.reason || "No reason"}</td>
+        <td>${userName}</td>
+        <td>${
+          report.message
+            ? report.message.substring(0, 30) + "..."
+            : "No message"
+        }</td>
+        <td>${reportDate}</td>
+        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+        <td>
+          <button class="action-btn btn-view" onclick="viewReport('${reportId}')">
+            <i class="fas fa-eye"></i>
+          </button>
+          ${
+            report.status === "pending"
+              ? `
+            <button class="action-btn btn-approve" onclick="approveReport('${reportId}')">
+              <i class="fas fa-check"></i>
+            </button>
+            <button class="action-btn btn-reject" onclick="rejectReport('${reportId}')">
+              <i class="fas fa-times"></i>
+            </button>
+          `
+              : ""
+          }
+          <button class="action-btn btn-delete" onclick="deleteReport('${reportId}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      `;
+      table.appendChild(row);
+    });
+
+    console.log(`Loaded ${snapshot.size} reports`);
+  } catch (error) {
+    console.error("Error loading reports:", error);
+    alert("Failed to load reports. Check console for details.");
+  }
 }
 
-// View report details
-async function viewReportDetails(reportId) {
-  const reports = await db.get("reports");
-  const report = reports.find((r) => r.id === reportId);
+// View report - SIMPLE MODAL
+async function viewReport(reportId) {
+  try {
+    // Get the report
+    const reportsCol = collection(db, "reports");
+    const snapshot = await getDocs(reportsCol);
+    let report = null;
+    let reportDocId = null;
 
-  if (!report) return;
-
-  currentReportId = reportId;
-
-  const modalBody = document.getElementById("reportModalBody");
-  modalBody.innerHTML = `
-    <div style="margin-bottom: 20px;">
-      <h4 style="color: var(--primary);">${report.placeName}</h4>
-      <p><strong>Issue Type:</strong> ${report.issueType}</p>
-      <p><strong>Reported By:</strong> ${report.reportedBy}</p>
-      <p><strong>Reported On:</strong> ${report.reportedDate}</p>
-      ${
-        report.latitude
-          ? `<p><strong>Coordinates:</strong> ${report.latitude.toFixed(
-              6
-            )}, ${report.longitude.toFixed(6)}</p>`
-          : ""
+    snapshot.forEach((docSnap) => {
+      if (docSnap.id === reportId) {
+        report = docSnap.data();
+        reportDocId = docSnap.id;
       }
-    </div>
-    
-    <div style="margin-bottom: 20px;">
-      <strong>Description:</strong>
-      <p style="margin-top: 5px; padding: 15px; background: var(--gray-100); border-radius: 8px; color: var(--gray-700);">
-        ${report.description}
-      </p>
-    </div>
-    
-    ${
-      report.image
-        ? `
-      <div style="margin-bottom: 20px;">
-        <strong>Proof Image:</strong>
-        <div style="text-align: center; margin-top: 10px;">
-          <img src="${report.image}" alt="Proof" class="report-image">
+    });
+
+    if (!report) {
+      alert("Report not found");
+      return;
+    }
+
+    // Get place name
+    let placeName = "Unknown Place";
+    if (report.place_id) {
+      try {
+        const placeRef = doc(db, "places", report.place_id);
+        const placeSnap = await getDoc(placeRef);
+        if (placeSnap.exists()) {
+          placeName = placeSnap.data().name || "Unknown Place";
+        }
+      } catch (e) {
+        console.log("Could not fetch place:", e);
+      }
+    }
+
+    // Get user name
+    let userName = "Anonymous";
+    if (report.reported_by) {
+      try {
+        const userRef = doc(db, "users", report.reported_by);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          userName = userSnap.data().name || "Anonymous";
+        }
+      } catch (e) {
+        console.log("Could not fetch user:", e);
+      }
+    }
+
+    // Create simple modal
+    const modal = document.createElement("div");
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    `;
+
+    modal.innerHTML = `
+      <div style="background: white; padding: 20px; border-radius: 10px; width: 500px; max-width: 90%;">
+        <h3 style="margin-top: 0;">Report Details</h3>
+        
+        <div style="margin-bottom: 15px;">
+          <strong>Place:</strong> ${placeName}<br>
+          <strong>Reported by:</strong> ${userName}<br>
+          <strong>Reason:</strong> ${report.reason || "N/A"}<br>
+          <strong>Date:</strong> ${
+            report.created_at
+              ? new Date(report.created_at.toDate()).toLocaleString()
+              : "N/A"
+          }<br>
+          <strong>Status:</strong> ${report.status || "pending"}
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <strong>Message:</strong><br>
+          <div style="padding: 10px; background: #f5f5f5; border-radius: 5px; margin-top: 5px;">
+            ${report.message || "No message provided"}
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button onclick="this.closest('div[style*=\"position: fixed\"]').remove()" 
+                  style="padding: 8px 16px; background: #666; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Close
+          </button>
         </div>
       </div>
-    `
-        : ""
-    }
-    
-    <div style="background: var(--gray-100); padding: 15px; border-radius: 8px;">
-      <strong>Current Status:</strong>
-      <span class="status-badge ${
-        report.status === "pending"
-          ? "status-reported"
-          : report.status === "resolved"
-          ? "status-verified"
-          : "status-rejected"
-      }" style="margin-left: 10px;">
-        ${
-          report.status === "pending"
-            ? "Pending Review"
-            : report.status === "resolved"
-            ? "Resolved"
-            : "Rejected"
-        }
-      </span>
-    </div>
-  `;
+    `;
 
-  document.getElementById("reportModal").style.display = "flex";
-}
+    document.body.appendChild(modal);
 
-// Approve report
-async function approveReport(reportId = null) {
-  const id = reportId || currentReportId;
-  if (!id) return;
-
-  const updated = await db.update("reports", id, { status: "resolved" });
-
-  if (updated) {
-    // Add activity
-    const newActivity = {
-      id: database.activities.length + 1,
-      type: "report_resolved",
-      message: `Approved report for '${updated.placeName}'`,
-      timestamp:
-        new Date().toLocaleDateString() +
-        " " +
-        new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-    };
-    database.activities.unshift(newActivity);
-
-    showToast("Report approved and marked as resolved!", "success");
-    loadReports();
-    updateBadges();
-    if (mapsInitialized) loadReportedMap("all");
-    closeReportModal();
+    // Close when clicking outside
+    modal.addEventListener("click", function (e) {
+      if (e.target === this) {
+        this.remove();
+      }
+    });
+  } catch (error) {
+    console.error("Error viewing report:", error);
+    alert("Failed to load report details");
   }
 }
 
-// Reject report
-async function rejectReport(reportId = null) {
-  const id = reportId || currentReportId;
-  if (!id) return;
+// Approve report - SIMPLE VERSION
+async function approveReport(reportId) {
+  if (!confirm("Approve this report?")) return;
 
-  // When admin rejects a report, remove it from the database
-  const deleted = await db.delete("reports", id);
+  try {
+    const reportRef = doc(db, "reports", reportId);
+    await updateDoc(reportRef, {
+      status: "resolved",
+      resolved_at: new Date(),
+    });
 
-  if (deleted) {
-    showToast("Report has been rejected and removed!", "success");
-    loadReports();
-    updateBadges();
-    if (mapsInitialized) loadReportedMap("all");
-    closeReportModal();
+    // Reload the reports
+    await loadReports();
+    alert("Report approved!");
+  } catch (error) {
+    console.error("Error approving report:", error);
+    alert("Failed to approve report");
   }
 }
 
-// Delete report
+// Reject report - SIMPLE VERSION
+async function rejectReport(reportId) {
+  if (!confirm("Reject this report?")) return;
+
+  try {
+    const reportRef = doc(db, "reports", reportId);
+    await updateDoc(reportRef, {
+      status: "rejected",
+      rejected_at: new Date(),
+    });
+
+    // Reload the reports
+    await loadReports();
+    alert("Report rejected!");
+  } catch (error) {
+    console.error("Error rejecting report:", error);
+    alert("Failed to reject report");
+  }
+}
+
+// Delete report - SIMPLE VERSION
 async function deleteReport(reportId) {
-  const modal = document.createElement("div");
-  modal.className = "modal";
-  modal.style.display = "flex";
-  modal.innerHTML = `
-    <div class="modal-content" style="max-width: 400px;">
-      <div class="modal-header">
-        <h3>Confirm Delete</h3>
-        <button class="logout-btn" onclick="this.parentElement.parentElement.remove()">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to delete this report? This action cannot be undone.</p>
-        <p style="color: var(--danger); font-weight: 600; margin-top: 10px;">This will permanently remove the report from the database.</p>
-      </div>
-      <div class="modal-footer">
-        <button class="action-btn btn-reject" onclick="confirmDeleteReport(${reportId})">
-          <i class="fas fa-trash"></i> Delete Permanently
-        </button>
-        <button class="logout-btn" onclick="this.parentElement.parentElement.parentElement.remove()" style="background: var(--gray-200); padding: 10px 20px; border-radius: 8px;">Cancel</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
+  if (!confirm("Delete this report permanently?")) return;
 
-  modal.addEventListener("click", function (e) {
-    if (e.target === this) {
-      this.remove();
-    }
-  });
-}
+  try {
+    const reportRef = doc(db, "reports", reportId);
+    await deleteDoc(reportRef);
 
-// Confirm delete report
-async function confirmDeleteReport(reportId) {
-  const deleted = await db.delete("reports", reportId);
-
-  if (deleted) {
-    showToast("Report deleted permanently from database!", "success");
-    loadReports();
-    updateBadges();
-    if (mapsInitialized) loadReportedMap("all");
-
-    const modal = document.querySelector(".modal");
-    if (modal) modal.remove();
+    // Reload the reports
+    await loadReports();
+    alert("Report deleted!");
+  } catch (error) {
+    console.error("Error deleting report:", error);
+    alert("Failed to delete report");
   }
-}
-
-// Close report modal
-function closeReportModal() {
-  document.getElementById("reportModal").style.display = "none";
-  currentReportId = null;
 }
 
 // Setup event listeners
 function setupEventListeners() {
-  // Global search
-  const globalSearch = document.getElementById("globalSearch");
-  if (globalSearch) {
-    globalSearch.addEventListener("input", function (e) {
-      const query = e.target.value;
-      // Search functionality can be implemented here
+  // Search functionality
+  const searchInput = document.getElementById("globalSearch");
+  if (searchInput) {
+    searchInput.addEventListener("input", function (e) {
+      const query = e.target.value.toLowerCase();
+      const rows = document.querySelectorAll("#reportedTable tr");
+
+      rows.forEach((row) => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query) ? "" : "none";
+      });
     });
   }
 
-  // Close modal when clicking outside
-  window.addEventListener("click", function (e) {
-    const modals = document.querySelectorAll(".modal");
-    modals.forEach((modal) => {
-      if (e.target === modal) {
-        modal.style.display = "none";
-        currentReportId = null;
-      }
+  // Filter buttons
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const filter = this.textContent.toLowerCase();
+      filterReports(filter);
     });
   });
 }
+
+// Filter reports - SIMPLE VERSION
+function filterReports(filter) {
+  const rows = document.querySelectorAll("#reportedTable tr");
+
+  rows.forEach((row) => {
+    const statusCell = row.querySelector(".status-badge");
+    if (!statusCell) return;
+
+    const statusText = statusCell.textContent.toLowerCase();
+
+    if (filter === "all" || filter === "" || statusText.includes(filter)) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+
+  // Update active button
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.classList.remove("active");
+  });
+  event.target.classList.add("active");
+}
+
+// Make functions global
+window.viewReport = viewReport;
+window.approveReport = approveReport;
+window.rejectReport = rejectReport;
+window.deleteReport = deleteReport;
+window.filterReports = filterReports;

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - Laptop Friendly Finder</title>
     <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/maps.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -13,12 +15,12 @@
   </head>
   <body>
     <!-- Loading Screen -->
-    <div id="loadingScreen">
+    <!-- <div id="loadingScreen">
       <div class="loader">
         <div class="loader-circle"></div>
         <div>Loading Dashboard...</div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
@@ -126,10 +128,6 @@
                 <h3 id="totalPlaces">0</h3>
                 <p>Total Places</p>
               </div>
-              <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i>
-                <span>12%</span>
-              </div>
             </div>
 
             <div class="stat-card">
@@ -139,10 +137,6 @@
               <div class="stat-info">
                 <h3 id="verifiedPlaces">0</h3>
                 <p>Verified Places</p>
-              </div>
-              <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i>
-                <span>8%</span>
               </div>
             </div>
 
@@ -154,10 +148,6 @@
                 <h3 id="pendingPlaces">0</h3>
                 <p>Pending Places</p>
               </div>
-              <div class="stat-trend trend-down">
-                <i class="fas fa-arrow-down"></i>
-                <span>3%</span>
-              </div>
             </div>
 
             <div class="stat-card">
@@ -168,10 +158,46 @@
                 <h3 id="reportedPlaces">0</h3>
                 <p>Reported Issues</p>
               </div>
-              <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i>
-                <span>24%</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Recent Activities</h3>
+            </div>
+            <div class="card-body">
+              <div id="activityList" class="activity-list">
+                <div class="empty-state">
+                  <i class="fas fa-bell"></i>
+                  <p>No recent activities</p>
+                </div>
               </div>
+            </div>
+          </div>
+
+          <!-- Recent Places -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Recent Places</h3>
+              <a href="places.html" class="btn btn-text">View All</a>
+            </div>
+            <div class="card-body">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Rating</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="recentPlacesTable">
+                  <tr>
+                    <td colspan="5" class="empty-cell">No places found</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
@@ -242,9 +268,8 @@
     </div>
 
     <!-- JavaScript Files -->
-    <script src="../js/database.js"></script>
     <script src="../js/utils.js"></script>
-    <script src="../js/maps.js"></script>
-    <script src="../js/dashboard.js"></script>
+    <script type="module" src="../js/maps.js"></script>
+    <script type="module" src="../js/dashboard.js"></script>
   </body>
 </html>

@@ -6,6 +6,7 @@ import {
   collection,
   addDoc
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // User already logged in → redirect
