@@ -394,7 +394,7 @@ body {
 }
 
 .nav-links li.active a {
-    /* background: #30458A; */
+    background: #30458A;
     color: white;
     box-shadow: 0 3px 6px rgba(48, 69, 138, 0.2);
 }
