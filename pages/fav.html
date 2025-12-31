@@ -1,192 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Favorites - LFP</title>
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/favorites.css">
+    <link rel="stylesheet" href="../css/favorites.css" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-     <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg" />
+  </head>
+  <body>
     <header class="main-header">
-        <!-- <div class="header-container">
-            <div class="header-logo">
-                <img src="../assets/images/logo.svg" alt="LFP Logo">
-                <span>LFP</span>
-            </div>
-            <div class="header-profile-icon">
-                <i id="headerProfile" class="fa-regular fa-user"></i>
-            </div>
-        </div> -->
+      <div class="header-container">
+        <div class="header-logo">
+          <img src="../assets/images/logo.svg" alt="LFP Logo" />
+          <span>LFP</span>
+        </div>
 
-        <div class="header-container">
-    <div class="header-logo">
-        <img src="../assets/images/logo.svg" alt="LFP Logo">
-        <span>LFP</span>
-    </div>
-
-    <div class="header-actions">
-        <!-- Dark mode toggle -->
-        <i id="darkModeToggle" class="fa-regular fa-moon"></i>
-
-    </div>
-</div>
-
-
-
-
+        <div class="header-actions">
+          <!-- Dark mode toggle -->
+          <i id="darkModeToggle" class="fa-regular fa-moon"></i>
+        </div>
+      </div>
     </header>
 
     <div class="container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <ul class="nav-links">
-                <li>
-                    <a href="home.html" title="Home">
-                        <i class="fa-solid fa-house"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="contribute-location.html" title="Contribute">
-                        <i class="fa-solid fa-users"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="places.html" title="Places">
-                        <i class="fa-solid fa-map"></i>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="fav.html" title="Favorite">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </li>
-            </ul>
-            
-            <div class="sidebar-bottom">
-                <i id="profile" class="fa-regular fa-user"></i>
-            </div>
-        </nav>
+      <!-- Sidebar Navigation -->
+      <nav class="sidebar">
+        <ul class="nav-links">
+          <li>
+            <a href="home.html" title="Home">
+              <i class="fa-solid fa-house"></i>
+            </a>
+          </li>
+          <li>
+            <a href="contribute-location.html" title="Contribute">
+              <i class="fa-solid fa-users"></i>
+            </a>
+          </li>
+          <li>
+            <a href="places.html" title="Places">
+              <i class="fa-solid fa-map"></i>
+            </a>
+          </li>
+          <li class="active">
+            <a href="fav.html" title="Favorite">
+              <i class="fa-solid fa-heart"></i>
+            </a>
+          </li>
+        </ul>
 
-        <!-- Main Content -->
-        <main class="main">
-            <!-- Page Header -->
-            <div class="page-header">
-                <h1><i class="fa-solid fa-heart" style="color: #ff4757; margin-right: 10px;"></i> Your Favorite Places</h1>
-                <p class="page-subtitle">Places you've liked and saved for later</p>
+        <div class="sidebar-bottom">
+          <i id="profile" class="fa-regular fa-user"></i>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main">
+        <!-- Page Header -->
+        <div class="page-header">
+          <h1>
+            <i
+              class="fa-solid fa-heart"
+              style="color: #ff4757; margin-right: 10px"
+            ></i>
+            Your Favorite Places
+          </h1>
+          <p class="page-subtitle">Places you've liked and saved for later</p>
+        </div>
+
+        <!-- Favorites Grid -->
+        <div class="favorites-grid">
+          <!-- Dynamic content will be loaded here -->
+        </div>
+
+        <div class="empty-favorites" id="emptyState" style="display: none">
+          <div class="empty-icon">
+            <i class="fa-regular fa-heart"></i>
+          </div>
+          <h3>No favorites yet</h3>
+          <p>
+            When you find places you like, click the heart icon to save them
+            here.
+          </p>
+          <a href="places.html" class="explore-fav-btn">
+            <i class="fa-solid fa-map"></i> Explore Places
+          </a>
+        </div>
+
+        <!-- Side Sheet for Place Details -->
+        <div class="sheet-overlay" id="sheetOverlay"></div>
+        <div class="place-sheet" id="placeSheet">
+          <button class="close-sheet" id="closeSheet">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <div class="sheet-content">
+            <div class="sheet-media">
+              <div class="media-carousel" id="mediaCarousel">
+                <!-- Images will be inserted here -->
+              </div>
+              <button class="carousel-btn prev" id="prevBtn">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <button class="carousel-btn next" id="nextBtn">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
             </div>
 
-            <!-- Favorites Grid -->
-            <div class="favorites-grid">
-                <!-- Dynamic content will be loaded here -->
-            </div>
+            <div class="sheet-info">
+              <h2 id="sheetName">Place Name</h2>
+              <div class="sheet-rating">
+                <i class="fa-solid fa-star"></i>
+                <span id="sheetRating">4.5</span>
+              </div>
 
-            <div class="empty-favorites" id="emptyState" style="display: none;">
-                <div class="empty-icon">
-                    <i class="fa-regular fa-heart"></i>
+              <div class="sheet-description">
+                <h3><i class="fa-solid fa-circle-info"></i> Description</h3>
+                <p id="sheetDescription">Place description goes here...</p>
+              </div>
+
+              <div class="sheet-ratings">
+                <h3><i class="fa-solid fa-star"></i> Ratings</h3>
+                <div class="rating-items">
+                  <div class="rating-item">
+                    <i class="fa-solid fa-wifi"></i>
+                    <span>WiFi:</span>
+                    <strong id="sheetWifi">4.5</strong>
+                  </div>
+                  <div class="rating-item">
+                    <i class="fa-solid fa-plug"></i>
+                    <span>Power:</span>
+                    <strong id="sheetPower">4.0</strong>
+                  </div>
+                  <div class="rating-item">
+                    <i class="fa-solid fa-face-smile"></i>
+                    <span>Service:</span>
+                    <strong id="sheetService">4.8</strong>
+                  </div>
                 </div>
-                <h3>No favorites yet</h3>
-                <p>When you find places you like, click the heart icon to save them here.</p>
-                <a href="places.html" class="explore-fav-btn">
-                    <i class="fa-solid fa-map"></i> Explore Places
-                </a>
-            </div>
+              </div>
 
-            <!-- Side Sheet for Place Details -->
-            <div class="sheet-overlay" id="sheetOverlay"></div>
-            <div class="place-sheet" id="placeSheet">
-                <button class="close-sheet" id="closeSheet">
-                    <i class="fa-solid fa-xmark"></i>
+              <div class="sheet-actions">
+                <button class="sheet-btn primary" id="viewMapBtn">
+                  <i class="fa-solid fa-map"></i> View Map
                 </button>
-                
-                <div class="sheet-content">
-                    <div class="sheet-media">
-                        <div class="media-carousel" id="mediaCarousel">
-                            <!-- Images will be inserted here -->
-                        </div>
-                        <button class="carousel-btn prev" id="prevBtn">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </button>
-                        <button class="carousel-btn next" id="nextBtn">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="sheet-info">
-                        <h2 id="sheetName">Place Name</h2>
-                        <div class="sheet-rating">
-                            <i class="fa-solid fa-star"></i>
-                            <span id="sheetRating">4.5</span>
-                        </div>
-                        
-                        <div class="sheet-description">
-                            <h3><i class="fa-solid fa-circle-info"></i> Description</h3>
-                            <p id="sheetDescription">Place description goes here...</p>
-                        </div>
-                        
-                        <div class="sheet-ratings">
-                            <h3><i class="fa-solid fa-star"></i> Ratings</h3>
-                            <div class="rating-items">
-                                <div class="rating-item">
-                                    <i class="fa-solid fa-wifi"></i>
-                                    <span>WiFi:</span>
-                                    <strong id="sheetWifi">4.5</strong>
-                                </div>
-                                <div class="rating-item">
-                                    <i class="fa-solid fa-plug"></i>
-                                    <span>Power:</span>
-                                    <strong id="sheetPower">4.0</strong>
-                                </div>
-                                <div class="rating-item">
-                                    <i class="fa-solid fa-face-smile"></i>
-                                    <span>Service:</span>
-                                    <strong id="sheetService">4.8</strong>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="sheet-actions">
-                            <button class="sheet-btn primary" id="viewMapBtn">
-                                <i class="fa-solid fa-map"></i> View Map
-                            </button>
-                            <button class="sheet-btn secondary" id="reportBtn">
-                                <i class="fa-solid fa-flag"></i> Report
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <button class="sheet-btn secondary" id="reportBtn">
+                  <i class="fa-solid fa-flag"></i> Report
+                </button>
+              </div>
             </div>
+          </div>
+        </div>
 
-            <div class="modal hidden" id="reportModal">
-                <div class="modal-content">
-                    <h3>Report Place</h3>
-                    <form id="reportForm">
-                        <label for="issueType">Issue Type:</label>
-                        <select id="issueType" name="issueType" required>
-                            <option value="" disabled selected>Select an issue</option>
-                            <option value="incorrect_info">Incorrect Information</option>
-                            <option value="spam">Spam / Fake</option>
-                            <option value="inappropriate_content">Inappropriate Content</option>
-                            <option value="other">Other</option>
-                        </select>
+        <div class="modal hidden" id="reportModal">
+          <div class="modal-content">
+            <h3>Report Place</h3>
+            <form id="reportForm">
+              <label for="issueType">Issue Type:</label>
+              <select id="issueType" name="issueType" required>
+                <option value="" disabled selected>Select an issue</option>
+                <option value="incorrect_info">Incorrect Information</option>
+                <option value="spam">Spam / Fake</option>
+                <option value="inappropriate_content">
+                  Inappropriate Content
+                </option>
+                <option value="other">Other</option>
+              </select>
 
-                        <label for="desc">Description:</label>
-                        <textarea id="desc" placeholder="Describe the issue..." required></textarea>
+              <label for="desc">Description:</label>
+              <textarea
+                id="desc"
+                placeholder="Describe the issue..."
+                required
+              ></textarea>
 
-                        <div class="modal-actions">
-                            <button type="submit" class="submit-btn">Submit</button>
-                            <button type="button" id="closeModal" class="cancel-btn">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </main>
+              <div class="modal-actions">
+                <button type="submit" class="submit-btn">Submit</button>
+                <button type="button" id="closeModal" class="cancel-btn">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
     </div>
     <script src="../js/favorites.js"></script>
     <script type="module" src="../js/fav.js"></script>
-</body>
+  </body>
 </html>
