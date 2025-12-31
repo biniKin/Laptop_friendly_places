@@ -12,30 +12,31 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-     background: radial-gradient(circle, #c3c1e0, #ffff);}
+    background: #f8f9fa;
+    position: relative;
+}
 
 .bg {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, #c3c1e0, #ffff);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     z-index: -1;
 }
 
 /* Container */
 .container {
-    width: 380px;
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
 }
 
 /* Glass Card */
 .glass {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: white;
     border-radius: 16px;
-    padding: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
 /* Forms */
@@ -49,123 +50,201 @@ body {
 
 h2 {
     text-align: center;
-    color: #fff;
-    margin-bottom: 20px;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    font-weight: 600;
 }
 
 /* Inputs */
 input {
     width: 100%;
-    padding: 12px;
+    padding: 14px 16px;
     margin-top: 10px;
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    border-radius: 8px;
-    color: #fff;
+    background: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    color: #333;
     outline: none;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+}
+
+input:focus {
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 input::placeholder {
-    color: #ddd;
+    color: #999;
 }
 
 /* Password Box */
 .password-box {
     position: relative;
+    margin-top: 10px;
+}
+
+.password-box input {
+    margin-top: 0;
+    padding-right: 45px;
 }
 
 .password-box i {
     position: absolute;
-    right: 12px;
+    right: 16px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #fff;
+    color: #666;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.password-box i:hover {
+    color: #667eea;
 }
 
 /* Button */
 button {
     width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-background: radial-gradient(circle, #a6c3cb, #ffffff);  
+    padding: 14px;
+    margin-top: 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
-    border-radius: 8px;
-    color: #000;
-    font-weight: bold;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
     display: flex;
     position: relative;
     justify-content: center;
-    gap: 10px;
-}
-
-.btn-text{
-    display: block;
     align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
 }
 
 button:hover {
-    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.btn-text {
+    display: block;
 }
 
 /* Switch Text */
 .switch {
     text-align: center;
-    margin-top: 15px;
-    color: #fff;
-    font-size: 14px;
+    margin-top: 20px;
+    color: #666;
+    font-size: 0.9rem;
 }
 
 .switch span {
-    color: #00f5ff;
+    color: #667eea;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.switch span:hover {
+    color: #764ba2;
+    text-decoration: underline;
 }
 
 /* Errors */
 .error {
-    color: #ff6b6b;
-    font-size: 12px;
-    height: 14px;
-}
-
-.msg{
-    border: 1px solid red;
-    border-radius: 10px;
-    height: 60px;
-    width: 100%;
-    background-color: rgba(223, 91, 91, 0.4);
+    color: #ff4757;
+    font-size: 0.85rem;
+    margin-top: 5px;
     display: block;
-    align-content: center;
-    padding: 10px;
-    margin-top: 10px;
-    display: none;
-    
+    min-height: 18px;
 }
 
-.spinner{
-    border: 3px solid white;
-    border-top: 3px solid black;
+.msg {
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 15px;
+    display: none;
+    font-size: 0.9rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.msg[style*="display: block"] {
+    display: block !important;
+}
+
+/* Spinner */
+.spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
     height: 20px;
     width: 20px;
     border-radius: 50%;
     display: none;
     animation: spin 1s linear infinite;
 }
- 
+
 @keyframes spin {
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}   
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Logo/Branding */
+.login-logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-logo img {
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.login-logo h1 {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.login-logo p {
+    color: #777;
+    font-size: 0.9rem;
+    margin-top: 5px;
 }
 
 /* Mobile Responsive */
 @media (max-width: 480px) {
     .container {
-        width: 90%;
+        width: 100%;
+        padding: 15px;
     }
 
     .glass {
-        padding: 20px;
+        padding: 30px 25px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+    }
+
+    input {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 0.95rem;
     }
 }

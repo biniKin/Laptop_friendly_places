@@ -136,15 +136,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function upload(file, folder) {
     try {
-      // Check if user is authenticated
-      // const { data: { session } } = await supabase.auth.getSession();
-      
-      // if (!session) {
-      //   throw new Error("You must be logged in to upload files");
-      // }
-
       // folder will be either "images" or "videos"
-      const path = `${folder}/${Date.now()}-${file.name}`;
+      const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+      const path = `${folder}/${fileName}`;
+      
+      console.log("Uploading to path:", path);
+      
       const { data, error } = await supabase.storage
         .from("placeImages")
         .upload(path, file, {
@@ -157,12 +154,13 @@ document.addEventListener("DOMContentLoaded", () => {
         throw error;
       }
       
-      // Get public URL
-      const { data: urlData } = supabase.storage
+      // Get public URL - correct method
+      const { data: { publicUrl } } = supabase.storage
         .from("placeImages")
         .getPublicUrl(path);
       
-      return urlData.publicUrl;
+      console.log("File uploaded successfully. Public URL:", publicUrl);
+      return publicUrl;
     } catch (error) {
       console.error("Upload failed:", error);
       throw error;
@@ -215,9 +213,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const description = document.getElementById("description").value;
       const lat = document.getElementById("lat").value;
       const lng = document.getElementById("lng").value;
-      const wifi = document.getElementById("wifi").value || "3";
-      const power = document.getElementById("power").value || "3";
-      const service = document.getElementById("service").value || "3";
+      const wifi = document.getElementById("wifi").value || "Good";
+      const power = document.getElementById("power").value || "Good";
+      const service = document.getElementById("service").value || "Good";
 
       // Submit to Firestore
       await addDoc(collection(db, "places"), {
