@@ -29,7 +29,7 @@ body {
 
 /* Glass Card */
 .glass {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(243, 197, 242, 0.651);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-radius: 16px;
@@ -49,7 +49,7 @@ body {
 
 h2 {
     text-align: center;
-    color: #fff;
+    color: #100d0d;
     margin-bottom: 20px;
 }
 
@@ -58,15 +58,15 @@ input {
     width: 100%;
     padding: 12px;
     margin-top: 10px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(249, 247, 247, 0.993);
     border: none;
     border-radius: 8px;
-    color: #fff;
+    color: #000;
     outline: none;
 }
 
 input::placeholder {
-    color: #ddd;
+    color: #100f0f;
 }
 
 /* Password Box */
@@ -80,7 +80,7 @@ input::placeholder {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #fff;
+    color: #181616;
 }
 
 /* Button */
@@ -88,7 +88,7 @@ button {
     width: 100%;
     padding: 12px;
     margin-top: 20px;
-background: radial-gradient(circle, #a6c3cb, #ffffff);  
+    background: rgba(171, 159, 159, 0.4);
     border: none;
     border-radius: 8px;
     color: #000;
@@ -113,7 +113,7 @@ button:hover {
 .switch {
     text-align: center;
     margin-top: 15px;
-    color: #fff;
+    color: #0e0e0e;
     font-size: 14px;
 }
 
@@ -153,7 +153,7 @@ button:hover {
     display: none;
     animation: spin 1s linear infinite;
 }
- 
+
 @keyframes spin {
     0% { transform: rotate(0deg);}
     100% { transform: rotate(360deg);}   
