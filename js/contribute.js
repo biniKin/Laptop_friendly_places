@@ -159,6 +159,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .from("placeImages")
         .getPublicUrl(path);
       
+      
+      
       console.log("File uploaded successfully. Public URL:", publicUrl);
       return publicUrl;
     } catch (error) {
@@ -166,6 +168,8 @@ document.addEventListener("DOMContentLoaded", () => {
       throw error;
     }
   }
+  
+
 
   /* -------------------- FORM SUBMIT -------------------- */
 
@@ -217,6 +221,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const power = document.getElementById("power").value || "Good";
       const service = document.getElementById("service").value || "Good";
 
+      console.log(`wifi: ${wifi}, power: ${power}, service: ${service}`);
+
       // Submit to Firestore
       await addDoc(collection(db, "places"), {
         name: placeName,
@@ -225,9 +231,9 @@ document.addEventListener("DOMContentLoaded", () => {
         location: new GeoPoint(parseFloat(lat), parseFloat(lng)),
         rating: {
           overall: parseFloat(ratingInput.value),
-          wifi: parseFloat(wifi),
-          power: parseFloat(power),
-          customer_service: parseFloat(service)
+          wifi: wifi,
+          power: power,
+          customer_service: service
         },
         media: {
           images: images,
